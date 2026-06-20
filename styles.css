@@ -556,6 +556,59 @@ h1, h2, h3, h4 {
   border-color: rgba(0, 229, 255, 0.7);
   box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
 }
+
+/* RingFit Dashboard placeholder */
+.project-img-placeholder.ringfit {
+  background:
+    linear-gradient(155deg,
+      #0a0a0f 0%, #12121f 30%, #0d0d18 55%,
+      #1a1a2e 75%, #0a0a0f 100%
+    );
+}
+.project-img-placeholder.ringfit .placeholder-label {
+  color: #f97316;
+  text-shadow: 0 0 18px rgba(249, 115, 22, 0.35);
+}
+.project-img-placeholder.ringfit::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border: 1.5px solid rgba(249, 115, 22, 0.2);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.06), inset 0 0 40px rgba(249, 115, 22, 0.04);
+}
+.project-img-placeholder.ringfit::after {
+  content: '🔥';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  z-index: 1;
+}
+.ringfit-live {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(249, 115, 22, 0.9);
+  letter-spacing: 0.06em;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.project-img-link:hover .ringfit-live {
+  opacity: 1;
+}
+
 .project-img-link {
   display: block;
   position: relative;
