@@ -118,6 +118,10 @@ img{display:block;max-width:100%;height:auto}
     <div><strong>核心工具</strong>Stable Diffusion · Figma</div>
     <div><strong>设计周期</strong>6 周</div>
   </div>
+  <div class="hero-meta" style="margin-top:12px">
+    <div><strong>Figma 原型</strong>含交互状态 · 桌面 + 移动端</div>
+    <div><strong>AI 素材</strong>80+ 张 · 6 组概念方向</div>
+  </div>
   <img src="images/ux/hero.jpg" alt="MindSpace 冥想App 主界面" class="hero-img">
   <div style="margin-top:36px">
     <a href="mindspace-app.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--accent);color:#fff;border-radius:30px;font-size:16px;font-weight:600;letter-spacing:.02em;box-shadow:0 8px 30px rgba(124,92,231,.35);transition:all .2s" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">▶ 体验在线原型</a>
@@ -198,10 +202,17 @@ img{display:block;max-width:100%;height:auto}
     <p class="sec-desc">AI 生成的视觉效果需要被"驯化"为可复用的设计 Token——色彩、圆角、阴影、间距、字体层级，每项决策都经过与 AI 素材的反复对照。</p>
 
     <div class="col2">
-      <div class="card"><h4>🎨 色彩系统</h4><p>从"星云渐变"方向提炼主色调：深夜紫 #1a1a3e → 薰衣草 #7c5ce7 → 暖桃 #f0c8b0。建立完整 light/dark 双模式色板。</p></div>
-      <div class="card"><h4>📝 字体层级</h4><p>标题：SF Pro Display · 正文：Inter。5 级字号系统（32/24/18/15/13），行高 1.2-1.6。</p></div>
-      <div class="card"><h4>🧩 组件库</h4><p>18 个核心组件：呼吸计时器、类别卡片、音频播放器、进度环、成就徽章。每个组件 4 个状态。</p></div>
-      <div class="card"><h4>🖼 AI 资产规范</h4><p>统一 AI 素材输出规格：2000×1500px、sRGB 色彩配置。确保不同批次素材无缝拼接。</p></div>
+      <div class="card"><h4>🎨 色彩系统</h4><p>从"星云渐变"方向提炼主色调：深夜紫 #1a1a3e → 薰衣草 #7c5ce7 → 暖桃 #f0c8b0。建立完整 light/dark 双模式色板，Figma Color Styles 统一管理。</p></div>
+      <div class="card"><h4>📝 字体层级</h4><p>标题：SF Pro Display · 正文：Inter。5 级字号系统（32/24/18/15/13），行高 1.2-1.6。Figma Text Styles 保证 4 屏字体一致性。</p></div>
+      <div class="card"><h4>🧩 组件库</h4><p>18 个核心 Figma 组件：呼吸计时器、类别卡片、音频播放器、进度环、成就徽章。每个组件 4 个交互状态（default/hover/pressed/disabled），Auto Layout 自适应。</p></div>
+      <div class="card"><h4>🖼 AI 资产规范</h4><p>统一 AI 素材输出规格：2000×1500px、sRGB 色彩配置。确保不同批次素材无缝拼接，Figma 图稿中统一管理。</p></div>
+    </div>
+  </div>
+</section>
+
+    <div class="col2" style="margin-top:24px">
+      <div class="card"><h4>📱 移动端适配</h4><p>4 屏均以 iPhone 15 Pro（393×852）为基准设计，同步提供桌面宽屏版本（1440×900）。组件间距与字号使用 Figma Variables 实现双断点切换，保证设计系统跨设备一致。</p></div>
+      <div class="card"><h4>🔄 Figma 设计迭代流程</h4><p>低保真线框图 → AI 生成视觉素材 → Figma 高保真整合 → 交互原型连线（Smart Animate + 条件交互）→ 可点击原型测试。AI 加速视觉探索，信息架构与交互逻辑全程 Figma 内手工打磨。</p></div>
     </div>
   </div>
 </section>

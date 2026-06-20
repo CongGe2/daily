@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Eclipse Arena · 星蚀竞技场</title>
+<meta name="description" content="Eclipse Arena - Sci-Fi Arena Combat">
+<meta name="theme-color" content="#080810">
+<style>
+:root{--bg:#080810;--surface:rgba(255,255,255,0.03);--text:#e0ddf0;--text-dim:rgba(224,221,240,0.45);--accent:#ff3b5c;--accent2:#3be0ff;--gold:#ffc44d;--warrior:#ff5e3a;--archer:#5eeadb}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:"Inter","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+canvas{display:block;position:absolute;inset:0}
+
+/* Overlays */
+.overlay{position:absolute;inset:0;pointer-events:none;z-index:10}.overlay>*{pointer-events:auto}
+
+/* CHAR SELECT */
+.char-select-screen{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:20;background:radial-gradient(ellipse at 50% 30%,rgba(255,59,92,0.06) 0%,transparent 60%),radial-gradient(ellipse at 30% 70%,rgba(59,224,255,0.04) 0%,transparent 50%);
+}
+.char-select-screen.hidden{display:none}
+.cs-title{font-size:clamp(36px,7vw,56px);font-weight:900;letter-spacing:.03em;margin-bottom:4px}
+.cs-title .e{color:var(--accent);text-shadow:0 0 50px rgba(255,59,92,0.4)}.cs-title .a{color:var(--accent2);text-shadow:0 0 40px rgba(59,224,255,0.3)}
+.cs-sub{font-size:13px;color:var(--text-dim);letter-spacing:.2em;margin-bottom:40px}
+.cs-grid{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;max-width:700px}
+.cs-card{
+  width:130px;padding:24px 14px;border-radius:14px;cursor:pointer;text-align:center;
+  background:var(--surface);border:1px solid rgba(255,255,255,0.06);
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.cs-card:hover{transform:translateY(-6px);background:rgba(255,255,255,0.06)}
+.cs-card.unlocked:hover{border-color:var(--accent);box-shadow:0 0 40px rgba(255,59,92,0.2)}
+.cs-card.locked{cursor:not-allowed;opacity:0.5}
+.cs-card.locked:hover{transform:none;background:var(--surface)}
+.cs-avatar{width:70px;height:70px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:38px}
+.cs-warrior .cs-avatar{background:linear-gradient(135deg,rgba(255,94,58,0.25),rgba(255,59,92,0.1));box-shadow:0 0 30px rgba(255,94,58,0.2)}
+.cs-archer .cs-avatar{background:linear-gradient(135deg,rgba(94,234,219,0.25),rgba(59,224,255,0.1));box-shadow:0 0 30px rgba(94,234,219,0.2)}
+.cs-locked .cs-avatar{background:rgba(255,255,255,0.03);filter:brightness(0)}
+.cs-name{font-size:14px;font-weight:700;margin-bottom:3px}
+.cs-class{font-size:11px;color:var(--text-dim)}
+.cs-lock{position:absolute;top:10px;right:14px;font-size:14px;opacity:0.6}
+.cs-hint{font-size:10px;color:var(--text-dim);margin-top:32px}
+
+/* GAME OVER */
+.gameover-screen{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:20;background:rgba(8,8,16,0.88);backdrop-filter:blur(6px);gap:20px;
+}
+.gameover-screen.hidden{display:none}
+.go-title{font-size:42px;font-weight:900;color:var(--accent)}
+.go-score{font-size:72px;font-weight:900;color:var(--gold);text-shadow:0 0 50px rgba(255,196,77,0.35)}
+.go-detail{font-size:15px;color:var(--text-dim)}
+.go-btn{
+  padding:14px 48px;border-radius:28px;font-size:16px;font-weight:700;cursor:pointer;
+  background:var(--accent);color:#fff;border:none;transition:all .2s;margin:4px;
+  box-shadow:0 8px 30px rgba(255,59,92,0.3);
+}
+.go-btn:hover{transform:scale(1.05)}
+.go-btn.ghost{background:rgba(255,255,255,0.06);box-shadow:none;color:var(--text-dim)}
+.go-btn.ghost:hover{color:var(--text)}
+
+/* HUD */
+.hud{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;z-index:10;pointer-events:none}
+.hud-left{display:flex;flex-direction:column;gap:4px}
+.hp-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text-dim)}
+.hp-bar-outer{width:220px;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden}
+.hp-bar-inner{height:100%;background:var(--accent);border-radius:4px;transition:width .35s}
+.hp-num{font-size:11px;color:var(--text-dim);margin-top:1px}
+
+.hud-right{text-align:right;display:flex;flex-direction:column;gap:6px}
+.hud-wave{font-size:11px;color:var(--text-dim);letter-spacing:.05em}
+.hud-wave b{font-size:22px;color:var(--accent2);display:block;line-height:1}
+.hud-score{font-size:28px;font-weight:900;color:var(--gold)}
+
+/* Abilities bar */
+.abilities{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:10}
+.ability-slot{
+  width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;position:relative;
+}
+.ability-key{font-size:10px;font-weight:700;color:var(--text-dim);margin-top:1px}
+.ability-icon{font-size:22px}
+.ability-cd{
+  position:absolute;inset:0;border-radius:12px;
+  background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:var(--text-dim);opacity:0;transition:opacity .2s;
+}
+.ability-cd.active{opacity:1}
+
+@media(max-width:768px){
+  .cs-card{width:100px;padding:18px 10px}
+  .cs-avatar{width:50px;height:50px;font-size:28px}
+  .hp-bar-outer{width:140px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="game"></canvas>
+
+<!-- ===== CHAR SELECT ===== -->
+<div class="char-select-screen" id="charSelectScreen">
+  <div class="cs-title"><span class="e">ECLIPSE</span> <span class="a">ARENA</span></div>
+  <div class="cs-sub">选择你的英雄</div>
+  <div class="cs-grid" id="charGrid">
+    <!-- Warrior -->
+    <div class="cs-card cs-warrior unlocked" data-char="warrior" onclick="selectChar('warrior')">
+      <div class="cs-avatar">⚔️</div>
+      <div class="cs-name">战 士</div>
+      <div class="cs-class">近战 · 高爆发</div>
+    </div>
+    <!-- Archer -->
+    <div class="cs-card cs-archer unlocked" data-char="archer" onclick="selectChar('archer')">
+      <div class="cs-avatar">🏹</div>
+      <div class="cs-name">射 手</div>
+      <div class="cs-class">远程 · 高机动</div>
+    </div>
+    <!-- Silhouettes -->
+    <div class="cs-card cs-locked locked"><div class="cs-avatar">🔮</div><div class="cs-name">法 师</div><div class="cs-class">???</div><div class="cs-lock">🔒</div></div>
+    <div class="cs-card cs-locked locked"><div class="cs-avatar">🗡️</div><div class="cs-name">刺 客</div><div class="cs-class">???</div><div class="cs-lock">🔒</div></div>
+    <div class="cs-card cs-locked locked"><div class="cs-avatar">🛡️</div><div class="cs-name">骑 士</div><div class="cs-class">???</div><div class="cs-lock">🔒</div></div>
+    <div class="cs-card cs-locked locked"><div class="cs-avatar">💀</div><div class="cs-name">术 士</div><div class="cs-class">???</div><div class="cs-lock">🔒</div></div>
+  </div>
+  <div class="cs-hint">点击角色选择 · 其余英雄即将登场</div>
+</div>
+
+<!-- ===== GAME OVER ===== -->
+<div class="gameover-screen hidden" id="gameoverScreen">
+  <div class="go-title">战 败</div>
+  <div class="go-score" id="finalScore">0</div>
+  <div class="go-detail" id="finalDetail"></div>
+  <div>
+    <button class="go-btn" onclick="restartGame()">↺ 再次挑战</button>
+    <button class="go-btn ghost" onclick="backToMenu()">← 返回选人</button>
+  </div>
+</div>
+
+<!-- HUD -->
+<div class="hud" id="hud" style="display:none">
+  <div class="hud-left">
+    <div class="hp-label" id="charName">战士</div>
+    <div class="hp-bar-outer"><div class="hp-bar-inner" id="hpBar" style="width:100%"></div></div>
+    <div class="hp-num" id="hpNum">100 / 100</div>
+  </div>
+  <div class="hud-right">
+    <div class="hud-wave">WAVE <b id="waveNum">1</b></div>
+    <div class="hud-score" id="scoreDisplay">0</div>
+  </div>
+</div>
+
+<!-- ABILITIES -->
+<div class="abilities" id="abilities" style="display:none">
+  <div class="ability-slot"><span class="ability-icon">⚡</span><span class="ability-key">SPACE</span><div class="ability-cd" id="cd1"></div></div>
+  <div class="ability-slot" id="skill2Slot"><span class="ability-icon">💥</span><span class="ability-key">E</span><div class="ability-cd" id="cd2"></div></div>
+</div>
+
+<script>
+// =============================================
+// ECLIPSE ARENA - COMBAT GAME
+// =============================================
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight}
+resize();addEventListener('resize',resize);
+
+// Audio
+let audioCtx;
+function initAudio(){if(!audioCtx)try{audioCtx=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}if(audioCtx?.state==='suspended')audioCtx.resume()}
+function sfx(freq,dur,type='square',vol=.08,decay=true){
+  if(!audioCtx)return;const t=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type=type;o.frequency.setValueAtTime(freq,t);if(decay)o.frequency.exponentialRampToValueAtTime(freq*.3,t+dur);
+  g.gain.setValueAtTime(vol,t);if(decay)g.gain.exponentialRampToValueAtTime(.001,t+dur);
+  o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+dur);
+}
+function sfxHit(){sfx(80,.15,'square',.12);sfx(200,.08,'triangle',.06)}
+function sfxSwing(){sfx(300,.1,'sawtooth',.05);setTimeout(()=>sfx(150,.15,'square',.06),60)}
+function sfxShoot(){sfx(800,.08,'square',.04);sfx(400,.05,'triangle',.03)}
+function sfxExplosion(){sfx(40,.3,'sawtooth',.15);sfx(60,.25,'square',.1)}
+function sfxDash(){sfx(500,.08,'triangle',.04);sfx(300,.12,'sine',.05)}
+
+// =============================================
+// CHARACTER DATA
+// =============================================
+const CHAR_DATA={
+  warrior:{name:'战士',icon:'⚔️',color:'#ff5e3a',glow:'rgba(255,94,58,0.3)',hp:150,speed:3.5,size:16,atkRange:55,atkDmg:30,atkSpd:28,atkArc:1.8,skill1:'冲刺斩',skill2:'裂地击'},
+  archer:{name:'射手',icon:'🏹',color:'#5eeadb',glow:'rgba(94,234,219,0.3)',hp:90,speed:3.0,size:13,atkRange:280,atkDmg:18,atkSpd:22,atkArc:0,skill1:'闪避',skill2:'多重箭'},
+};
+
+// =============================================
+// GAME STATE
+// =============================================
+let charKey='warrior',charData,player,enemies,projectiles,particles,effects,floatingTexts;
+let score,wave,enemiesRemaining,waveTimer,kills,gameRunning=false,frame=0;
+
+// Input
+const keys={};
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=true;e.preventDefault()});
+addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false});
+
+// Screen shake
+let shakeX=0,shakeY=0,shakeIntensity=0;
+
+function initGame(){
+  charData=CHAR_DATA[charKey];
+  player={
+    x:W/2,y:H/2,hp:charData.hp,maxHp:charData.hp,
+    speed:charData.speed,size:charData.size,
+    atkDmg:charData.atkDmg,atkRange:charData.atkRange,atkSpd:charData.atkSpd,
+    atkCooldown:0,atkArc:charData.atkArc,
+    color:charData.color,glow:charData.glow,
+    skill1CD:0,skill1Max:90,skill2CD:0,skill2Max:180,
+    invincible:0,dx:0,dy:0,dashing:false,dashTimer:0,
+  };
+  projectiles=[];enemies=[];particles=[];effects=[];floatingTexts=[];
+  score=0;wave=1;kills=0;enemiesRemaining=6;waveTimer=0;gameRunning=true;frame=0;
+  document.getElementById('hud').style.display='flex';
+  document.getElementById('abilities').style.display='flex';
+  document.getElementById('charName').textContent=charData.name;
+  updateHUD();
+}
+
+// =============================================
+// PARTICLES & EFFECTS
+// =============================================
+function spawnParticles(x,y,count,color,speed=4,life=20,size=3){
+  for(let i=0;i<count;i++){
+    const a=Math.random()*Math.PI*2,s=Math.random()*speed+speed*.3;
+    particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life,maxLife:life,color,size:Math.random()*size+size*.5});
+  }
+}
+function spawnEffect(x,y,r,color){effects.push({x,y,r:0,maxR:r,color,life:16,maxLife:16})}
+function spawnFloatText(x,y,text,color='#fff'){floatingTexts.push({x,y,text,color,life:40,maxLife:40,vy:-1.5})}
+
+function addShake(intensity){shakeIntensity=Math.max(shakeIntensity,intensity)}
+
+// =============================================
+// ENEMIES
+// =============================================
+function spawnEnemy(){
+  let x,y;const side=Math.floor(Math.random()*4),m=80;
+  if(side===0){x=Math.random()*W;y=-m}else if(side===1){x=W+m;y=Math.random()*H}else if(side===2){x=Math.random()*W;y=H+m}else{x=-m;y=Math.random()*H}
+  const types=[
+    {name:'爪兵',hp:25+wave*6,speed:1.6+wave*.08,size:11,dmg:12,color:'#ff6b8a',score:100,type:'melee'},
+    {name:'枪兵',hp:18+wave*4,speed:1.0+wave*.05,size:10,dmg:8,color:'#ff8c5a',score:150,type:'ranged',shootCD:0,shootMax:80},
+    {name:'重装',hp:60+wave*15,speed:.8+wave*.03,size:20,dmg:22,color:'#cc3355',score:300,type:'tank'},
+  ];
+  let t=0;if(wave>=3&&Math.random()<.2)t=1;if(wave>=5&&Math.random()<.12)t=2;
+  const td=types[t];
+  enemies.push({x,y,hp:td.hp,maxHp:td.hp,speed:td.speed,size:td.size,dmg:td.dmg,color:td.color,score:td.score,type:td.type,shootCD:0,shootMax:td.shootMax||0,stunTimer:0});
+}
+
+// =============================================
+// PLAYER ACTIONS
+// =============================================
+function playerAttack(){
+  if(player.atkCooldown>0)return;
+  player.atkCooldown=player.atkSpd;
+  initAudio();
+
+  if(charKey==='warrior'){
+    sfxSwing();
+    // Melee arc in front of player
+    const facingAngle=Math.atan2(player.dy||0,player.dx||1);
+    enemies.forEach(e=>{
+      if(e.stunTimer>0)return;
+      const dx=e.x-player.x,dy=e.y-player.y;
+      const dist=Math.hypot(dx,dy);
+      const angle=Math.atan2(dy,dx);
+      let angleDiff=angle-facingAngle;
+      while(angleDiff>Math.PI)angleDiff-=Math.PI*2;
+      while(angleDiff<-Math.PI)angleDiff+=Math.PI*2;
+      if(dist<player.atkRange&&Math.abs(angleDiff)<player.atkArc/2){
+        damageEnemy(e,player.atkDmg);
+        // Knockback
+        const kb=8;
+        e.x+=Math.cos(angle)*kb;e.y+=Math.sin(angle)*kb;
+        e.stunTimer=8;
+      }
+    });
+    // Sword slash visual
+    spawnEffect(player.x+Math.cos(facingAngle)*30,player.y+Math.sin(facingAngle)*30,50,player.color);
+    spawnParticles(player.x+Math.cos(facingAngle)*25,player.y+Math.sin(facingAngle)*25,8,'#fff',3,12,2);
+    addShake(3);
+  }else if(charKey==='archer'){
+    sfxShoot();
+    // Find nearest enemy for aim direction
+    let tx=player.x+(player.dx||1)*200,ty=player.y+(player.dy||0)*200;
+    let nearest=null,nd=Infinity;
+    enemies.forEach(e=>{const d=Math.hypot(e.x-player.x,e.y-player.y);if(d<nd){nd=d;nearest=e}});
+    if(nearest)tx=nearest.x,ty=nearest.y;
+    const angle=Math.atan2(ty-player.y,tx-player.x);
+    const spread=(Math.random()-.5)*.15;
+    projectiles.push({x:player.x+Math.cos(angle)*player.size,y:player.y+Math.sin(angle)*player.size,vx:Math.cos(angle+spread)*9,vy:Math.sin(angle+spread)*9,dmg:player.atkDmg,color:player.color,life:80,isArrow:true});
+  }
+}
+
+function useSkill1(){
+  if(player.skill1CD>0)return;
+  initAudio();
+  if(charKey==='warrior'){
+    // Dash strike
+    player.skill1CD=player.skill1Max;
+    const angle=Math.atan2(player.dy||0,player.dx||1);
+    player.dashing=true;player.dashTimer=12;
+    player.dashVx=Math.cos(angle)*12;player.dashVy=Math.sin(angle)*12;
+    player.invincible=12;
+    sfxDash();
+    spawnParticles(player.x,player.y,12,player.color,4,15,3);
+    // Damage enemies along dash path
+    enemies.forEach(e=>{
+      if(e.stunTimer>0)return;
+      const dist=Math.hypot(e.x-player.x,e.y-player.y);
+      if(dist<80){damageEnemy(e,player.atkDmg*1.5);e.stunTimer=10}
+    });
+    addShake(5);
+  }else if(charKey==='archer'){
+    // Dodge roll
+    player.skill1CD=player.skill1Max;
+    const angle=Math.atan2(player.dy||0,player.dx||1);
+    player.dashing=true;player.dashTimer=10;
+    player.dashVx=Math.cos(angle)*10;player.dashVy=Math.sin(angle)*10;
+    player.invincible=10;
+    sfxDash();
+    spawnParticles(player.x,player.y,10,player.color,3,12,2);
+  }
+}
+
+function useSkill2(){
+  if(player.skill2CD>0)return;
+  initAudio();
+  if(charKey==='warrior'){
+    // Ground slam - AOE around player
+    player.skill2CD=player.skill2Max;
+    sfxExplosion();
+    spawnEffect(player.x,player.y,120,'#fff');
+    spawnParticles(player.x,player.y,30,player.color,8,30,4);
+    enemies.forEach(e=>{
+      const dist=Math.hypot(e.x-player.x,e.y-player.y);
+      if(dist<120){damageEnemy(e,player.atkDmg*2.5);e.stunTimer=16}
+    });
+    addShake(12);
+  }else if(charKey==='archer'){
+    // Multi-shot - 5 arrows in spread
+    player.skill2CD=player.skill2Max;
+    sfxShoot();
+    let tx=player.x+(player.dx||1)*200,ty=player.y+(player.dy||0)*200;
+    let nearest=null,nd=Infinity;
+    enemies.forEach(e=>{const d=Math.hypot(e.x-player.x,e.y-player.y);if(d<nd){nd=d;nearest=e}});
+    if(nearest)tx=nearest.x,ty=nearest.y;
+    const baseAngle=Math.atan2(ty-player.y,tx-player.x);
+    for(let i=-2;i<=2;i++){
+      const a=baseAngle+i*.18;
+      projectiles.push({x:player.x+Math.cos(a)*player.size,y:player.y+Math.sin(a)*player.size,vx:Math.cos(a)*8,vy:Math.sin(a)*8,dmg:player.atkDmg*1.3,color:player.color,life:80,isArrow:true});
+    }
+  }
+}
+
+function damageEnemy(e,dmg){
+  e.hp-=dmg;
+  spawnParticles(e.x,e.y,6,e.color,3,15,2);
+  spawnFloatText(e.x,e.y-10,Math.round(dmg),'#fff');
+  if(e.hp<=0){
+    spawnEffect(e.x,e.y,e.size*3,e.color);
+    spawnParticles(e.x,e.y,15,e.color,5,25,3);
+    spawnFloatText(e.x,e.y-20,'+'+e.score,CHAR_DATA[charKey].color);
+    score+=e.score;kills++;
+    addShake(2);
+    sfxHit();
+  }
+}
+
+// =============================================
+// ENEMY AI
+// =============================================
+function enemyAI(e){
+  if(e.stunTimer>0){e.stunTimer--;return}
+  if(e.type==='ranged'){
+    // Keep distance, shoot
+    const dist=Math.hypot(player.x-e.x,player.y-e.y);
+    const angle=Math.atan2(player.y-e.y,player.x-e.x);
+    if(dist>200){e.x+=Math.cos(angle)*e.speed;e.y+=Math.sin(angle)*e.speed}
+    else if(dist<140){e.x-=Math.cos(angle)*e.speed;e.y-=Math.sin(angle)*e.speed}
+    if(e.shootCD>0)e.shootCD--;
+    if(e.shootCD<=0&&dist<400){
+      e.shootCD=e.shootMax;
+      projectiles.push({x:e.x,y:e.y,vx:Math.cos(angle)*4,vy:Math.sin(angle)*4,dmg:e.dmg,color:e.color,life:100,isEnemy:true});
+    }
+  }else{
+    const angle=Math.atan2(player.y-e.y,player.x-e.x);
+    e.x+=Math.cos(angle)*e.speed;e.y+=Math.sin(angle)*e.speed;
+  }
+  // Contact damage
+  if(e.type!=='ranged'&&Math.hypot(e.x-player.x,e.y-player.y)<player.size+e.size-4){
+    if(player.invincible<=0&&!player.dashing){
+      player.hp-=e.dmg;player.invincible=25;
+      spawnParticles(player.x,player.y,15,'#fff',5,20,3);
+      spawnFloatText(player.x,player.y-10,'-'+e.dmg,'#ff3b5c');
+      addShake(6);sfxHit();
+      if(player.hp<=0){player.hp=0;gameOver();return}
+    }
+  }
+}
+
+// =============================================
+// UPDATE
+// =============================================
+function updateHUD(){
+  document.getElementById('hpBar').style.width=(player.hp/player.maxHp*100)+'%';
+  document.getElementById('hpNum').textContent=Math.ceil(player.hp)+' / '+player.maxHp;
+  document.getElementById('waveNum').textContent=wave;
+  document.getElementById('scoreDisplay').textContent=score;
+  // Cooldowns
+  const cd1=document.getElementById('cd1'),cd2=document.getElementById('cd2');
+  cd1.classList.toggle('active',player.skill1CD>0);
+  cd2.classList.toggle('active',player.skill2CD>0);
+  if(player.skill1CD>0)cd1.textContent=Math.ceil(player.skill1CD/60)+'s';
+  if(player.skill2CD>0)cd2.textContent=Math.ceil(player.skill2CD/60)+'s';
+}
+
+function update(){
+  if(!gameRunning)return;frame++;
+
+  // Cooldowns
+  if(player.atkCooldown>0)player.atkCooldown--;
+  if(player.skill1CD>0)player.skill1CD--;
+  if(player.skill2CD>0)player.skill2CD--;
+  if(player.invincible>0)player.invincible--;
+
+  // Dash
+  if(player.dashing){
+    player.x+=player.dashVx;player.y+=player.dashVy;
+    player.dashTimer--;
+    spawnParticles(player.x,player.y,1,player.color,2,8,2);
+    if(player.dashTimer<=0)player.dashing=false;
+  }
+
+  // Movement
+  let mx=0,my=0;
+  if(keys.w||keys.arrowup)my=-1;if(keys.s||keys.arrowdown)my=1;
+  if(keys.a||keys.arrowleft)mx=-1;if(keys.d||keys.arrowright)mx=1;
+  if(mx||my){const l=Math.sqrt(mx*mx+my*my);mx/=l;my/=l}
+  if(!player.dashing){
+    player.x+=mx*player.speed;player.y+=my*player.speed;
+    if(mx||my){player.dx=mx;player.dy=my}
+  }
+  player.x=Math.max(player.size,Math.min(W-player.size,player.x));
+  player.y=Math.max(player.size,Math.min(H-player.size,player.y));
+
+  // Auto attack
+  if(enemies.length>0&&player.atkCooldown<=0){
+    let nearest=null,nd=Infinity;
+    enemies.forEach(e=>{const d=Math.hypot(e.x-player.x,e.y-player.y);if(d<nd){nd=d;nearest=e}});
+    if(nearest&&nd<(player.atkRange+(charKey==='warrior'?0:200)))playerAttack();
+  }
+
+  // Skills
+  if(keys[' ']||keys.space){useSkill1();keys[' ']=false;keys.space=false}
+  if(keys.e){useSkill2();keys.e=false}
+
+  // Update projectiles
+  projectiles=projectiles.filter(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.life--;
+    if(p.life<=0||p.x<-50||p.x>W+50||p.y<-50||p.y>H+50)return false;
+    // Trail for arrows
+    if(p.isArrow&&frame%2===0)spawnParticles(p.x,p.y,1,p.color+'80',1,6,1);
+    if(p.isEnemy){
+      if(Math.hypot(p.x-player.x,p.y-player.y)<player.size+4){
+        if(player.invincible<=0&&!player.dashing){
+          player.hp-=p.dmg;player.invincible=20;
+          spawnParticles(p.x,p.y,8,'#fff',4,15,2);
+          spawnFloatText(p.x,p.y,'-'+p.dmg,'#ff3b5c');
+          addShake(4);sfxHit();
+          if(player.hp<=0){player.hp=0;gameOver()}
+        }
+        return false;
+      }
+    }else{
+      for(let i=enemies.length-1;i>=0;i--){
+        const e=enemies[i];
+        if(Math.hypot(p.x-e.x,p.y-e.y)<e.size+6){
+          damageEnemy(e,p.dmg);
+          if(e.hp<=0)enemies.splice(i,1);
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+
+  // Update enemies
+  enemies.forEach(e=>enemyAI(e));
+
+  // Remove dead enemies (HP already checked in damageEnemy, they're already spliced)
+
+  // Particles
+  particles=particles.filter(p=>{p.x+=p.vx;p.y+=p.vy;p.vx*=.92;p.vy*=.92;p.life--;return p.life>0});
+  // Effects
+  effects=effects.filter(e=>{e.r+=(e.maxR-e.r)*.2;e.life--;return e.life>0});
+  // Floating texts
+  floatingTexts=floatingTexts.filter(t=>{t.y+=t.vy;t.life--;return t.life>0});
+
+  // Waves
+  if(enemies.length===0){waveTimer++;if(waveTimer>70){wave++;enemiesRemaining=5+wave*2;waveTimer=0}}
+  if(enemies.length<enemiesRemaining&&frame%Math.max(10,50-wave*3)===0)spawnEnemy();
+
+  // Shake decay
+  shakeIntensity*=.88;
+  shakeX=(Math.random()-.5)*shakeIntensity*2;
+  shakeY=(Math.random()-.5)*shakeIntensity*2;
+
+  updateHUD();
+}
+
+// =============================================
+// RENDER
+// =============================================
+function drawBackground(){
+  ctx.fillStyle='#080810';ctx.fillRect(0,0,W,H);
+  // Grid
+  ctx.strokeStyle='rgba(255,255,255,0.015)';ctx.lineWidth=.5;
+  const gs=50;
+  for(let x=gs;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=gs;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // Vignette
+  const v=ctx.createRadialGradient(W/2,H/2,Math.min(W,H)*.35,W/2,H/2,Math.max(W,H)*.8);
+  v.addColorStop(0,'transparent');v.addColorStop(1,'rgba(0,0,0,.55)');
+  ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+}
+
+function drawEntity(x,y,size,color,type,hp,maxHp,isPlayer){
+  ctx.save();ctx.translate(x,y);
+  // Glow
+  const g=ctx.createRadialGradient(0,0,size*.4,0,0,size*2.5);
+  g.addColorStop(0,color+'35');g.addColorStop(1,'transparent');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,size*2.5,0,Math.PI*2);ctx.fill();
+
+  if(type==='warrior'||type==='tank'){
+    // Hexagonal tanky shape
+    const pts=6,rot=Math.PI/6;
+    ctx.fillStyle=color;ctx.beginPath();
+    for(let i=0;i<pts;i++){const a=i*Math.PI*2/pts+rot;ctx.lineTo(Math.cos(a)*size,Math.sin(a)*size)}
+    ctx.closePath();ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1.5;ctx.stroke();
+  }else if(type==='archer'||type==='ranged'){
+    // Diamond shape
+    ctx.fillStyle=color;ctx.beginPath();
+    ctx.moveTo(0,-size);ctx.lineTo(size*.7,0);ctx.lineTo(0,size*.6);ctx.lineTo(-size*.7,0);
+    ctx.closePath();ctx.fill();
+  }else if(type==='melee'){
+    // Triangle
+    ctx.fillStyle=color;ctx.beginPath();
+    ctx.moveTo(0,-size);ctx.lineTo(size*.8,size*.7);ctx.lineTo(-size*.8,size*.7);
+    ctx.closePath();ctx.fill();
+  }
+
+  // Inner highlight
+  const ih=ctx.createRadialGradient(-size*.2,-size*.3,size*.05,0,0,size);
+  ih.addColorStop(0,'rgba(255,255,255,.25)');ih.addColorStop(1,'transparent');
+  ctx.fillStyle=ih;ctx.beginPath();ctx.arc(0,0,size,0,Math.PI*2);ctx.fill();
+
+  // HP bar for enemies
+  if(!isPlayer&&hp<maxHp){
+    const bw=size*1.5,bh=2.5;
+    ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(-bw/2,-size-10,bw,bh);
+    ctx.fillStyle=color;ctx.fillRect(-bw/2,-size-10,bw*(hp/maxHp),bh);
+  }
+
+  ctx.restore();
+}
+
+function render(){
+  ctx.save();ctx.translate(shakeX,shakeY);
+
+  drawBackground();
+
+  // Effects
+  effects.forEach(e=>{const a=e.life/e.maxLife*.35;ctx.strokeStyle=e.color+Math.floor(a*255).toString(16).padStart(2,'0');ctx.lineWidth=3*a;ctx.beginPath();ctx.arc(e.x,e.y,e.r,0,Math.PI*2);ctx.stroke()});
+
+  // Particles
+  particles.forEach(p=>{const a=p.life/p.maxLife;ctx.fillStyle=p.color+Math.floor(a*255).toString(16).padStart(2,'0');ctx.beginPath();ctx.arc(p.x,p.y,p.size*a,0,Math.PI*2);ctx.fill()});
+
+  // Enemy projectiles
+  projectiles.filter(p=>p.isEnemy).forEach(p=>{ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=6;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0});
+
+  // Enemies
+  enemies.forEach(e=>drawEntity(e.x,e.y,e.size,e.color,e.type,e.hp,e.maxHp,false));
+
+  // Player projectiles
+  projectiles.filter(p=>!p.isEnemy).forEach(p=>{ctx.fillStyle=p.color;ctx.shadowColor=p.color;ctx.shadowBlur=8;ctx.beginPath();ctx.arc(p.x,p.y,p.isArrow?2.5:3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0});
+
+  // Player
+  if(player.invincible>0&&Math.floor(player.invincible/3)%2===0)ctx.globalAlpha=.4;
+  drawEntity(player.x,player.y,player.size,player.color,charKey,player.hp,player.maxHp,true);
+  ctx.globalAlpha=1;
+
+  // Floating texts
+  floatingTexts.forEach(t=>{const a=t.life/t.maxLife;ctx.fillStyle=t.color+Math.floor(a*255).toString(16).padStart(2,'0');ctx.font='bold 13px Inter';ctx.textAlign='center';ctx.fillText(t.text,t.x,t.y)});
+
+  ctx.restore();
+}
+
+// =============================================
+// GAME LOOP
+// =============================================
+function loop(){update();render();requestAnimationFrame(loop)}
+
+// =============================================
+// SELECTION & GAME FLOW
+// =============================================
+function selectChar(key){
+  initAudio();charKey=key;
+  document.getElementById('charSelectScreen').classList.add('hidden');
+  document.getElementById('gameoverScreen').classList.add('hidden');
+  document.getElementById('skill2Slot').style.display='flex';
+  if(key==='archer')document.getElementById('skill2Slot').querySelector('.ability-key').textContent='E';
+  initGame();
+}
+
+function gameOver(){
+  gameRunning=false;
+  document.getElementById('gameoverScreen').classList.remove('hidden');
+  document.getElementById('finalScore').textContent=score;
+  document.getElementById('finalDetail').textContent=`波次 ${wave} · 击杀 ${kills} · ${charData.name}`;
+  document.getElementById('hud').style.display='none';
+  document.getElementById('abilities').style.display='none';
+  spawnEffect(player.x,player.y,150,'#fff');
+  spawnParticles(player.x,player.y,50,'#fff',7,40,3);
+  addShake(15);sfxExplosion();
+}
+
+function restartGame(){
+  document.getElementById('gameoverScreen').classList.add('hidden');
+  initGame();
+}
+
+function backToMenu(){
+  document.getElementById('gameoverScreen').classList.add('hidden');
+  document.getElementById('charSelectScreen').classList.remove('hidden');
+  document.getElementById('hud').style.display='none';
+  document.getElementById('abilities').style.display='none';
+  gameRunning=false;enemies=[];projectiles=[];particles=[];
+}
+
+// =============================================
+// INIT
+// =============================================
+loop();
+</script>
+</body>
+</html>
