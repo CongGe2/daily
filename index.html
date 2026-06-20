@@ -49,15 +49,46 @@
         </p>
         <div class="hero-cta reveal">
           <a href="#projects" class="cta-link">查看作品<span class="cta-arrow">↓</span></a>
+          <a href="resume.html" class="cta-link cta-resume" style="margin-left:32px;">简历<span class="cta-arrow">↗</span></a>
         </div>
       </div>
       <div class="hero-bg"></div>
     </section>
 
+    <!-- About Me -->
+    <section class="about-me section" id="about-me">
+      <div class="section-inner">
+        <div class="about-me-grid reveal">
+          <div class="about-me-avatar">
+            <div class="avatar-placeholder">JCX</div>
+          </div>
+          <div class="about-me-text">
+            <div class="section-label">About Me</div>
+            <h2 class="section-heading">不只是设计师</h2>
+            <p class="about-me-desc">
+              我是金承旭，澳门科技大学产品设计大三学生。我相信<span class="highlight">好的设计存在于代码与实物的交汇处</span>——既能用 Rhino 建模复杂曲面、3D 打印验证原型，也能写 React 把交互想法变成可点击的 Demo。
+            </p>
+            <p class="about-me-desc">
+              多年 3A 游戏玩家经历让我对<span class="highlight">交互体验有近乎偏执的敏感</span>——一个按钮的反馈延迟、一个转场的缓动曲线、一个悬停的阴影变化，我都会注意到。这种敏感正在转化为我的 UI 设计能力。
+            </p>
+            <p class="about-me-desc">
+              目前寻找产品设计 / UI-UX 方向实习，Base 澳门/大湾区。
+            </p>
+            <div class="about-me-stats">
+              <div class="stat-item"><span class="stat-num">7</span><span class="stat-label">完成项目</span></div>
+              <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">AI 工具链</span></div>
+              <div class="stat-item"><span class="stat-num">2</span><span class="stat-label">线上 Demo</span></div>
+              <div class="stat-item"><span class="stat-num">1</span><span class="stat-label">国际展览</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- About -->
     <section class="about section" id="about">
       <div class="section-inner">
-        <div class="section-label reveal">About</div>
+        <div class="section-label reveal">Education</div>
         <div class="about-grid">
           <div class="about-edu reveal">
             <h2 class="section-heading">教育背景</h2>
@@ -120,15 +151,50 @@
           </div>
         </article>
 
+        <!-- Project 0★ - MindSpace UX -->
+        <article class="project-card reveal" id="project-mindspace">
+          <div class="project-index">UX</div>
+          <div class="project-body">
+            <div class="project-image">
+              <a href="mindspace-ux.html">
+                <img src="images/optimized/mindspace-thumb.jpg" alt="MindSpace 冥想App · UX设计案例" loading="lazy">
+              </a>
+            </div>
+            <div class="project-info">
+              <div class="project-meta">
+                <span class="project-type">UX 设计 · AI 驱动流程</span>
+                <span class="project-date">2026</span>
+              </div>
+              <h3 class="project-title">
+                MindSpace 冥想与专注力 App
+                <span class="project-subtitle">UX 设计 · Stable Diffusion 工作流</span>
+              </h3>
+              <p class="project-desc">
+                以 Stable Diffusion 为核心的 UX 设计流程——从 AI 视觉方向探索（6 组概念 2 天完成）到 Prompt 工程设计资产，最终落地为完整的高保真原型。展示 AI 如何在 UX 流程中加速"探索-筛选-决策"循环。
+              </p>
+              <ul class="project-details">
+                <li>Stable Diffusion 驱动：Prompt 工程 → 批量生成 → 筛选 → Figma 精修整合</li>
+                <li>4 屏高保真原型：Onboarding · Home · Session · Profile</li>
+              </ul>
+              <div class="project-tags">
+                <span>UX设计</span><span>Stable Diffusion</span><span>Prompt工程</span><span>Figma</span><span>设计系统</span><span>AI工作流</span>
+              </div>
+              <a href="mindspace-ux.html" class="project-link">
+                查看完整 UX 案例 →
+              </a>
+            </div>
+          </div>
+        </article>
+
         <!-- Project ★ - Eclipse Arena Game UI -->
         <article class="project-card reveal" id="project-ui">
           <div class="project-index">★</div>
           <div class="project-body">
             <div class="project-image">
-              <a href="./eclipse-arena/" class="project-img-link">
+              <a href="eclipse-arena-case.html" class="project-img-link">
                 <div class="project-img-placeholder eclipse-arena">
                   <span class="placeholder-label">Eclipse Arena 游戏UI设计系统</span>
-                  <div class="eclipse-arena-play">▶ 点击进入</div>
+                  <div class="eclipse-arena-play">▶ 查看详情</div>
                 </div>
               </a>
             </div>
@@ -151,8 +217,11 @@
               <div class="project-tags">
                 <span>游戏UI</span><span>设计系统</span><span>交互动画</span><span>AI生图</span><span>React</span><span>Framer Motion</span><span>TypeScript</span>
               </div>
-              <a href="./eclipse-arena/" class="project-link project-link-hero">
-                🎮 点击进入完整原型 →
+              <a href="eclipse-arena-case.html" class="project-link project-link-hero">
+                📋 查看完整设计案例 →
+              </a>
+              <a href="./eclipse-arena/" class="project-link" style="margin-left:16px;">
+                🎮 直接体验交互原型 ↗
               </a>
             </div>
           </div>
@@ -375,10 +444,10 @@
             <div class="skill-icon">✦</div>
             <h3 class="skill-name">AI 驱动设计</h3>
             <p class="skill-desc">
-              熟练使用 Midjourney、Nano Banana2 等 AI 生图工具，擅长视觉类 Prompt 创作、概念发散与多方案快速验证。AI 融入设计全流程，从灵感激发到方案迭代。
+              熟练使用 Midjourney、NanoBanana2 等 AI 生图工具，擅长视觉类 Prompt 创作、概念发散与多方案快速验证。AI 融入设计全流程。
             </p>
             <div class="skill-tools">
-              <span>Midjourney</span><span>Stable Diffusion</span><span>Prompt Engineering</span>
+              <span>Midjourney</span><span>NanoBanana2</span><span>Stable Diffusion</span><span>Prompt Engineering</span>
             </div>
           </div>
 
@@ -386,7 +455,7 @@
             <div class="skill-icon">◇</div>
             <h3 class="skill-name">产品设计与原型</h3>
             <p class="skill-desc">
-              具备用户洞察 → 需求定义 → 概念发散 → 方案收敛 → 原型验证的完整产品设计能力。注重从真实用户场景出发，将洞察转化为可验证的设计方案。
+              用户洞察 → 需求定义 → 概念发散 → 方案收敛 → 原型验证。注重从真实用户场景出发，将洞察转化为可验证的设计方案。
             </p>
           </div>
 
@@ -403,18 +472,42 @@
 
           <div class="skill-card reveal">
             <div class="skill-icon">◈</div>
-            <h3 class="skill-name">UI/UX 设计</h3>
+            <h3 class="skill-name">UI/UX 设计 + 前端落地</h3>
             <p class="skill-desc">
-              完整网页 UI 设计规范搭建，用户旅程设计，交互流程规划。通过 Vibe Coding 快速实现 MVP，设计到代码无缝衔接，加速验证周期。
+              完整网页 UI 设计规范搭建，用户旅程设计，交互流程规划。具备 React/TypeScript 编码能力，设计到代码无缝衔接，2个项目线上可交互。
             </p>
             <div class="skill-tools">
-              <span>设计规范</span><span>用户旅程</span><span>Vibe Coding</span><span>MVP</span>
+              <span>Figma</span><span>设计系统</span><span>React</span><span>TypeScript</span><span>Framer Motion</span>
             </div>
           </div>
         </div>
 
+        <!-- Skill progress bars -->
+        <div class="skill-bars reveal">
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Figma / UI 设计</span><span>85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>Rhino 7 三维建模</span><span>75%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>KeyShot 渲染</span><span>70%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>React / TypeScript</span><span>60%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:60%"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-bar-label"><span>AI 生图 / Prompt</span><span>85%</span></div>
+            <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+          </div>
+        </div>
+
         <div class="personal-note reveal">
-          <p>3A 游戏多年重度玩家，对交互体验与视觉设计有敏锐直觉。</p>
+          <p>🎮 3A 游戏多年重度玩家，对交互体验与视觉设计有敏锐直觉</p>
         </div>
       </div>
     </section>
@@ -425,16 +518,18 @@
         <div class="section-label reveal">Contact</div>
         <h2 class="section-heading large reveal">联系我</h2>
         <p class="contact-text reveal">
-          目前为澳门科技大学产品设计专业大三学生，<br class="contact-br">寻找产品设计 / UI/UX 方向的实习机会。
+          澳门科技大学产品设计专业大三，寻找产品设计 / UI/UX 方向实习。<br class="contact-br">Base 澳门 · 大湾区，可远程。
         </p>
         <div class="contact-links reveal">
-          <a href="mailto:1416907076@qq.com" class="contact-link">发送邮件</a>
+          <a href="mailto:1416907076@qq.com" class="contact-link">📧 发送邮件</a>
           <span class="contact-sep">/</span>
-          <a href="#" class="contact-link" id="wechatLink">微信联系</a>
+          <a href="#" class="contact-link" id="wechatLink">💬 微信: JCX-1416907076</a>
         </div>
-        <p class="contact-note reveal">
-          完整简历与作品集 PDF 可邮件索取
-        </p>
+        <div class="contact-links reveal" style="margin-top:12px;">
+          <a href="resume.html" class="contact-link">📄 在线简历</a>
+          <span class="contact-sep">/</span>
+          <a href="https://github.com/congge2" target="_blank" rel="noopener" class="contact-link">🔗 GitHub</a>
+        </div>
       </div>
     </section>
   </main>
@@ -442,8 +537,19 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <p class="footer-text">© 2026 金承旭 JIN CHENGXU</p>
-      <a href="#hero" class="footer-top">↑ 返回顶部</a>
+      <div class="footer-col">
+        <p class="footer-name">JIN CHENGXU · 金承旭</p>
+        <p class="footer-desc">产品设计 · UI/UX · 三维建模<br>AI 原生设计思维</p>
+      </div>
+      <div class="footer-col footer-links-col">
+        <a href="mailto:1416907076@qq.com">Email</a>
+        <a href="https://github.com/congge2" target="_blank" rel="noopener">GitHub</a>
+        <a href="resume.html">简历</a>
+        <a href="#hero">返回顶部 ↑</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 金承旭 JIN CHENGXU — Built with ❤️ + AI</p>
     </div>
   </footer>
 

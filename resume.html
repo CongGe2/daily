@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>金承旭 · 简历</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --text: #1a1a18;
+      --text-secondary: #6e6d6a;
+      --text-tertiary: #a09e9a;
+      --accent: #b0926e;
+      --border: #e4e1dc;
+      --border-light: #edeae6;
+      --font-serif: "Noto Serif SC", "STSong", "SimSun", serif;
+      --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+      background: white;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+    @media print {
+      body { padding: 0; font-size: 11px; }
+      .no-print { display: none; }
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1.5px solid var(--text);
+    }
+    .header h1 {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .header .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+    .header .contact-info {
+      text-align: right;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+    .header .contact-info a {
+      color: var(--text);
+      text-decoration: none;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      margin-top: 36px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .edu-item, .exp-item, .project-item {
+      margin-bottom: 20px;
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .item-title {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .item-sub {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+    .item-date {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+    }
+    .item-desc {
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .tag-list span {
+      font-size: 10px;
+      background: #f3f1ee;
+      padding: 2px 10px;
+      border-radius: 2px;
+      color: var(--text-secondary);
+    }
+    .skills-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 40px;
+    }
+    .skills-summary li {
+      font-size: 12px;
+      color: var(--text-secondary);
+      list-style: square;
+      margin-left: 16px;
+    }
+    .back-link {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: white;
+    }
+    .back-link:hover { color: var(--text); border-color: var(--text); }
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      font-size: 12px;
+      padding: 8px 20px;
+      background: var(--text);
+      color: white;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .print-btn:hover { opacity: 0.8; }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link no-print">← 返回作品集</a>
+<button class="print-btn no-print" onclick="window.print()">🖨️ 打印 PDF</button>
+
+<div class="header">
+  <div>
+    <h1>金承旭</h1>
+    <p class="subtitle">JIN CHENGXU · 产品设计 · UI/UX · 三维建模</p>
+  </div>
+  <div class="contact-info">
+    📧 1416907076@qq.com<br>
+    💬 WeChat: JCX-1416907076<br>
+    🔗 github.com/congge2<br>
+    📍 澳门 · 大湾区
+  </div>
+</div>
+
+<h2>教育背景</h2>
+<div class="edu-item">
+  <div class="item-header">
+    <span class="item-title">澳门科技大学 · 产品设计 本科</span>
+    <span class="item-date">2023.09 — 2027.06</span>
+  </div>
+  <p class="item-desc">核心课程：设计概论、人机工程学、设计材料与工艺、设计心理学、三维建模与渲染</p>
+  <p class="item-desc">荣誉：2026 澳门科技大学优秀学生奖</p>
+</div>
+
+<h2>技能</h2>
+<div class="skills-summary">
+  <li>Figma — UI 设计系统搭建、原型交互</li>
+  <li>Rhino 7 — 复杂曲面建模、结构设计</li>
+  <li>KeyShot — 产品级渲染、材质编辑</li>
+  <li>3D Printing — FDM 快速原型验证</li>
+  <li>React / TypeScript — 交互原型前端落地</li>
+  <li>Framer Motion — 高保真动画实现</li>
+  <li>Midjourney / NanoBanana2 — AI 概念发散</li>
+  <li>Vibe Coding — AI 辅助全流程开发</li>
+</div>
+
+<h2>项目经历</h2>
+
+<div class="project-item">
+  <div class="item-header">
+    <span class="item-title">Rift 便携蓝牙音箱 — 独立产品设计</span>
+    <span class="item-date">2026</span>
+  </div>
+  <p class="item-desc">以"斜切分割"为核心设计语言，Kvadrat 声学织物 × 阳极氧化铝材质对峙。完整流程：用户研究→市场分析→概念发散→CMF 定义→结构设计。Rhino 7 建模 + KeyShot 渲染。</p>
+  <div class="tag-list"><span>产品设计</span><span>CMF</span><span>用户研究</span><span>Rhino 7</span><span>KeyShot</span></div>
+</div>
+
+<div class="project-item">
+  <div class="item-header">
+    <span class="item-title">Eclipse Arena · 星蚀竞技场 — 游戏UI设计系统</span>
+    <span class="item-date">2026</span>
+  </div>
+  <p class="item-desc">6大核心界面的完整游戏UI设计语言系统。NanoBanana2 AI 生成8位角色原画+场景背景。React 18 + Framer Motion 实现高保真交互：Spring 3D卡片、Canvas粒子、实时HUD模拟。</p>
+  <div class="tag-list"><span>游戏UI</span><span>设计系统</span><span>React</span><span>Framer Motion</span><span>AI生图</span></div>
+</div>
+
+<div class="project-item">
+  <div class="item-header">
+    <span class="item-title">磁吸悬浮 VR 体感辅助设备 — 课程项目</span>
+    <span class="item-date">2026</span>
+  </div>
+  <p class="item-desc">从电影道具调研出发，发现 VR "地面限制"痛点。AI 生图完成外骨骼概念发散，收敛至磁吸+绳索方案。Rhino 复杂曲面建模 + 3D 打印验证人机尺度。</p>
+  <div class="tag-list"><span>用户研究</span><span>概念发散</span><span>Rhino 7</span><span>3D打印</span></div>
+</div>
+
+<div class="project-item">
+  <div class="item-header">
+    <span class="item-title">Terrin 陶瓷首饰品牌官网 — UI 设计</span>
+    <span class="item-date">2025</span>
+  </div>
+  <p class="item-desc">黑白植物影像 Hero Section，Hover 彩色渐变过渡的商品展示系统。设计系统搭建 + Vibe Coding MVP 前端落地。</p>
+  <div class="tag-list"><span>UI设计</span><span>设计系统</span><span>Vibe Coding</span></div>
+</div>
+
+<div class="project-item">
+  <div class="item-header">
+    <span class="item-title">《汉魂·狮魄》陶瓷艺术装置 — 个人创作</span>
+    <span class="item-date">2025</span>
+  </div>
+  <p class="item-desc">汉代虎形艺术 → 当代陶瓷狮塑转化。入选澳大利亚 Anlan Museum 公开展览。</p>
+  <div class="tag-list"><span>文化研究</span><span>陶瓷工艺</span><span>国际展览</span></div>
+</div>
+
+<h2>实践经历</h2>
+<div class="exp-item">
+  <div class="item-header">
+    <span class="item-title">澳门科技大学 2025 双年展 · 策展助理</span>
+    <span class="item-date">2025</span>
+  </div>
+  <p class="item-desc">协助导师策划执行双年展全流程。以报纸为原材料手工打造沉船装置作为展厅视觉中心，统筹场地布置与空间叙事。</p>
+</div>
+
+<div class="exp-item">
+  <div class="item-header">
+    <span class="item-title">校内舞台工作组 · 跨部门协调</span>
+    <span class="item-date">2024 — 2025</span>
+  </div>
+  <p class="item-desc">跨部门资源协调与现场执行，培养突发状况快速响应能力与团队协作意识。</p>
+</div>
+
+<h2>语言能力</h2>
+<p class="item-desc" style="margin-bottom:0;">中文（母语）· 英文（学术读写）· 粤语（日常交流）</p>
+
+</body>
+</html>

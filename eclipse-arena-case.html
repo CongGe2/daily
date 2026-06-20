@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eclipse Arena · 星蚀竞技场 — 游戏UI设计系统 | 金承旭</title>
+  <meta name="description" content="6大核心界面的完整游戏UI设计语言系统。NanoBanana2 AI生成8位角色原画。React + Framer Motion 高保真交互原型。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: var(--bg); }
+    .case-hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(180deg, #0a0e1a 0%, #141b30 60%, var(--bg) 100%);
+      color: #e0e8ff;
+      padding: 120px 24px 80px;
+    }
+    .case-hero-content { max-width: 720px; }
+    .case-hero h1 {
+      font-family: 'Orbitron', 'Inter', sans-serif;
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      color: #fff;
+      text-shadow: 0 0 60px rgba(0,229,255,0.4);
+    }
+    .case-hero .subtitle {
+      font-size: 18px;
+      color: #00e5ff;
+      letter-spacing: 0.3em;
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+    .case-hero .hero-desc {
+      font-size: 15px;
+      color: rgba(224,232,255,0.6);
+      line-height: 1.8;
+    }
+    .case-hero .hero-tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .case-hero .hero-tags span {
+      padding: 6px 16px;
+      border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 2px;
+      font-size: 12px;
+      color: #00e5ff;
+      letter-spacing: 0.06em;
+    }
+    .case-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px clamp(24px, 5vw, 64px);
+    }
+    .case-section h2 {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+    .case-section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 12px;
+    }
+    .case-section p {
+      font-size: 15px;
+      line-height: 2;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .case-section ul {
+      margin: 16px 0 24px 20px;
+    }
+    .case-section li {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--text-secondary);
+    }
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .screen-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 24px;
+      text-align: center;
+    }
+    .screen-card .icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .screen-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .screen-card p {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      line-height: 1.6;
+    }
+    .highlight-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border-light);
+      padding: 32px;
+      margin: 32px 0;
+      border-radius: 2px;
+    }
+    .highlight-box h3 {
+      margin-top: 0;
+    }
+    .back-link {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      padding: 8px 16px;
+      background: rgba(10,14,26,0.8);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    .back-link:hover { border-color: #00e5ff; color: #00e5ff; }
+    .cta-bar {
+      text-align: center;
+      padding: 60px 24px;
+      background: var(--bg-alt);
+    }
+    .cta-bar a {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--text);
+      color: white;
+      border-radius: 2px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-bar a:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← 返回作品集</a>
+
+<!-- Hero -->
+<section class="case-hero">
+  <div class="case-hero-content">
+    <h1>ECLIPSE ARENA</h1>
+    <p class="subtitle">星 蚀 竞 技 场</p>
+    <p class="hero-desc">
+      科幻竞技场游戏完整UI设计语言系统。从主菜单到战斗HUD，从角色选择到商城系统——6大核心界面，15个可复用组件，一套完整的设计Token体系。
+    </p>
+    <div class="hero-tags">
+      <span>游戏UI设计</span><span>设计系统</span><span>高保真原型</span><span>AI生图</span><span>React</span><span>Framer Motion</span>
+    </div>
+  </div>
+</section>
+
+<!-- Overview -->
+<section class="case-section">
+  <h2>项目概述</h2>
+  <p>
+    Eclipse Arena 是一个虚构的科幻竞技场游戏，我为其设计了完整的UI系统。项目目标是在作品集中展示游戏UI设计能力——不仅限于静态界面，还包括交互原型、动画系统、以及完整的设计Token管理。
+  </p>
+  <p>
+    与常见的UI设计展示不同，这个项目<strong>所有界面都是可交互的</strong>。从按钮的悬停光晕、卡片的3D弹簧倾斜、到页面间的对角线转场——每一处动效都经过精心调校。
+  </p>
+
+  <h3>设计目标</h3>
+  <ul>
+    <li>展示游戏UI全链路设计能力：视觉设计 → 交互定义 → 动效实现 → 前端落地</li>
+    <li>建立完整的设计Token系统，包含颜色、字体、间距、阴影、动效曲线</li>
+    <li>所有界面可交互、可点击、可在不同屏幕间切换</li>
+    <li>利用AI生图工具生成高质量角色原画和场景背景</li>
+  </ul>
+
+  <div class="highlight-box">
+    <h3>🛠️ 技术栈</h3>
+    <p style="margin-bottom:0;">React 18 · TypeScript · Tailwind CSS · Framer Motion 11 · Vite 5 · NanoBanana2 (Gemini 3.1 Flash Image) · Cloudflare Pages</p>
+  </div>
+</section>
+
+<!-- Screens -->
+<section class="case-section">
+  <h2>6大核心界面</h2>
+  <div class="screen-grid">
+    <div class="screen-card">
+      <div class="icon">🏠</div>
+      <h4>主菜单</h4>
+      <p>Canvas粒子背景 · Logo色散动画 · 悬停光晕菜单</p>
+    </div>
+    <div class="screen-card">
+      <div class="icon">⚔️</div>
+      <h4>角色选择</h4>
+      <p>8位AI生成英雄 · Spring 3D卡片 · 属性动画条</p>
+    </div>
+    <div class="screen-card">
+      <div class="icon">🎯</div>
+      <h4>战斗HUD</h4>
+      <p>实时血蓝条 · 技能冷却 · 小地图 · 击杀信息流</p>
+    </div>
+    <div class="screen-card">
+      <div class="icon">🎒</div>
+      <h4>背包系统</h4>
+      <p>40格拖拽网格 · 装备侧栏 · 稀有度光效</p>
+    </div>
+    <div class="screen-card">
+      <div class="icon">🏪</div>
+      <h4>商城</h4>
+      <p>物品卡片 · Spring 3D倾斜 · 购买通知Toast</p>
+    </div>
+    <div class="screen-card">
+      <div class="icon">⚙️</div>
+      <h4>设置面板</h4>
+      <p>4标签页 · 游戏风格滑块/开关 · 键位绑定表</p>
+    </div>
+  </div>
+</section>
+
+<!-- AI Workflow -->
+<section class="case-section">
+  <h2>AI 生图工作流</h2>
+  <p>
+    全部8位英雄角色原画和2张场景背景均使用 <strong>NanoBanana2 (Gemini 3.1 Flash Image)</strong> 生成。每个角色有独特的视觉风格、配色方案和职业特征。
+  </p>
+  <p>工作流程：</p>
+  <ul>
+    <li><strong>Prompt 设计</strong> — 为每个角色编写详细的视觉描述，包含构图、光影、色彩、背景等参数</li>
+    <li><strong>风格一致性</strong> — 所有8个角色共享相同的 Style Guide（半写实游戏原画风格、戏剧性 rim lighting、暗色调背景）</li>
+    <li><strong>批量生成</strong> — Node.js 脚本调用 API，自动排队、下载、重试</li>
+    <li><strong>前端集成</strong> — 生成图像直接放入 Vite 项目的 public/ 目录，React 组件通过类特定 clipPath 边框展示</li>
+  </ul>
+
+  <div class="highlight-box">
+    <h3>🎨 生成资产清单</h3>
+    <p style="margin-bottom:0;">8张角色原画（各 ~5.5MB PNG）· 2张场景背景（竞技场 7.1MB + 主菜单 5.5MB）· 总计 57MB · 生成时间 ~2分钟</p>
+  </div>
+</section>
+
+<!-- Interaction Design -->
+<section class="case-section">
+  <h2>交互与动画系统</h2>
+  <p>项目的核心竞争力在于<strong>交互动效的实现深度</strong>。整个动画系统分为5个层次：</p>
+
+  <h3>Layer 1: 页面转场</h3>
+  <p>基于 AnimatePresence 的状态驱动导航。屏幕切换时触发对角线擦除转场，切换方向根据导航方向改变。退出动画和进入动画同时播放。</p>
+
+  <h3>Layer 2: 3D 卡片系统</h3>
+  <p>角色选择和商城卡片使用 useSpring + useMotionValue 实现。鼠标移动→卡片实时3D倾斜；鼠标离开→高刚度弹簧瞬间回弹（stiffness: 400, damping: 25）。每个卡片还有动态跟随的径向光晕。</p>
+
+  <h3>Layer 3: 微交互</h3>
+  <ul>
+    <li>按钮悬停：光扫过效果 + 光晕脉冲 + 缩放</li>
+    <li>技能点击：波纹扩散动画（AnimatePresence + scale/opacity）</li>
+    <li>物品格：悬停稀有度光效 + 缩放</li>
+    <li>购买确认：粒子爆发特效 + Toast 通知</li>
+  </ul>
+
+  <h3>Layer 4: 实时模拟</h3>
+  <p>战斗HUD具备实时状态更新：血量/蓝量条、技能冷却径向遮罩、击杀信息滚动（6秒自动清理）。使用 setInterval + useReducer 模拟游戏数据流。</p>
+
+  <h3>Layer 5: 粒子背景</h3>
+  <p>Canvas 2D 粒子系统：120个粒子、连接线、颜色渐变。使用 requestAnimationFrame 实现60fps渲染，零布局开销。</p>
+</section>
+
+<!-- Design System -->
+<section class="case-section">
+  <h2>设计 Token 系统</h2>
+  <p>完整的设计 Token 体系确保视觉一致性：</p>
+  <ul>
+    <li><strong>色彩</strong> — 12级色阶（eclipse-950 到 eclipse-300）+ 语义色（health/mana/shield/xp）+ 稀有度色</li>
+    <li><strong>字体</strong> — Orbitron（标题/按钮）· Rajdhani（UI标签）· Noto Sans SC（正文）</li>
+    <li><strong>阴影/发光</strong> — 统一的 glow 色值，基于元素稀有度和状态变化</li>
+    <li><strong>动画曲线</strong> — 统一的 ease 曲线 [0.4, 0, 0.2, 1] · spring stiffness: 300-700</li>
+    <li><strong>圆角/间距</strong> — 统一的 4px 圆角 · 8px 间距基准网格</li>
+  </ul>
+</section>
+
+<!-- CTA -->
+<section class="cta-bar">
+  <a href="./eclipse-arena/">🎮 进入完整交互原型 →</a>
+</section>
+
+</body>
+</html>
