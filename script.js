@@ -108,9 +108,37 @@
   if (wechatLink) {
     wechatLink.addEventListener('click', function (e) {
       e.preventDefault();
-      // Replace with your actual WeChat ID below
-      alert('微信号：请在此填入你的微信号\n\n（编辑 script.js 中此处的文本即可）');
+      var id = 'JCX-1416907076';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(id).then(function () {
+          showToast('微信号已复制：' + id);
+        }).catch(function () {
+          showToast('微信号：' + id);
+        });
+      } else {
+        showToast('微信号：' + id);
+      }
     });
+
+    function showToast(msg) {
+      var toast = document.createElement('div');
+      toast.textContent = msg;
+      toast.style.cssText =
+        'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);' +
+        'background:#121210;color:#e4e2de;padding:14px 28px;border-radius:2px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity 0.3s;' +
+        'font-family:"Inter","PingFang SC",sans-serif;letter-spacing:0.03em;';
+      document.body.appendChild(toast);
+      requestAnimationFrame(function () {
+        toast.style.opacity = '1';
+      });
+      setTimeout(function () {
+        toast.style.opacity = '0';
+        setTimeout(function () {
+          document.body.removeChild(toast);
+        }, 300);
+      }, 2500);
+    }
   }
 
 })();
