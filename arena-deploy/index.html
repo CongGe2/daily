@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arena Test</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0808;font-family:Inter,sans-serif;color:#c8b898}
+canvas{display:block;position:absolute;inset:0}
+.m{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;gap:20px;background:rgba(8,6,4,.95)}
+.m.h{display:none}
+.m h1{font-size:28px;color:#c8a050}
+.m .sub{font-size:12px;color:rgba(200,180,150,.5)}
+.m button{padding:16px 40px;border-radius:20px;font-size:16px;font-weight:700;cursor:pointer;background:#c8a050;color:#1a1008;border:none}
+.m button:hover{transform:scale(1.05)}
+.m .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.m .cell{width:50px;height:50px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:18px}
+.m .cell.open{color:#c8b898;background:rgba(200,160,80,.1);border-color:rgba(200,160,80,.2)}
+.m .cell.open:hover{background:rgba(200,160,80,.25)}
+.m .cell.locked{color:rgba(255,255,255,.1);cursor:not-allowed}
+.hud{position:absolute;top:16px;left:16px;color:#fff;font-size:14px;pointer-events:none;z-index:10}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div class="m" id="m1">
+  <h1>ECLIPSE ARENA · TEST</h1>
+  <div class="sub">Step 1: Pick character</div>
+  <button onclick="pick('warrior')">⚔️ 战士</button>
+  <button onclick="pick('archer')">🏹 射手</button>
+</div>
+
+<div class="m h" id="m2">
+  <h1 id="m2title">选关卡</h1>
+  <div class="sub">Step 2: Pick level</div>
+  <div class="grid" id="lvlGrid"></div>
+  <button onclick="back()" style="background:rgba(255,255,255,.06);color:rgba(200,180,150,.6)">← 返回</button>
+</div>
+
+<div class="hud" id="hud" style="display:none">关卡 <span id="hlvl">1</span> | <span id="hchar">战士</span> | HP <span id="hhp">100</span></div>
+
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+let W,H;function R(){W=canvas.width=innerWidth;H=canvas.height=innerHeight}R();onresize=R;
+
+let gameRunning=false,charKey='',levelNum=0;
+let px=200,py=200;
+
+// Step 1: pick character
+function pick(key){
+  charKey=key;
+  document.getElementById('m1').classList.add('h');
+  document.getElementById('m2').classList.remove('h');
+  document.getElementById('m2title').textContent=(key==='warrior'?'⚔️ 战士':'🏹 射手')+' · 选关卡';
+  // Build level grid (5 levels for test)
+  const g=document.getElementById('lvlGrid');g.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const c=document.createElement('div');c.className='cell open';c.textContent=i;
+    c.onclick=()=>startLevel(i);g.appendChild(c);
+  }
+}
+
+function back(){document.getElementById('m2').classList.add('h');document.getElementById('m1').classList.remove('h')}
+
+// Step 2: start level
+function startLevel(lv){
+  levelNum=lv;px=W/2;py=H/2;
+  document.getElementById('m1').classList.add('h');
+  document.getElementById('m2').classList.add('h');
+  document.getElementById('hud').style.display='block';
+  document.getElementById('hlvl').textContent=lv;
+  document.getElementById('hchar').textContent=charKey==='warrior'?'战士':'射手';
+  document.getElementById('hhp').textContent='100';
+  gameRunning=true;
+}
+
+// Input
+const keys={};
+onkeydown=e=>{keys[e.key.toLowerCase()]=true};
+onkeyup=e=>{keys[e.key.toLowerCase()]=false};
+
+// Game loop
+function loop(){
+  // Movement
+  if(gameRunning){
+    let mx=0,my=0;
+    if(keys.w||keys.arrowup)my=-1;
+    if(keys.s||keys.arrowdown)my=1;
+    if(keys.a||keys.arrowleft)mx=-1;
+    if(keys.d||keys.arrowright)mx=1;
+    px+=mx*3;py+=my*3;
+    if(px<20)px=20;if(px>W-20)px=W-20;
+    if(py<20)py=20;if(py>H-20)py=H-20;
+  }
+
+  // Render
+  ctx.fillStyle='#0a0808';ctx.fillRect(0,0,W,H);
+  // Grid
+  ctx.strokeStyle='rgba(255,255,255,.03)';ctx.lineWidth=.5;
+  for(let x=50;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=50;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  // Player
+  ctx.fillStyle=charKey==='warrior'?'#e85a30':'#4ad8b0';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=20;
+  ctx.beginPath();ctx.arc(px,py,16,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+  // Direction line
+  ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,py-16);ctx.stroke();
+
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

@@ -608,31 +608,50 @@ h1, h2, h3, h4 {
   opacity: 1;
 }
 
-/* SmartDorm placeholder */
+/* SmartDorm placeholder — dorm room product scene */
 .project-img-placeholder.smartdorm {
   background:
-    linear-gradient(160deg,
-      #f4f1ec 0%, #e8e4db 25%, #f0ece4 50%,
-      #e0dbd0 70%, #ede8df 100%
-    );
+    /* wall */
+    linear-gradient(180deg, #f7f5f0 0%, #efe9df 60%, #e8e0d4 100%);
+  overflow: hidden;
 }
 .project-img-placeholder.smartdorm .placeholder-label {
-  color: #5a7a6a;
+  color: #4a6b56;
+  font-weight: 600;
+  background: rgba(250,250,248,0.85);
+  z-index: 3;
 }
+/* desk surface */
 .project-img-placeholder.smartdorm::before {
   content: '';
   position: absolute;
-  inset: 12% 18%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 3px;
-  opacity: 0.3;
+  bottom: 0; left: 0; right: 0;
+  height: 28%;
+  background: linear-gradient(180deg, #c4a882 0%, #b8956e 30%, #a8815c 100%);
+  border-top: 2px solid rgba(140,110,80,0.3);
+  z-index: 1;
+}
+/* products on desk */
+.project-img-placeholder.smartdorm::after {
+  content: '';
+  position: absolute;
+  bottom: 26%; left: 12%; right: 12%;
+  height: 55%;
+  z-index: 2;
+  /* three product silhouettes */
   background:
-    linear-gradient(90deg, rgba(90,122,106,0.3) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(90,122,106,0.3) 1px, transparent 1px);
-  background-size: 30% 30%;
-  border: 1px solid rgba(90,122,106,0.2);
+    /* A: expansion board */
+    linear-gradient(180deg, #e8ddd0 0%, #d9ccbc 50%, #cfc0ae 100%) 0% 45% / 38% 50% no-repeat,
+    /* A: shadow */
+    linear-gradient(180deg, rgba(0,0,0,0.06) 0%, transparent 100%) 2% 48% / 38% 8% no-repeat,
+    /* B: stacking box */
+    linear-gradient(180deg, #e2d8ca 0%, #d5c9b8 50%, #cbbcaa 100%) 44% 55% / 24% 38% no-repeat,
+    /* B: shadow */
+    linear-gradient(180deg, rgba(0,0,0,0.06) 0%, transparent 100%) 45% 58% / 24% 6% no-repeat,
+    /* C: bedside rack silhouette */
+    linear-gradient(180deg, #ece4d8 0%, #ded3c3 50%, #d4c7b5 100%) 74% 28% / 18% 68% no-repeat,
+    /* C: shadow */
+    linear-gradient(180deg, rgba(0,0,0,0.06) 0%, transparent 100%) 75% 30% / 18% 6% no-repeat;
   border-radius: 2px;
 }
 .project-img-placeholder.smartdorm::after {
