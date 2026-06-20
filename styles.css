@@ -608,6 +608,43 @@ h1, h2, h3, h4 {
   opacity: 1;
 }
 
+/* SmartDorm placeholder */
+.project-img-placeholder.smartdorm {
+  background:
+    linear-gradient(160deg,
+      #f4f1ec 0%, #e8e4db 25%, #f0ece4 50%,
+      #e0dbd0 70%, #ede8df 100%
+    );
+}
+.project-img-placeholder.smartdorm .placeholder-label {
+  color: #5a7a6a;
+}
+.project-img-placeholder.smartdorm::before {
+  content: '';
+  position: absolute;
+  inset: 12% 18%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  opacity: 0.3;
+  background:
+    linear-gradient(90deg, rgba(90,122,106,0.3) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(90,122,106,0.3) 1px, transparent 1px);
+  background-size: 30% 30%;
+  border: 1px solid rgba(90,122,106,0.2);
+  border-radius: 2px;
+}
+.project-img-placeholder.smartdorm::after {
+  content: '🏠';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 26px;
+  z-index: 1;
+}
+
 .project-img-link {
   display: block;
   position: relative;
