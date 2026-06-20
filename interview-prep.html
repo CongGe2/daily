@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品设计实习面试通关手册 · 金承旭</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 20mm 18mm; }
+  :root {
+    --text: #1a1a18; --text-secondary: #555452; --accent: #b0926e;
+    --border: #e4e1dc; --bg-alt: #f7f5f2;
+    --font-serif: "Noto Serif SC", "STSong", "SimSun", serif;
+    --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans); font-size: 12px; line-height: 1.85;
+    color: var(--text); max-width: 780px; margin: 0 auto; padding: 40px 0;
+  }
+  h1 { font-family: var(--font-serif); font-size: 36px; font-weight: 700; text-align: center; margin-bottom: 8px; letter-spacing: 0.03em; }
+  h2 { font-family: var(--font-serif); font-size: 22px; font-weight: 600; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); letter-spacing: 0.02em; }
+  h3 { font-family: var(--font-serif); font-size: 16px; font-weight: 600; margin: 28px 0 10px; color: var(--text); }
+  h4 { font-size: 13px; font-weight: 600; margin: 20px 0 8px; }
+  .subtitle { text-align: center; color: var(--text-secondary); font-size: 14px; margin-bottom: 40px; }
+  .cover-meta { text-align: center; color: var(--text-secondary); font-size: 12px; margin-bottom: 8px; }
+  p { margin-bottom: 10px; color: var(--text-secondary); }
+  strong { color: var(--text); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 11px; page-break-inside: avoid; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { background: var(--bg-alt); font-weight: 600; font-size: 11px; color: var(--text); white-space: nowrap; }
+  tr:first-child th { border-top: 2px solid var(--accent); }
+  td:first-child { font-weight: 500; color: var(--text); min-width: 200px; }
+  td:nth-child(2) { color: var(--text); }
+  .tag { display: inline-block; background: var(--bg-alt); padding: 2px 8px; border-radius: 2px; font-size: 10px; margin-right: 4px; }
+  .answer-block { background: var(--bg-alt); padding: 16px 20px; margin: 10px 0 16px; border-left: 2px solid var(--accent); border-radius: 0 4px 4px 0; font-size: 11px; }
+  .answer-block p { margin-bottom: 6px; }
+  .answer-block strong { color: var(--accent); }
+  .tip { background: #faf7f3; padding: 12px 16px; margin: 10px 0; border-radius: 4px; font-size: 11px; border: 1px solid #ede6db; }
+  .tip::before { content: "💡 "; }
+  .dos-donts { display: flex; gap: 20px; margin: 12px 0; }
+  .do-box, .dont-box { flex: 1; padding: 14px; border-radius: 4px; font-size: 11px; }
+  .do-box { background: #f0f7f0; border: 1px solid #c8e0c8; }
+  .dont-box { background: #fdf2f2; border: 1px solid #f0c8c8; }
+  .do-box::before { content: "✅ 做"; display: block; font-weight: 700; margin-bottom: 6px; }
+  .dont-box::before { content: "❌ 不做"; display: block; font-weight: 700; margin-bottom: 6px; }
+  .checklist li { list-style: none; padding: 6px 0; padding-left: 24px; position: relative; }
+  .checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--accent); }
+  ul { padding-left: 20px; margin-bottom: 10px; }
+  li { color: var(--text-secondary); margin-bottom: 4px; }
+  .page-break { page-break-before: always; }
+  .script-box { background: #fff; border: 1px solid var(--border); padding: 20px 24px; margin: 12px 0; border-radius: 4px; }
+  .script-box h4 { margin-top: 0; color: var(--accent); }
+  .script-box p { font-size: 12px; line-height: 2; }
+
+  @media print {
+    body { padding: 0; }
+    h2 { page-break-after: avoid; }
+    .answer-block, .script-box, table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>产品设计实习<br>面试通关手册</h1>
+<p class="cover-meta">定制对象：金承旭 · 澳门科技大学 · 产品设计 大三</p>
+<p class="cover-meta">适用岗位：产品设计 / UI/UX / 工业设计 实习</p>
+<p class="subtitle">2026 年 6 月版</p>
+
+<!-- ====================== PART 0: BASICS ====================== -->
+<h2>一、面试前 · 72 小时清单</h2>
+
+<table>
+<tr><th style="width:30%">时间</th><th>任务</th><th>完成</th></tr>
+<tr><td>面试前 72h</td><td>研究目标公司：产品线、设计风格、近期动态、团队规模</td><td>☐</td></tr>
+<tr><td>面试前 48h</td><td>逐页温习作品集，确保每个项目的"做了什么 → 为什么这样做 → 结果是什么"能流畅讲出</td><td>☐</td></tr>
+<tr><td>面试前 48h</td><td>准备 3 版自我介绍：30 秒（电梯 pitch）、1 分钟（标准）、3 分钟（详细）</td><td>☐</td></tr>
+<tr><td>面试前 24h</td><td>测试设备（线上面试：摄像头、麦克风、网络、背景整洁）</td><td>☐</td></tr>
+<tr><td>面试前 24h</td><td>准备 3 个反问面试官的问题（见第七节）</td><td>☐</td></tr>
+<tr><td>面试前 12h</td><td>早睡。作品集可以反复改，但疲惫的脸改不了</td><td>☐</td></tr>
+<tr><td>面试前 1h</td><td>线上面试：打开作品集网页 + 本地 PDF 备份；线下：打印 2 份纸质作品集</td><td>☐</td></tr>
+<tr><td>面试前 10min</td><td>深呼吸，喝温水。记住：面试官不是在找完美的设计师，是在找靠谱的队友</td><td>☐</td></tr>
+</table>
+
+<div class="tip">线上面试务必提前测试。至少 3 次面试失败是因为"听不见"或"屏幕共享不了"——这不是能力问题，是准备问题。</div>
+
+<!-- ====================== PART 1: SELF-INTRO ====================== -->
+<h2>二、自我介绍 · 三版本</h2>
+
+<h3>30 秒版（电梯 / 群面）</h3>
+<div class="script-box">
+<p>您好，我是金承旭，澳门科技大学产品设计专业大三在读。我的核心能力是产品全流程设计——从用户洞察到实体原型落地。我熟练使用 Rhino 7、KeyShot 和 AI 生图工具，做过 VR 体感设备、景区公共座椅系统、以及一个已上线的首饰品牌官网 UI。今年获得澳门科技大学优秀学生奖，目前正在寻找实习机会。谢谢。</p>
+</div>
+
+<h3>1 分钟版（标准）</h3>
+<div class="script-box">
+<p>您好，我是金承旭，澳门科技大学产品设计专业大三学生。我的设计训练覆盖产品设计、UI/UX 和三维建模三条线。</p>
+<p>在<strong>产品设计方面</strong>，我独立完成过磁吸悬浮 VR 体感辅助设备项目——从电影道具调研出发，经历概念发散到方案收敛，最终用 Rhino 7 完成复杂曲面建模并通过 3D 打印验证人机尺度。另一个项目是景区公共座椅系统的 redesign，从真实场景的行为观察出发定位设计机会点。</p>
+<p>在<strong>UI/UX 方面</strong>，我独立完成了一个陶瓷首饰品牌的官网设计，从设计系统搭建到交互规范制定，并通过 Vibe Coding 实现了完整的 MVP 前端落地。</p>
+<p>我的特点是不只停留在概念阶段——我有 3D 打印、AI 生图工具（MJ/SD/NanoBanana2）和前端开发的实际落地能力。今年获得了学校优秀学生奖。谢谢。</p>
+</div>
+
+<h3>3 分钟版（深度面）</h3>
+<div class="script-box">
+<p>您好，我是金承旭，澳门科技大学产品设计专业大三，2027 年毕业。我想从三个维度快速介绍一下自己。</p>
+<p><strong>第一，产品设计是我的核心训练。</strong>我经受过完整的工业设计流程训练——最近的一个课程项目是磁吸悬浮 VR 体感辅助设备，从《黑豹2》和《头号玩家》电影道具调研开始，经历了四轮方案迭代：从全身外骨骼方案，因为体积过大被推翻，到引入磁吸连接机制，最终收敛到腰腿部轻量化方案。整个过程中我用 Midjourney 和 NanoBanana2 做概念发散，Rhino 7 做复杂曲面建模，KeyShot 渲染，并用 3D 打印做了原型验证。这个项目教会我最重要的不是建模技巧，而是在约束中做取舍的判断力。</p>
+<p><strong>第二，我有 UI/UX 设计和落地能力。</strong>我独立为一个陶瓷首饰品牌做了官网 UI——从设计系统搭建到交互规范制定，然后通过 Vibe Coding 自己把 MVP 写出来上线了。我不想做一个只会画图的设计师，我想看到自己的设计在真实用户面前运转。</p>
+<p><strong>第三，我有 AI 原生设计思维。</strong>我日常使用 Midjourney、Stable Diffusion 和 NanoBanana2 融入设计流程——不只是生图，而是用 AI 加速概念发散、快速验证多方向方案、缩短迭代周期。在 AI 改变设计行业的节点，这是我认为自己最大的差异化竞争力。</p>
+<p>另外，我有一件陶瓷艺术装置作品在澳大利亚 Anlan Museum 公开展出——虽然听起来和产品设计不直接相关，但它训练了我从传统文化符号中提取设计语言并做当代转化的能力，这在文旅产品和国潮品牌领域是可直接应用的方法论。</p>
+<p>谢谢，这就是我的基本情况。</p>
+</div>
+
+<!-- ====================== PART 2: ETIQUETTE ====================== -->
+<h2>三、面试礼仪速查</h2>
+
+<div class="dos-donts">
+  <div class="do-box">
+    <ul>
+      <li>提前 5-10 分钟到达 / 上线</li>
+      <li>带纸质作品集（线下）或确保屏幕共享正常</li>
+      <li>回答先给结论，再展开细节</li>
+      <li>不会的问题诚实说"这方面我还在学习，但我了解过类似的……"</li>
+      <li>面试后 24 小时内发感谢邮件</li>
+      <li>穿得体干净——产品设计岗不需要西装，但需要整洁</li>
+    </ul>
+  </div>
+  <div class="dont-box">
+    <ul>
+      <li>不要迟到（提前测试路线/设备）</li>
+      <li>不要说上家坏话（即使只是课程项目）</li>
+      <li>不要背诵——准备充分但说出来要自然</li>
+      <li>不要打断面试官</li>
+      <li>不要说"我没什么问题了"</li>
+      <li>不要过度谦虚——你是在展示专业能力，不是在乞讨工作</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ====================== PART 3: PORTFOLIO PRESENTATION ====================== -->
+<h2>四、作品集讲述策略 · STAR 框架</h2>
+
+<p>每个项目按这个顺序讲，面试官最容易跟上：</p>
+
+<table>
+<tr><th>步骤</th><th>含义</th><th>你的例子（VR 项目）</th></tr>
+<tr><td>S · Situation</td><td>背景和问题是什么？</td><td>现有 VR 设备受"地面限制"，用户在虚拟世界自由移动，身体却困在地面——沉浸感断层</td></tr>
+<tr><td>T · Task</td><td>你要解决什么？</td><td>设计一个能让用户在物理空间中实现悬浮/空翻等体感动作的辅助设备</td></tr>
+<tr><td>A · Action</td><td>你做了什么？</td><td>电影道具调研 → 四轮方案迭代（全身外骨骼被否→引入磁吸→聚焦腰腿部）→ Rhino 7 建模 → 3D 打印原型</td></tr>
+<tr><td>R · Result</td><td>结果和反思</td><td>从浪漫的全身外骨骼收敛到务实的腰腿部磁吸方案——核心能力是在约束中做正确取舍</td></tr>
+</table>
+
+<div class="tip">面试官最常打断的一句话："等等，你为什么选这个方案？"——所以讲 Action 的时候永远要顺带解释决策逻辑。</div>
+
+<!-- ====================== PART 4: COMMON QUESTIONS ====================== -->
+<div class="page-break"></div>
+<h2>五、面试官必问 20 题 · 定制化回答</h2>
+
+<table>
+<tr><th style="width:38%">问题</th><th style="width:62%">你的回答框架 / 关键词</th></tr>
+
+<tr>
+<td>1. 简单介绍一下你自己</td>
+<td>见第二节三版本自我介绍。选一个合适的。核心记忆点：产品设计 + UI/UX + AI 原生，三条线交叉。</td>
+</tr>
+
+<tr>
+<td>2. 为什么选择产品设计？</td>
+<td>不要回答"因为喜欢画画"。<br>✅ "我被训练去发现'不对'的地方——游客不坐椅子坐花坛，VR 玩家身体动不了——然后把这些'不对'变成可以摸到的解决方案。从发现问题到原型落地，整个链路上的每一步我都有能力完成。这种掌控感让我选择产品设计。"</td>
+</tr>
+
+<tr>
+<td>3. 介绍一个你最满意的项目</td>
+<td>选 VR 项目。用 STAR 框架讲。强调"四轮迭代推翻自己方案"——面试官想听的是你的思考过程，不是炫技。<br>关键句："全身外骨骼的浪漫想象最终让位于腰腿部磁吸方案——这不是妥协，是在约束中做正确取舍的判断力。"</td>
+</tr>
+
+<tr>
+<td>4. 这个项目中你遇到的最大困难是什么？</td>
+<td>"从庞大的全身外骨骼减到轻量化方案时，我不知道'减到什么程度'是对的。后来我发现应该回到用户场景——用户需要的是'能快速穿上、能自由做动作'，而不是'看起来像钢铁侠'。场景定义约束，约束驱动决策。"</td>
+</tr>
+
+<tr>
+<td>5. 你的设计流程是什么样的？</td>
+<td>调研（用户/场景/竞品）→ 洞察提炼 → 概念发散（AI 工具加速）→ 多方案评估与收敛 → 建模与原型 → 测试反馈 → 迭代。强调 AI 工具在整个流程中的嵌入位置，这是差异化点。</td>
+</tr>
+
+<tr>
+<td>6. 你怎么处理别人对你设计的批评？</td>
+<td>"我第一反应是问'哪里不好，为什么'——不是防御，是理解。比如 VR 项目第一版全身外骨骼被导师指出体积过大，我没有辩护，而是回到场景重新思考。批评是免费的调研数据。"</td>
+</tr>
+
+<tr>
+<td>7. 你用过哪些设计工具？你的强弱项？</td>
+<td>强项：Rhino 7（复杂曲面）、KeyShot（产品渲染）、AI 生图（MJ/SD/NanoBanana2）、Figma（UI 设计）、前端（Vibe Coding / HTML/CSS）<br>弱项："我的参数化设计（Grasshopper）经验还不够深，目前正在自学。另外在用户测试的方法论上，我希望通过实际项目积累更多一手经验。"<br>✅ 诚实 + 展示学习意愿 = 加分</td>
+</tr>
+
+<tr>
+<td>8. 你怎么了解用户需求？</td>
+<td>"三管齐下：行为观察（比如座椅项目，去看游客真实的行为模式而不是问他们想要什么）、竞品分析、以及与目标用户的非结构化访谈。我倾向于先观察再提问——用户说出来的往往不是真正的痛点。"<br>举例：景区座椅——游客说"椅子不够"但观察显示他们选花坛不选椅，真问题是景观互动不足。</td>
+</tr>
+
+<tr>
+<td>9. 你最喜欢的 App / 产品是什么？为什么？</td>
+<td>选一个你能深度分析的。比如飞书："飞书的多维表格 + 文档 + 消息三合一，不是功能堆叠，而是信息流动的逻辑设计——从消息到文档到表格，信息不需要'搬家'。这背后是对团队协作场景的深度理解。"<br>选什么都行，但要能讲出"为什么这样设计"而不是"我喜欢它"。</td>
+</tr>
+
+<tr>
+<td>10. 你怎么看待 AI 对设计行业的影响？</td>
+<td>"AI 不会替代设计师，但会用 AI 的设计师会替代不会用的。我的态度是拥抱——我日常用 AI 做概念发散、快速验证多方向方案。但 AI 不能帮你判断'哪个方向是对的'——判断力、品味、对用户的共情，这些是设计师的核心价值。AI 是加速器，不是替代品。"</td>
+</tr>
+
+<tr>
+<td>11. 你在团队中通常扮演什么角色？</td>
+<td>"我倾向于做'连接者'的角色——不是每种技能都最强，但我能把做调研的、做建模的、做视觉的人串起来，确保大家在解决同一个问题。在舞台工作组经历中，我的核心任务就是跨部门协调，这种经验在复杂设计项目中很实用。"</td>
+</tr>
+
+<tr>
+<td>12. 你最近在学什么新东西？</td>
+<td>选一个真实的、正在进行的方向。"最近在深入学习 Grasshopper 参数化设计和 Vibe Coding——不只是写静态页面，而是能独立把设计原型变成可以交互的前端。"</td>
+</tr>
+
+<tr>
+<td>13. 为什么想加入我们公司？</td>
+<td>面试前必须研究目标公司。回答结构：① 我知道你们做了什么（具体提一个产品/设计）+ ② 我的能力在哪里匹配 + ③ 我想学到什么。<br>比如："贵公司的 XX 产品在用户场景的细腻程度上让我印象深刻。我的强项是从场景出发驱动设计决策，这个方法论和贵团队的方向一致。同时我想在实际项目中提升自己对商业约束的理解——课程项目不会教这个。"</td>
+</tr>
+
+<tr>
+<td>14. 你的职业规划是什么？</td>
+<td>"短期：通过实习在实际项目中验证和深化我的设计能力，特别是用户研究和方案落地的全流程。中期：我希望成为能独立负责一个产品线的设计师——从用户洞察到量产方案都能把控。长期：我希望用设计能力帮助中国品牌做出真正有国际影响力的产品。"<br>✅ 有层次、有野心但不浮夸。</td>
+</tr>
+
+<tr>
+<td>15. 你有工作经验吗？你怎么看？</td>
+<td>"我没有正式工作经验，但我的课程项目不是纸上谈兵——VR 项目有 3D 打印原型和完整的设计推导链，Terrin UI 项目我已经把 MVP 做上线了。我理解学校项目和商业项目的差距，这正是我想通过实习来弥补的。"</td>
+</tr>
+
+<tr>
+<td>16. 如果要你在两周内完成一个不熟悉的领域的设计，你会怎么做？</td>
+<td>"第一天用来快速建立领域知识——用户访谈、竞品分析、场景梳理。第二天到第四天用 AI 辅助做概念发散和快速方案生成。第四天到第七天做方案评估和收敛，选定方向。第二周建模、测试、迭代——同时每天和导师同步一次确保方向不偏。"</td>
+</tr>
+
+<tr>
+<td>17. 你怎么平衡设计理想和商业现实？</td>
+<td>"课程项目教会我的最重要的事就是'在约束中做取舍'。VR 项目里我可以做一个很酷的全身外骨骼，但商业现实是用户不会穿戴一个 20 公斤的设备。好设计是在给定约束下找到最优解，不是在没有约束时做出最漂亮的东西。"</td>
+</tr>
+
+<tr>
+<td>18. 你有没有失败的项目？</td>
+<td>选一个真实的、但展示了成长的——VR 项目第一版就是："第一版全身外骨骼方案在导师反馈中被判定体积过大、不具备飞行能力。我没有把它看作失败，而是看作设计迭代的正常过程。如果没有被推翻的第一版，我不会收敛到后来的磁吸方案。"</td>
+</tr>
+
+<tr>
+<td>19. 你对薪资有什么期望？</td>
+<td>"作为实习生，我的首要目标是学习和成长。我相信贵公司对实习生有合理的薪资标准，我愿意遵循公司的规定。如果一定要说数字，我了解过行业实习薪资的大致范围，在这个范围内都可以接受。"</td>
+</tr>
+
+<tr>
+<td>20. 你有什么想问我的？</td>
+<td>见第七节。永远不要说"没有问题"。</td>
+</tr>
+</table>
+
+<!-- ====================== PART 5: PROJECT Q&A ====================== -->
+<div class="page-break"></div>
+<h2>六、项目逐一攻防 · 面试官可能追问的细节</h2>
+
+<h3>项目 01 · Terrin 陶瓷首饰品牌官网 UI</h3>
+<table>
+<tr><th style="width:38%">追问</th><th style="width:62%">回答</th></tr>
+<tr><td>"你为什么选择黑白为主色调？"</td><td>"两个原因：一是黑白处理让商品图的色彩信息暂时隐藏，用户 hover 时渐变还原——这是一种'探索感'的交互设计，让浏览变成发现的过程。二是黑白与陶瓷的自然肌理形成统一，避免彩色照片之间的视觉冲突。"</td></tr>
+<tr><td>"你自己写的代码还是用工具？"</td><td>"我通过 Vibe Coding 独立完成 MVP。我会写 HTML/CSS，理解组件之间的交互逻辑，可以在 AI 辅助下高效地把设计稿变成可交互的前端。我的目标不是成为前端工程师，而是确保设计和实现之间没有损耗。"</td></tr>
+<tr><td>"如果重新做一次，你会改什么？"</td><td>"移动端的商品详情页交互——目前是滚动式，但考虑到首饰的视觉特性，我会尝试加入手势缩放和 360° 旋转查看，让手机端的体验更接近实物触摸。"</td></tr>
+</table>
+
+<h3>项目 02 · 磁吸悬浮 VR 体感辅助设备</h3>
+<table>
+<tr><th style="width:38%">追问</th><th style="width:62%">回答</th></tr>
+<tr><td>"为什么要从电影入手？"</td><td>"不是装饰性的灵感板。电影道具是已经被验证过的'视觉-功能'结合体——它在叙事中有明确的用途和视觉语言。我的方法是：从电影道具中提取功能逻辑和形态语言，然后剥离电影设定，还原到现实用户需求上重新设计。这是一种从'被设计好的东西'反向学习设计逻辑的方法。"</td></tr>
+<tr><td>"为什么不继续做全身外骨骼？"</td><td>"三个判断：体积——用户不会愿意穿戴 20 公斤的设备；可行性——飞行功能在现有技术条件下不可实现；场景——用户需要的不是一副铠甲而是能帮助完成特定动作的轻量辅助。理想的方案不是最酷的，而是最有可能被用户接受的。"</td></tr>
+<tr><td>"3D 打印原型验证了什么？"</td><td>"主要验证了腿部模块的人机尺度——绑带的宽度和位置、磁吸接口的角度和可达性、以及穿戴舒适度的初步判断。原型告诉我，数字模型里看起来正确的尺寸，穿在人身上可能完全不同。"</td></tr>
+</table>
+
+<h3>项目 03 · 景区公共座椅系统 Redesign</h3>
+<table>
+<tr><th style="width:38%">追问</th><th style="width:62%">回答</th></tr>
+<tr><td>"你怎么发现'游客弃椅选花坛'这个现象的？"</td><td>"我在景区坐了 2 小时观察。大部分人经过空椅子选择坐在花坛边——不是因为椅子不够，而是椅子贴墙摆放、没有景观朝向、也没有社交空间。花坛的高度刚好适合短暂休息，而且朝向景观。这个洞察驱动了整个设计的三个维度：人车分流、观景体验、社交属性。"</td></tr>
+<tr><td>"1:7 白膜的作用是什么？"</td><td>"低成本快速验证结构比例和视觉体量。全尺寸模型成本太高，1:7 是一个性价比很好的中间态——能看出比例问题、结构关系、以及不同椅型之间的视觉协调性。"</td></tr>
+</table>
+
+<h3>项目 04 · 《汉魂·狮魄》陶瓷艺术装置</h3>
+<table>
+<tr><th style="width:38%">追问</th><th style="width:62%">回答</th></tr>
+<tr><td>"这和产品设计有什么关系？"</td><td>"它训练了我从传统文化符号中提取设计语言并做当代转化的能力。我深入研究汉代虎形艺术的造型语言——比例关系、线条张力、精神内核——然后不是复制，而是转化为当代陶瓷的表现语言。这种'文化符号 → 设计语言 → 当代产品'的方法论，在文旅产品设计、国潮品牌开发中是直接可用的。"</td></tr>
+<tr><td>"你怎么定义这个项目的成功？"</td><td>"入选澳大利亚 Anlan Museum 公开展览是一个外部验证——说明我的转化逻辑不仅自洽，而且在国际语境下被认可。但对我而言，更大的成功是走通了'文化溯源 → 意象提炼 → 当代转化 → 实物成型'的完整闭环。"</td></tr>
+</table>
+
+<!-- ====================== PART 6: YOUR QUESTIONS ====================== -->
+<div class="page-break"></div>
+<h2>七、反问面试官 · 必问 3 题 + 备选</h2>
+
+<div class="answer-block">
+<p><strong>必问 1：</strong>"您希望这个岗位的实习生在实习期结束时，掌握了什么或做到了什么，算是一个成功的实习？"</p>
+<p style="font-size:10px;color:var(--text-secondary)">→ 这个问题展示你关注结果而非"混经历"。同时帮你自己判断这个岗位是否真能学到东西。</p>
+</div>
+
+<div class="answer-block">
+<p><strong>必问 2：</strong>"团队目前的设计流程是怎样的？从需求到方案落地，实习生会在哪个环节参与最多？"</p>
+<p style="font-size:10px;color:var(--text-secondary)">→ 了解真实工作场景，避免进去后发现只让你做杂活。</p>
+</div>
+
+<div class="answer-block">
+<p><strong>必问 3：</strong>"您觉得目前团队在设计上最大的挑战是什么？"</p>
+<p style="font-size:10px;color:var(--text-secondary)">→ 展示你关心团队而非只关心自己。同时帮自己提前预判进去后会面临什么问题。</p>
+</div>
+
+<h4>备选问题</h4>
+<ul>
+  <li>"团队里设计师和工程师的合作模式是怎样的？"</li>
+  <li>"公司对 AI 工具在设计流程中的使用持什么态度？"</li>
+  <li>"有没有什么我正在做的方向，您觉得特别需要补充或调整的？"</li>
+</ul>
+
+<div class="tip">不要说"每周工作几天""几点下班"——这些可以拿到 offer 后再问 HR。面试官评估的是你的专业态度，不是你的时间管理。</div>
+
+<!-- ====================== PART 8: CRISIS ====================== -->
+<h2>八、危机处理 · 答不上来的时候</h2>
+
+<table>
+<tr><th>状况</th><th>应对</th></tr>
+<tr><td>被问到完全不懂的概念</td><td>"这方面我确实还没有系统了解过，您能简单介绍一下吗？我想结合我已有的知识试着理解一下。"<br>→ 诚实 + 展示学习意愿。不要硬编。</td></tr>
+<tr><td>被追问一个数据或细节，想不起来</td><td>"具体的数字我现在记不太准确，但逻辑是这样的……（然后讲逻辑）。如果需要，面试后我可以整理确切数据发邮件给您。"</td></tr>
+<tr><td>被质疑方案可行性</td><td>"这是一个很对的问题。我的方案确实在 XX 方面需要进一步验证——我目前做了 XX 验证，下一步计划做 XX。您在实际项目中遇到类似问题时是怎么处理的？"<br>→ 承认局限 + 展示思考 + 反向学习。</td></tr>
+<tr><td>脑子一片空白</td><td>喝口水，停 3 秒。"让我组织一下思路。"——停下来比乱说强 100 倍。面试官会等。</td></tr>
+<tr><td>面试官态度冷淡或质疑</td><td>不要慌。有时候这是压力测试。保持冷静，用逻辑回应而非情绪。如果确实不对路，礼貌完成面试——每场面试都是练习。</td></tr>
+</table>
+
+<!-- ====================== PART 9: AFTER ====================== -->
+<h2>九、面试后 · 24 小时必做</h2>
+
+<div class="answer-block">
+<p><strong>感谢邮件模板：</strong></p>
+<p>尊敬的 [名字] 老师 / [姓] 总：</p>
+<p>感谢您今天抽出时间与我面谈。通过今天的交流，我对贵团队在 [具体提一个对方说过的事] 方面的理念有了更深的理解，也让我更加希望有机会加入。</p>
+<p>您提到的 [面试中聊过的一个具体话题] 让我很受启发，面试后我进一步了解了 [相关内容]，如果加入团队，我希望在这方面做出贡献。</p>
+<p>再次感谢。祝工作顺利。</p>
+<p style="text-align:right">金承旭<br>[日期]</p>
+</div>
+
+<div class="tip">24 小时内发。不要群发模板——必须在邮件里提到一个面试中聊到的具体细节。这封邮件的目的是让面试官记住你，不是为了礼貌。</div>
+
+<!-- ====================== PART 10: CHEATSHEET ====================== -->
+<div class="page-break"></div>
+<h2>十、进考场前一瞥 · 核心记忆点</h2>
+
+<table>
+<tr><th>类别</th><th>关键词</th></tr>
+<tr><td>你是谁</td><td>澳门科大学生 · 产品设计 + UI/UX + AI 原生</td></tr>
+<tr><td>你的差异化</td><td>不只做概念——Rhino 建模 + 3D 打印 + 前端落地 + AI 嵌入全流程</td></tr>
+<tr><td>你的最强项目</td><td>VR 设备（四轮迭代完整推导链）</td></tr>
+<tr><td>你的隐藏王牌</td><td>Anlan Museum 国际展览 + AI 工具链（MJ/SD/NanoBanana2）</td></tr>
+<tr><td>你的弱点怎么说</td><td>Grasshopper 经验不足 + 用户测试方法论待提升（强调正在学）</td></tr>
+<tr><td>你的反问</td><td>"成功的实习是什么样？""团队设计流程？""最大挑战？"</td></tr>
+<tr><td>面试后</td><td>24h 内发感谢邮件，必须提一个具体细节</td></tr>
+<tr><td>底线心态</td><td>你是来展示专业能力的，不是来乞讨的。自信但不傲慢。</td></tr>
+</table>
+
+<div style="text-align:center;margin-top:48px;padding-top:24px;border-top:2px solid var(--accent)">
+  <p style="font-family:var(--font-serif);font-size:18px;color:var(--text)">
+    面试的本质不是"你能不能做"，而是<strong>"你值不值得教"</strong>。<br>
+    展示你的思考方式，比展示你的渲染图更重要。
+  </p>
+  <p style="font-size:11px;color:var(--text-secondary);margin-top:8px">
+    © 2026 金承旭 面试准备手册 · 定制版
+  </p>
+</div>
+
+</body>
+</html>

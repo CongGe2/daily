@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rift · 便携蓝牙音箱 | 产品设计案例 | 金承旭</title>
-<meta name="description" content="Rift 便携蓝牙音箱——从用户洞察到CMF落地的完整产品设计案例">
+<meta name="description" content="Rift 便携蓝牙音箱——从用户研究到CMF落地的完整产品设计案例 · 斜切分割设计语言">
 <meta property="og:title" content="Rift 便携蓝牙音箱 · 产品设计">
 <meta property="og:description" content="斜切分割形态 · 声学织物 × 阳极氧化铝 · 完整设计推导">
+<meta property="og:image" content="images/optimized/rift-speaker-thumb.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#fafaf8">
 
@@ -32,6 +33,7 @@ html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
 body{font-family:var(--font-sans);font-size:16px;line-height:1.75;color:var(--text);background:var(--bg)}
 ::selection{background:var(--accent-dim);color:var(--text)}
 a{color:inherit;text-decoration:none}ul{list-style:none}
+img{display:block;max-width:100%;height:auto}
 
 /* Nav */
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:background .35s var(--ease),padding .35s var(--ease),box-shadow .35s var(--ease)}
@@ -39,7 +41,6 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .nav-inner{max-width:var(--max);margin:0 auto;padding:0 clamp(24px,5vw,64px);display:flex;align-items:center;justify-content:space-between}
 .nav-back{font-size:13px;color:var(--text-secondary);transition:color .2s;display:flex;align-items:center;gap:8px}
 .nav-back:hover{color:var(--text)}
-.nav-back span{font-size:16px}
 .nav-project{font-family:var(--font-serif);font-size:15px;font-weight:600;color:var(--text-secondary)}
 
 /* Hero */
@@ -53,11 +54,11 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .hero-meta{display:flex;gap:32px;font-size:12px;color:var(--text-tertiary);letter-spacing:.05em}
 .hero-meta strong{display:block;font-size:14px;color:var(--text);font-weight:600;margin-bottom:2px}
 .hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:480px}
-.hero-visual svg{width:100%;max-width:500px;height:auto;filter:drop-shadow(0 40px 70px rgba(0,0,0,.12)) drop-shadow(0 8px 20px rgba(0,0,0,.06))}
+.hero-visual img{width:100%;max-width:500px;height:auto;filter:drop-shadow(0 40px 70px rgba(0,0,0,.12));border-radius:3px}
 
 /* Section */
 .sec{padding:clamp(80px,12vw,140px) 0}
-.sec:nth-child(even){background:var(--bg-alt)}
+.sec:nth-child(even):not(.no-alt){background:var(--bg-alt)}
 .sec-inner{max-width:var(--max);margin:0 auto;padding:0 clamp(24px,5vw,64px)}
 .sec-tag{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:block}
 .sec-title{font-family:var(--font-serif);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:24px;letter-spacing:-.005em}
@@ -69,18 +70,10 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .brief-card h4{font-family:var(--font-serif);font-size:18px;margin-bottom:8px}
 .brief-card p{font-size:14px;color:var(--text-secondary);line-height:1.75}
 
-/* Product shot area */
-.product-shot{position:relative;width:100%;border-radius:2px;overflow:hidden;background:linear-gradient(160deg,#ece8e0 0%,#e4dfd5 25%,#f0ece5 50%,#e8e3d9 75%,#dfd9ce 100%);display:flex;align-items:center;justify-content:center;margin:56px 0;border:1px solid var(--border-light)}
-.product-shot svg{width:100%;max-width:700px;height:auto;padding:clamp(40px,8vw,80px)}
-.product-shot.dark{background:linear-gradient(160deg,#1a1916 0%,#22201c 30%,#1c1a17 60%,#25231e 100%);border-color:rgba(255,255,255,.06)}
-
-/* Multi-view grid */
-.views-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:56px 0}
-.view-card{background:var(--card);border:1px solid var(--border-light);border-radius:2px;overflow:hidden}
-.view-card .view-label{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--text-tertiary);padding:20px 24px 0}
-.view-card svg{width:100%;height:auto;padding:24px}
-.view-card.dark{background:#1c1b18;border-color:rgba(255,255,255,.06)}
-.view-card.dark .view-label{color:var(--dark-text-secondary)}
+/* Product shot */
+.product-shot{position:relative;width:100%;border-radius:2px;overflow:hidden;margin:56px 0;border:1px solid var(--border-light)}
+.product-shot img{width:100%;display:block}
+.product-shot figcaption{font-size:11px;color:var(--text-tertiary);text-align:center;padding:16px;letter-spacing:.04em;background:var(--card)}
 
 /* Flow */
 .flow-bar{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:28px 0;overflow-x:auto}
@@ -107,16 +100,28 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .cmf-swatch h5{font-size:14px;margin-bottom:4px}
 .cmf-swatch p{font-size:11px;color:var(--text-tertiary);letter-spacing:.04em}
 
-/* Exploded view */
-.exploded-area{position:relative;width:100%;background:linear-gradient(180deg,#f7f5f1 0%,#f0ede6 50%,#ece7df 100%);border-radius:2px;border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;margin:56px 0;overflow:hidden}
-.exploded-area svg{width:100%;max-width:650px;height:auto;padding:clamp(48px,8vw,80px)}
-
 /* Quote */
 .quote-block{margin:56px 0;padding:48px 56px;background:var(--bg-alt);border-left:2px solid var(--accent);position:relative}
 .quote-block::before{content:'"';position:absolute;top:16px;left:22px;font-family:var(--font-serif);font-size:64px;color:var(--accent-dim);line-height:1}
 .quote-block p{font-family:var(--font-serif);font-size:19px;font-style:italic;line-height:1.9;color:var(--text-secondary);position:relative;z-index:1}
 
-/* Outcome */
+/* Comparison grid */
+.compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:48px 0}
+.compare-card{background:var(--card);border:1px solid var(--border-light);border-radius:2px;padding:28px;text-align:center}
+.compare-card h4{font-size:13px;font-weight:600;margin-top:12px;font-family:var(--font-sans)}
+.compare-card p{font-size:12px;color:var(--text-secondary);margin-top:4px;line-height:1.5}
+.compare-rank{display:inline-block;font-size:11px;font-weight:600;padding:2px 10px;border-radius:2px;margin-bottom:10px}
+.compare-rank.best{background:var(--accent-dim);color:var(--accent)}
+.compare-rank.good{background:rgba(0,0,0,0.04);color:var(--text-secondary)}
+
+/* Sketch gallery */
+.sketch-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:48px 0}
+.sketch-card{background:var(--card);border:1px solid var(--border-light);border-radius:2px;overflow:hidden}
+.sketch-card img{width:100%;display:block}
+.sketch-card figcaption{padding:20px 24px;font-size:13px;color:var(--text-secondary);line-height:1.6}
+.sketch-card figcaption strong{color:var(--text);display:block;font-size:15px;margin-bottom:4px;font-family:var(--font-serif)}
+
+/* Outcome stats */
 .outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:48px 0}
 .outcome-stat{text-align:center;padding:32px 20px;background:var(--card);border:1px solid var(--border-light);border-radius:2px}
 .outcome-stat .stat-num{font-family:var(--font-serif);font-size:clamp(36px,5vw,52px);font-weight:700;color:var(--accent);line-height:1}
@@ -136,24 +141,29 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.revealed{opacity:1;transform:translateY(0)}
 
+/* Full-width image */
+.img-full{width:100%;border-radius:2px;border:1px solid var(--border-light);margin:24px 0}
+
 /* Responsive */
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:40px}
   .hero-visual{min-height:340px;order:-1}
-  .hero-visual svg{max-width:380px}
+  .hero-visual img{max-width:400px}
   .col2{grid-template-columns:1fr}
   .brief-grid{grid-template-columns:1fr}
-  .views-grid{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:repeat(2,1fr)}
+  .sketch-grid{grid-template-columns:1fr}
   .outcome-grid{grid-template-columns:1fr}
 }
 @media(max-width:768px){
   .hero h1{font-size:clamp(36px,10vw,52px)}
   .hero-visual{min-height:280px}
-  .hero-visual svg{max-width:300px}
+  .hero-visual img{max-width:320px}
   .cmf-strip{flex-direction:column}
   .quote-block{padding:36px 28px}
   .flow-inner{justify-content:flex-start}
   .flow-label{display:none}
+  .compare-grid{grid-template-columns:1fr}
 }
 @media(max-width:480px){
   .hero-meta{flex-direction:column;gap:16px}
@@ -167,7 +177,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-back"><span>←</span> 返回作品集</a>
-    <span class="nav-project">Rift Speaker</span>
+    <span class="nav-project">Rift Speaker · 产品设计案例</span>
   </div>
 </nav>
 
@@ -177,162 +187,17 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-text reveal">
-      <span class="hero-tag">Product Design · 2026</span>
+      <span class="hero-tag">Product Design · 独立项目 · 2026</span>
       <h1>Rift<br><span>便携蓝牙音箱</span></h1>
-      <p class="hero-sub">一条斜切分割线，两种材质的对话——声学织物与阳极氧化铝之间，是声音的张力与平静。</p>
+      <p class="hero-sub">一条斜切分割线，两种材质的对话——Kvadrat 声学织物与阳极氧化铝之间，是声音的张力与平静。</p>
       <div class="hero-meta">
-        <div><strong>独立设计项目</strong>概念至CMF</div>
+        <div><strong>独立设计项目</strong>概念至 CMF</div>
         <div><strong>设计周期</strong>12 周</div>
         <div><strong>工具</strong>Rhino 7 · KeyShot · AI 辅助</div>
       </div>
     </div>
     <div class="hero-visual reveal">
-      <!-- HERO PRODUCT RENDER: 3/4 perspective view -->
-      <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <!-- Body gradients - simulating 3D cylinder -->
-          <linearGradient id="bodyMain" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f5f2ec"/>
-            <stop offset="8%" stop-color="#ece7de"/>
-            <stop offset="20%" stop-color="#e0dad0"/>
-            <stop offset="35%" stop-color="#d5cec2"/>
-            <stop offset="48%" stop-color="#c8c0b3"/>
-            <stop offset="55%" stop-color="#d0c8ba"/>
-            <stop offset="65%" stop-color="#ddd6c9"/>
-            <stop offset="78%" stop-color="#e8e3d8"/>
-            <stop offset="90%" stop-color="#f0ebe2"/>
-            <stop offset="100%" stop-color="#e8e3d8"/>
-          </linearGradient>
-          <!-- Highlight stripe -->
-          <linearGradient id="highlight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
-            <stop offset="18%" stop-color="rgba(255,255,255,0.6)"/>
-            <stop offset="25%" stop-color="rgba(255,255,255,0.8)"/>
-            <stop offset="32%" stop-color="rgba(255,255,255,0.4)"/>
-            <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
-          </linearGradient>
-          <!-- Fabric texture gradient -->
-          <linearGradient id="fabric" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3a3632"/>
-            <stop offset="15%" stop-color="#2e2b27"/>
-            <stop offset="30%" stop-color="#242220"/>
-            <stop offset="50%" stop-color="#1e1c1a"/>
-            <stop offset="70%" stop-color="#242220"/>
-            <stop offset="85%" stop-color="#2e2b27"/>
-            <stop offset="100%" stop-color="#3a3632"/>
-          </linearGradient>
-          <!-- Fabric highlight -->
-          <linearGradient id="fabricHl" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
-            <stop offset="22%" stop-color="rgba(255,255,255,0.12)"/>
-            <stop offset="30%" stop-color="rgba(255,255,255,0.18)"/>
-            <stop offset="38%" stop-color="rgba(255,255,255,0.06)"/>
-            <stop offset="48%" stop-color="rgba(255,255,255,0)"/>
-          </linearGradient>
-          <!-- Aluminum base gradient -->
-          <linearGradient id="alum" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#d5cec4"/>
-            <stop offset="10%" stop-color="#c8c0b5"/>
-            <stop offset="25%" stop-color="#b8af9f"/>
-            <stop offset="45%" stop-color="#a89e8c"/>
-            <stop offset="55%" stop-color="#b0a694"/>
-            <stop offset="65%" stop-color="#c0b8a8"/>
-            <stop offset="80%" stop-color="#d0c8ba"/>
-            <stop offset="95%" stop-color="#ddd6c9"/>
-            <stop offset="100%" stop-color="#c8c0b2"/>
-          </linearGradient>
-          <!-- Metallic ring gradient -->
-          <linearGradient id="metalRing" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#e8e2d8"/>
-            <stop offset="25%" stop-color="#c4baaa"/>
-            <stop offset="50%" stop-color="#a89c88"/>
-            <stop offset="75%" stop-color="#c8bfae"/>
-            <stop offset="100%" stop-color="#e0d8cc"/>
-          </linearGradient>
-          <!-- Shadow gradient -->
-          <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0%" stop-color="rgba(0,0,0,0.15)"/>
-            <stop offset="60%" stop-color="rgba(0,0,0,0.04)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-          </radialGradient>
-          <!-- Background glow -->
-          <radialGradient id="bgGlow" cx="0.5" cy="0.45" r="0.55">
-            <stop offset="0%" stop-color="rgba(196,98,58,0.06)"/>
-            <stop offset="50%" stop-color="rgba(196,98,58,0.02)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
-          </radialGradient>
-          <!-- Fabric pattern -->
-          <pattern id="fabricPattern" width="3" height="3" patternUnits="userSpaceOnUse">
-            <rect width="3" height="3" fill="transparent"/>
-            <circle cx="1.5" cy="1.5" r="0.4" fill="rgba(0,0,0,0.08)"/>
-          </pattern>
-          <!-- Button gradient -->
-          <radialGradient id="btnGrad" cx="0.4" cy="0.35" r="0.6">
-            <stop offset="0%" stop-color="#fafaf8"/>
-            <stop offset="40%" stop-color="#e8e3d8"/>
-            <stop offset="100%" stop-color="#c8bfae"/>
-          </radialGradient>
-        </defs>
-
-        <!-- Background glow -->
-        <rect x="0" y="0" width="500" height="500" fill="url(#bgGlow)"/>
-
-        <!-- Floor shadow -->
-        <ellipse cx="250" cy="420" rx="180" ry="30" fill="url(#shadow)"/>
-
-        <!-- === SPEAKER BODY === -->
-        <!-- Main body - tapered cylinder, slightly tilted for perspective -->
-        <g transform="translate(250,220) rotate(-8)">
-          <!-- The body is a truncated cone shape -->
-          <!-- Top ellipse -->
-          <ellipse cx="0" cy="-140" rx="72" ry="20" fill="#d8d1c4" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
-          <!-- Body surface -->
-          <path d="M-72,-140 L-78,140 Q-78,155 0,155 Q78,155 78,140 L72,-140 Z" fill="url(#bodyMain)"/>
-          <!-- Body highlight stripe -->
-          <path d="M-72,-140 L-78,140 Q-78,155 0,155 Q78,155 78,140 L72,-140 Z" fill="url(#highlight)"/>
-          <!-- Bottom ellipse -->
-          <ellipse cx="0" cy="140" rx="78" ry="22" fill="#b8af9f" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-
-          <!-- Diagonal cut - the defining design feature -->
-          <!-- Upper section: acoustic fabric -->
-          <clipPath id="diagCut">
-            <path d="M-78,-140 L78,-140 L78,20 Q78,35 0,40 Q-78,35 -78,20 Z"/>
-          </clipPath>
-          <g clip-path="url(#diagCut)">
-            <!-- Fabric base -->
-            <path d="M-80,-145 L80,-145 L80,50 L-80,50 Z" fill="url(#fabric)"/>
-            <!-- Fabric pattern overlay -->
-            <path d="M-80,-145 L80,-145 L80,50 L-80,50 Z" fill="url(#fabricPattern)"/>
-            <!-- Fabric highlight -->
-            <path d="M-80,-145 L80,-145 L80,50 L-80,50 Z" fill="url(#fabricHl)"/>
-          </g>
-
-          <!-- Diagonal dividing line - the "Rift" -->
-          <path d="M-78,20 Q-78,35 0,40 Q78,35 78,20" stroke="#d4c8b8" stroke-width="1.5" fill="none" opacity="0.6"/>
-          <path d="M-78,20 Q-78,35 0,40 Q78,35 78,20" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" fill="none"/>
-
-          <!-- Metallic ring at the divide -->
-          <path d="M-78.5,19 L78.5,19 Q78.5,34.5 0,39.5 Q-78.5,34.5 -78.5,19 Z" fill="none" stroke="url(#metalRing)" stroke-width="3" opacity="0.7"/>
-
-          <!-- Control buttons on fabric -->
-          <circle cx="-30" cy="-70" r="8" fill="url(#btnGrad)" opacity="0.9"/>
-          <circle cx="0" cy="-80" r="8" fill="url(#btnGrad)" opacity="0.9"/>
-          <circle cx="30" cy="-70" r="8" fill="url(#btnGrad)" opacity="0.9"/>
-
-          <!-- LED indicator -->
-          <ellipse cx="0" cy="-95" rx="3" ry="1.5" fill="#c4623a" opacity="0.8"/>
-          <ellipse cx="0" cy="-95" rx="6" ry="3" fill="rgba(196,98,58,0.15)"/>
-
-          <!-- Brand mark (subtle) -->
-          <text x="0" y="-52" text-anchor="middle" font-family="Inter" font-size="7" font-weight="500" letter-spacing="3" fill="rgba(255,255,255,0.25)">RIFT</text>
-
-          <!-- Base ring -->
-          <ellipse cx="0" cy="140" rx="79" ry="23" fill="none" stroke="url(#metalRing)" stroke-width="2.5"/>
-        </g>
-
-        <!-- Ambient light reflection on surface -->
-        <ellipse cx="220" cy="380" rx="120" ry="8" fill="rgba(196,98,58,0.04)"/>
-      </svg>
+      <img src="images/rift/optimized/rift-hero-shot.jpg" alt="Rift 便携蓝牙音箱 · 斜切分割设计">
     </div>
   </div>
 </section>
@@ -340,24 +205,18 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 <!-- ============ DESIGN PROCESS FLOW ============ -->
 <div class="flow-bar">
   <div class="flow-inner">
-    <div class="flow-step"><span class="flow-num filled">1</span><span class="flow-label">用户研究</span></div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step"><span class="flow-num filled">2</span><span class="flow-label">市场分析</span></div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step"><span class="flow-num filled">3</span><span class="flow-label">概念发散</span></div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step"><span class="flow-num filled">4</span><span class="flow-label">形态探索</span></div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step"><span class="flow-num">5</span><span class="flow-label">CMF定义</span></div>
-    <span class="flow-arrow">→</span>
-    <div class="flow-step"><span class="flow-num">6</span><span class="flow-label">3D建模</span></div>
-    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num filled">1</span><span class="flow-label">用户研究</span></div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num filled">2</span><span class="flow-label">市场分析</span></div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num filled">3</span><span class="flow-label">概念发散</span></div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num filled">4</span><span class="flow-label">草图迭代</span></div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num filled">5</span><span class="flow-label">CMF定义</span></div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="flow-num">6</span><span class="flow-label">3D建模</span></div><span class="flow-arrow">→</span>
     <div class="flow-step"><span class="flow-num">7</span><span class="flow-label">最终方案</span></div>
   </div>
 </div>
 
-<!-- ============ DESIGN BRIEF ============ -->
-<section class="sec">
+<!-- ============ 01 · DESIGN BRIEF ============ -->
+<section class="sec no-alt">
   <div class="sec-inner">
     <span class="sec-tag reveal">01 · Design Brief</span>
     <h2 class="sec-title reveal">设计背景与机会</h2>
@@ -366,348 +225,142 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
       <strong style="color:var(--text)">Rift 定位于两者之间——既能融入精心布置的家居空间，又具备足够的声学性能让聆听成为仪式。</strong>
     </p>
     <div class="brief-grid reveal">
-      <div class="brief-card">
-        <h4>🎯 目标用户</h4>
-        <p>25-35 岁城市创意工作者，重视家居美学，愿意为设计感付费。在家里听音乐是一种仪式而非背景噪音。</p>
-      </div>
-      <div class="brief-card">
-        <h4>💡 设计机会</h4>
-        <p>现有产品要么"隐于环境"（黑色圆柱体），要么"过于张扬"（RGB灯效）。缺少一件静止时也值得被观看的音频产品。</p>
-      </div>
-      <div class="brief-card">
-        <h4>🔧 设计约束</h4>
-        <p>Ø80-100mm 直径 · 180-220mm 高度 · <800g · 蓝牙 5.3 · IPX4 防水 · 10h+ 续航 · 零售价 ¥499-699</p>
-      </div>
+      <div class="brief-card"><h4>🎯 目标用户</h4><p>25-35 岁城市创意工作者，重视家居美学，愿意为设计感付费。在家里听音乐是一种仪式而非背景噪音。</p></div>
+      <div class="brief-card"><h4>💡 设计机会</h4><p>现有产品要么"隐于环境"（黑色圆柱体），要么"过于张扬"（RGB灯效）。缺少一件静止时也值得被观看的音频产品。</p></div>
+      <div class="brief-card"><h4>🔧 设计约束</h4><p>Ø80-100mm 直径 · 180-220mm 高度 · <800g · 蓝牙 5.3 · IPX4 防水 · 10h+ 续航 · 零售价 ¥499-699</p></div>
     </div>
   </div>
 </section>
 
-<!-- ============ USER RESEARCH ============ -->
+<!-- ============ 02 · COMPETITIVE ANALYSIS ============ -->
 <section class="sec">
   <div class="sec-inner">
-    <span class="sec-tag reveal">02 · User Research</span>
-    <h2 class="sec-title reveal">用户研究 · 三个核心洞察</h2>
-    <div class="col2 reveal" style="margin-top:40px">
-      <div>
-        <div class="brief-card" style="margin-bottom:20px">
-          <h4>洞察 1：音箱是家具的一部分</h4>
-          <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">87% 受访者将便携音箱长期放置于固定位置（书架、茶几、床头柜）。它不是"随身携带"的设备——它是那个位置的一件陈设。</p>
-        </div>
-        <div class="brief-card" style="margin-bottom:20px">
-          <h4>洞察 2：触感决定"品质感"</h4>
-          <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">在盲测中，用户对"高级感"的判断 70% 来自触感而非视觉。材质冷暖、表面纹理、重量分布——手比眼睛更诚实。</p>
-        </div>
-        <div class="brief-card">
-          <h4>洞察 3：声学方向的视觉暗示</h4>
-          <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">用户会下意识将扬声器网面朝向自己。非对称或具有方向性视觉特征的设计，能帮用户直觉地正确放置音箱。</p>
-        </div>
-      </div>
-      <div>
-        <div style="background:var(--card);border:1px solid var(--border-light);border-radius:2px;padding:36px">
-          <h4 style="font-family:var(--font-serif);font-size:16px;margin-bottom:16px">竞品定位分析</h4>
-          <!-- Simple positioning chart using CSS -->
-          <div style="position:relative;width:100%;aspect-ratio:1;max-width:320px;margin:0 auto">
-            <!-- Axes -->
-            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border)"></div>
-            <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)"></div>
-            <!-- Labels -->
-            <div style="position:absolute;top:5px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-tertiary)">美学优先</div>
-            <div style="position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--text-tertiary)">功能优先</div>
-            <div style="position:absolute;left:5px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:10px;color:var(--text-tertiary);white-space:nowrap">家用</div>
-            <div style="position:absolute;right:5px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:10px;color:var(--text-tertiary);white-space:nowrap">户外</div>
-            <!-- Competitors -->
-            <div style="position:absolute;top:25%;left:25%;width:10px;height:10px;background:#ccc;border-radius:50%;transform:translate(-50%,-50%)" title="B&O"></div>
-            <div style="position:absolute;top:60%;left:70%;width:10px;height:10px;background:#ccc;border-radius:50%;transform:translate(-50%,-50%)" title="JBL"></div>
-            <div style="position:absolute;top:70%;left:30%;width:10px;height:10px;background:#ccc;border-radius:50%;transform:translate(-50%,-50%)" title="Marshall"></div>
-            <div style="position:absolute;top:40%;left:55%;width:10px;height:10px;background:#ccc;border-radius:50%;transform:translate(-50%,-50%)" title="Sonos"></div>
-            <!-- Rift -->
-            <div style="position:absolute;top:30%;left:48%;width:16px;height:16px;background:var(--accent);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 16px rgba(196,98,58,.3)"></div>
-            <div style="position:absolute;top:22%;left:48%;font-size:11px;font-weight:600;color:var(--accent);transform:translate(-50%,-50%)">Rift</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONCEPT DEVELOPMENT ============ -->
-<section class="sec">
-  <div class="sec-inner">
-    <span class="sec-tag reveal">03 · Concept Development</span>
-    <h2 class="sec-title reveal">概念发展 · 从发散到收敛</h2>
-    <p class="sec-desc reveal" style="margin-bottom:40px">
-      核心设计语言围绕一个关键决策：<strong style="color:var(--text)">用一道斜切分割线打破圆柱体的单调</strong>。这道"Rift"不仅定义了产品的视觉身份，还自然划分了功能区域——上部声学织物透声，下部金属腔体共振。
+    <span class="sec-tag reveal">02 · Competitive Analysis</span>
+    <h2 class="sec-title reveal">竞品对比 · Rift 在哪</h2>
+    <p class="sec-desc reveal" style="margin-bottom:32px">
+      现有便携音箱在"家居美学"与"声学性能"之间留下了明显的空白地带。Rift 定位于左上角——<strong style="color:var(--text)">既是声音工具，也是空间中的一件雕塑</strong>。
     </p>
 
-    <!-- Concept evolution SVG -->
-    <div class="product-shot reveal">
-      <svg viewBox="0 0 800 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="cone1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#e8e3d8"/><stop offset="50%" stop-color="#c8bfae"/><stop offset="100%" stop-color="#b0a490"/>
-          </linearGradient>
-          <linearGradient id="cone2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2a2722"/><stop offset="40%" stop-color="#1e1c18"/><stop offset="100%" stop-color="#3a3530"/>
-          </linearGradient>
-          <linearGradient id="cone3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3a3530"/><stop offset="45%" stop-color="#1e1c18"/><stop offset="100%" stop-color="#b0a490"/>
-          </linearGradient>
-        </defs>
-        <!-- Concept 1: Plain cylinder (rejected) -->
-        <g transform="translate(130,150)">
-          <text x="0" y="100" text-anchor="middle" font-size="11" fill="var(--text-tertiary)" font-family="Inter">Concept A: 完整圆柱</text>
-          <path d="M-40,-80 L-40,80 Q-40,95 0,95 Q40,95 40,80 L40,-80 Z" fill="url(#cone1)" opacity="0.5"/>
-          <ellipse cx="0" cy="-80" rx="40" ry="12" fill="#ddd6c9" opacity="0.5"/>
-          <ellipse cx="0" cy="80" rx="40" ry="14" fill="#b0a490" opacity="0.5"/>
-          <text x="0" y="120" text-anchor="middle" font-size="10" fill="#c8bfae" font-family="Inter">✕ 单调 · 无视觉焦点</text>
-        </g>
-        <!-- Arrow -->
-        <text x="240" y="155" text-anchor="middle" font-size="20" fill="var(--border)">→</text>
-        <!-- Concept 2: Horizontal split (considered) -->
-        <g transform="translate(400,150)">
-          <text x="0" y="100" text-anchor="middle" font-size="11" fill="var(--text-tertiary)" font-family="Inter">Concept B: 水平分割</text>
-          <path d="M-40,-80 L-40,20 Q-40,35 0,35 Q40,35 40,20 L40,-80 Z" fill="url(#cone2)" opacity="0.5"/>
-          <path d="M-40,20 Q-40,35 0,35 Q40,35 40,20 L40,80 Q40,95 0,95 Q-40,95 -40,80 Z" fill="url(#cone1)" opacity="0.5"/>
-          <ellipse cx="0" cy="-80" rx="40" ry="12" fill="#3a3530" opacity="0.5"/>
-          <ellipse cx="0" cy="80" rx="40" ry="14" fill="#b0a490" opacity="0.5"/>
-          <text x="0" y="120" text-anchor="middle" font-size="10" fill="#c8bfae" font-family="Inter">△ 可接受 · 缺乏张力</text>
-        </g>
-        <!-- Arrow -->
-        <text x="510" y="155" text-anchor="middle" font-size="20" fill="var(--accent)">→</text>
-        <!-- Concept 3: Diagonal split (selected) -->
-        <g transform="translate(670,150)">
-          <text x="0" y="100" text-anchor="middle" font-size="11" fill="var(--accent)" font-family="Inter" font-weight="600">Concept C: 斜切分割 ✓</text>
-          <path d="M-40,-80 L-40,20 Q-40,35 0,40 Q40,35 40,20 L40,-80 Z" fill="url(#cone2)"/>
-          <path d="M-40,20 Q-40,35 0,40 Q40,35 40,20 L40,80 Q40,95 0,95 Q-40,95 -40,80 Z" fill="url(#cone1)"/>
-          <ellipse cx="0" cy="-80" rx="40" ry="12" fill="#2e2b27"/>
-          <ellipse cx="0" cy="80" rx="40" ry="14" fill="#b0a490"/>
-          <!-- Rift highlight -->
-          <path d="M-40,20 Q-40,35 0,40 Q40,35 40,20" stroke="var(--accent)" stroke-width="1.5" fill="none" opacity="0.5"/>
-        </g>
-      </svg>
+    <figure class="product-shot reveal">
+      <img src="images/rift/optimized/rift-competitive-comparison.jpg" alt="竞品对比：B&O · Marshall · JBL · Rift" loading="lazy">
+      <figcaption>从左至右：Beosound A1 风格 · Marshall Emberton 风格 · JBL Flip 风格 · Rift（斜切分割设计语言）</figcaption>
+    </figure>
+
+    <div class="compare-grid reveal">
+      <div class="compare-card">
+        <span class="compare-rank good">B&O 风格</span>
+        <h4>美学先行</h4>
+        <p>精致但声学妥协，<br>圆形形态限制单元尺寸</p>
+      </div>
+      <div class="compare-card">
+        <span class="compare-rank good">Marshall 风格</span>
+        <h4>复古识别</h4>
+        <p>强品牌辨识度，<br>但风格局限于摇滚美学</p>
+      </div>
+      <div class="compare-card">
+        <span class="compare-rank good">JBL 风格</span>
+        <h4>功能优先</h4>
+        <p>声学好但视觉平淡，<br>不适合家居陈列</p>
+      </div>
+      <div class="compare-card">
+        <span class="compare-rank best">Rift</span>
+        <h4>家居雕塑 × 声学</h4>
+        <p>斜切分割设计语言，<br>织物+金属材质对话</p>
+      </div>
     </div>
 
     <div class="quote-block reveal">
-      <p>斜切线不只是好看——它解决了两个功能问题：为用户提供了直觉的扬声器朝向提示，同时为声学织物和金属腔体提供了自然的材料分界。</p>
+      <p>竞品要么"好看但不够好听"，要么"好听但不够好看"。Rift 的设计命题不是做一个折中方案——而是让美学成为声学体验的一部分。</p>
     </div>
   </div>
 </section>
 
-<!-- ============ CMF ============ -->
+<!-- ============ 03 · SKETCHES ============ -->
+<section class="sec no-alt">
+  <div class="sec-inner">
+    <span class="sec-tag reveal">03 · Concept Sketches</span>
+    <h2 class="sec-title reveal">概念草图 · 从发散到聚焦</h2>
+    <p class="sec-desc reveal" style="margin-bottom:40px">
+      在设计的最初两周，核心问题是：<strong style="color:var(--text)">一个圆柱体之外，便携音箱还能是什么形态？</strong>
+      以下草图记录了从广泛发散到逐步聚焦于"斜切分割"方向的全过程。
+    </p>
+
+    <div class="sketch-grid">
+      <figure class="sketch-card reveal">
+        <img src="images/rift/optimized/rift-concept-sketches.jpg" alt="Rift 概念草图 · 初期发散" loading="lazy">
+        <figcaption>
+          <strong>Phase 1 · 概念发散</strong>
+          最初的 8-12 个方向探索：圆柱体、圆角矩形、有机卵石形、多边形棱柱……
+          关键发现：圆柱体仍是声学最优解，但需要打破单调。
+        </figcaption>
+      </figure>
+      <figure class="sketch-card reveal">
+        <img src="images/rift/optimized/rift-form-exploration.jpg" alt="Rift 形态探索 · 分割线变体" loading="lazy">
+        <figcaption>
+          <strong>Phase 2 · 分割线变体研究</strong>
+          在确定圆柱体基础上，探索 5 种分割线方案：水平分割（平淡）、15° 斜切（太浅）、30° 斜切（✓ 最佳）、锯齿分割（太复杂）、波浪分割（方向感弱）。
+          30° 斜切线在视觉张力和功能分区间取得最优平衡。
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="quote-block reveal">
+      <p>一个好的设计概念应该能用一句话描述——"斜切分割的圆柱体"就是这句话。它既定义了一个形式，也暗示了一个态度：不妥协。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · CMF ============ -->
 <section class="sec">
   <div class="sec-inner">
     <span class="sec-tag reveal">04 · CMF Design</span>
     <h2 class="sec-title reveal">颜色 · 材料 · 表面处理</h2>
-    <p class="sec-desc reveal" style="margin-bottom:40px">三种配色方案，覆盖不同家居风格。每种配色保持相同的材料组合逻辑：上部 Kvadrat 声学织物 + 下部喷砂阳极氧化铝 + 硅胶底座环。</p>
+    <p class="sec-desc reveal" style="margin-bottom:28px">三种配色方案，覆盖不同家居风格。每种配色保持相同的材料组合逻辑：上部 Kvadrat 声学织物 + 下部喷砂阳极氧化铝 + 硅胶底座环。</p>
+
+    <figure class="product-shot reveal">
+      <img src="images/rift/optimized/rift-cmf-detail.jpg" alt="Rift CMF 细节 · 织物与金属材质过渡" loading="lazy">
+      <figcaption>材质过渡细节：深炭灰 Kvadrat 声学织物与暖银喷砂阳极氧化铝沿斜切线精密接合</figcaption>
+    </figure>
 
     <div class="cmf-strip reveal">
       <div class="cmf-swatch" style="background:#fafaf8">
-        <div class="swatch-circle" style="background:#e8e2d6;box-shadow:0 2px 12px rgba(0,0,0,.06)"></div>
-        <h5>暖沙色</h5>
-        <p>Warm Sand</p>
-        <p style="font-size:10px;color:var(--text-tertiary);margin-top:8px">织物 #D4C9B8 · 铝 #C8BFAE</p>
+        <div class="swatch-circle" style="background:#e8e2d6"></div>
+        <h5>暖沙色</h5><p>Warm Sand</p>
+        <p style="font-size:10px;color:var(--text-tertiary);margin-top:6px">织物 #D4C9B8 · 铝 #C8BFAE</p>
       </div>
       <div class="cmf-swatch" style="background:#1c1b18">
         <div class="swatch-circle" style="background:#2e2b26"></div>
-        <h5 style="color:#e8e6e2">深空灰</h5>
-        <p style="color:#989590">Space Grey</p>
-        <p style="font-size:10px;color:#989590;margin-top:8px">织物 #2E2B26 · 铝 #3A3530</p>
+        <h5 style="color:#e8e6e2">深空灰</h5><p style="color:#989590">Space Grey</p>
+        <p style="font-size:10px;color:#989590;margin-top:6px">织物 #2E2B26 · 铝 #3A3530</p>
       </div>
       <div class="cmf-swatch" style="background:#f5f3ee">
         <div class="swatch-circle" style="background:#6b8e7b"></div>
-        <h5>苔藓绿</h5>
-        <p>Moss Green</p>
-        <p style="font-size:10px;color:var(--text-tertiary);margin-top:8px">织物 #5C7D6A · 铝 #7A9684</p>
+        <h5>苔藓绿</h5><p>Moss Green</p>
+        <p style="font-size:10px;color:var(--text-tertiary);margin-top:6px">织物 #5C7D6A · 铝 #7A9684</p>
       </div>
     </div>
 
-    <!-- Material detail cards -->
-    <div class="col2 reveal" style="margin-top:48px">
-      <div style="background:var(--card);border:1px solid var(--border-light);border-radius:2px;padding:36px">
+    <div class="col2 reveal" style="margin-top:40px">
+      <div style="background:var(--card);border:1px solid var(--border-light);padding:36px;border-radius:2px">
         <h4 style="font-family:var(--font-serif);font-size:18px;margin-bottom:16px">Kvadrat 声学织物</h4>
-        <p style="font-size:14px;color:var(--text-secondary);line-height:1.9">
-          丹麦 Kvadrat 定制声学织物，0.8mm 厚度，透声率 94%。<br><br>
-          表面微纹理提供细腻触感，同时有效隐藏内部扬声器单元。<br><br>
-          阻燃等级 B1，耐磨性 50,000+ Martindale。
-        </p>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.9">丹麦 Kvadrat 定制声学织物，0.8mm 厚度，透声率 94%。表面微纹理提供细腻触感，同时有效隐藏内部扬声器单元。阻燃等级 B1，耐磨性 50,000+ Martindale。</p>
       </div>
-      <div style="background:var(--card);border:1px solid var(--border-light);border-radius:2px;padding:36px">
+      <div style="background:var(--card);border:1px solid var(--border-light);padding:36px;border-radius:2px">
         <h4 style="font-family:var(--font-serif);font-size:18px;margin-bottom:16px">喷砂阳极氧化铝</h4>
-        <p style="font-size:14px;color:var(--text-secondary);line-height:1.9">
-          6063 铝合金，120# 玻璃珠喷砂处理。<br><br>
-          表面粗糙度 Ra 1.2μm——足够细腻以抵抗指纹，足够粗糙以提供温暖的金属触感。<br><br>
-          阳极氧化膜厚 12μm，盐雾测试 400h+。
-        </p>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.9">6063 铝合金，120# 玻璃珠喷砂处理。表面粗糙度 Ra 1.2μm——足够细腻以抵抗指纹，足够粗糙以提供温暖的金属触感。阳极氧化膜厚 12μm，盐雾测试 400h+。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ EXPLODED VIEW ============ -->
-<section class="sec">
+<!-- ============ 05 · FINAL DESIGN ============ -->
+<section class="sec no-alt">
   <div class="sec-inner">
-    <span class="sec-tag reveal">05 · Technical Design</span>
-    <h2 class="sec-title reveal">结构分解 · 爆炸视图</h2>
-    <p class="sec-desc reveal" style="margin-bottom:24px">7 层组件精密堆叠，每层之间有明确的装配关系。设计考虑了可制造性和可维修性。</p>
+    <span class="sec-tag reveal">05 · Final Design</span>
+    <h2 class="sec-title reveal">最终方案 · 技术规格</h2>
+    <p class="sec-desc reveal" style="margin-bottom:24px">经过 12 周迭代，从概念草图到 CMF 定义，Rift 最终方案如下：</p>
 
-    <div class="exploded-area reveal">
-      <svg viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="exAlum" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#d5cec2"/><stop offset="30%" stop-color="#b8af9f"/><stop offset="70%" stop-color="#c8c0b2"/><stop offset="100%" stop-color="#a89e8c"/>
-          </linearGradient>
-          <linearGradient id="exFabric" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#3a3632"/><stop offset="50%" stop-color="#1e1c1a"/><stop offset="100%" stop-color="#2e2b27"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Layer 7: Top cap -->
-        <g transform="translate(250,60)">
-          <ellipse cx="0" cy="0" rx="68" ry="18" fill="#e0d8cc"/>
-          <ellipse cx="0" cy="0" rx="64" ry="16" fill="#d5cec2"/>
-          <ellipse cx="0" cy="-4" rx="58" ry="14" fill="#e8e3d8"/>
-          <text x="70" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">顶盖 · ABS+PC</text>
-          <line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 6: Control module -->
-        <g transform="translate(250,140)">
-          <ellipse cx="0" cy="0" rx="66" ry="17" fill="#d0c8ba"/>
-          <ellipse cx="0" cy="0" rx="62" ry="15" fill="#e0d8cc"/>
-          <circle cx="-25" cy="-3" r="5" fill="#c8bfae"/>
-          <circle cx="0" cy="-5" r="5" fill="#c8bfae"/>
-          <circle cx="25" cy="-3" r="5" fill="#c8bfae"/>
-          <text x="72" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">控制模块 · PCB</text>
-          <line x1="57" y1="2" x2="42" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 5: Fabric sleeve -->
-        <g transform="translate(250,230)">
-          <path d="M-66,-25 L-66,22 Q-66,32 0,34 Q66,32 66,22 L66,-25 Z" fill="url(#exFabric)"/>
-          <path d="M-66,-25 L-66,22 Q-66,32 0,34 Q66,32 66,22 L66,-25 Z" fill="url(#fabricPattern)"/>
-          <ellipse cx="0" cy="-25" rx="66" ry="17" fill="#3a3632"/>
-          <text x="75" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">声学织物套 · Kvadrat</text>
-          <line x1="60" y1="2" x2="45" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 4: Speaker driver -->
-        <g transform="translate(250,320)">
-          <ellipse cx="0" cy="0" rx="60" ry="16" fill="#555"/>
-          <ellipse cx="0" cy="0" rx="55" ry="14" fill="#3a3a3a"/>
-          <ellipse cx="0" cy="-2" rx="25" ry="7" fill="#222"/>
-          <ellipse cx="0" cy="-2" rx="18" ry="5" fill="#111"/>
-          <text x="68" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">扬声器单元 · Ø66mm</text>
-          <line x1="53" y1="2" x2="38" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 3: Battery -->
-        <g transform="translate(250,400)">
-          <rect x="-45" y="-20" width="90" height="40" rx="4" fill="#444"/>
-          <rect x="-43" y="-18" width="86" height="36" rx="3" fill="#555"/>
-          <text x="0" y="4" text-anchor="middle" font-size="9" fill="#888" font-family="Inter">Li-ion 5000mAh</text>
-          <text x="53" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">电池组</text>
-          <line x1="43" y1="2" x2="28" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 2: Aluminum body -->
-        <g transform="translate(250,490)">
-          <path d="M-64,-30 L-64,28 Q-64,41 0,43 Q64,41 64,28 L64,-30 Z" fill="url(#exAlum)"/>
-          <ellipse cx="0" cy="-30" rx="64" ry="16" fill="#d5cec2"/>
-          <ellipse cx="0" cy="28" rx="64" ry="18" fill="#b8af9f"/>
-          <text x="72" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">铝制腔体 · 6063</text>
-          <line x1="57" y1="2" x2="42" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Layer 1: Base ring -->
-        <g transform="translate(250,550)">
-          <ellipse cx="0" cy="0" rx="66" ry="19" fill="#c8bfae"/>
-          <ellipse cx="0" cy="0" rx="60" ry="16" fill="#b0a694"/>
-          <text x="72" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">硅胶底座环</text>
-          <line x1="57" y1="2" x2="42" y2="2" stroke="var(--border)" stroke-width="0.5"/>
-        </g>
-
-        <!-- Assembly lines (light gray vertical dashes) -->
-        <line x1="150" y1="70" x2="150" y2="560" stroke="var(--border-light)" stroke-width="1" stroke-dasharray="4,6"/>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MULTI-VIEW ============ -->
-<section class="sec">
-  <div class="sec-inner">
-    <span class="sec-tag reveal">06 · Final Design</span>
-    <h2 class="sec-title reveal">最终方案 · 多角度视图</h2>
-
-    <div class="views-grid reveal">
-      <!-- Front view -->
-      <div class="view-card dark">
-        <div class="view-label">Front · 正视图</div>
-        <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="fvBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f0ece4"/><stop offset="15%" stop-color="#e0dad0"/><stop offset="40%" stop-color="#c8bfae"/><stop offset="55%" stop-color="#bfb5a2"/><stop offset="70%" stop-color="#d0c8ba"/><stop offset="100%" stop-color="#e0d8cc"/>
-            </linearGradient>
-            <linearGradient id="fvFabric" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#3a3530"/><stop offset="35%" stop-color="#1e1c18"/><stop offset="70%" stop-color="#2a2722"/><stop offset="100%" stop-color="#3a3530"/>
-            </linearGradient>
-          </defs>
-          <!-- Body -->
-          <path d="M55,40 L55,200 Q55,215 100,218 Q145,215 145,200 L145,40 Z" fill="url(#fvBody)"/>
-          <!-- Fabric upper -->
-          <clipPath id="fvClip"><path d="M54,40 L54,75 Q54,90 100,93 Q146,90 146,75 L146,40 Z"/></clipPath>
-          <g clip-path="url(#fvClip)">
-            <rect x="50" y="35" width="100" height="65" fill="url(#fvFabric)"/>
-            <rect x="50" y="35" width="100" height="65" fill="url(#fabricPattern)"/>
-          </g>
-          <!-- Rift line -->
-          <path d="M54,75 Q54,90 100,93 Q146,90 146,75" stroke="rgba(196,98,58,.4)" stroke-width="1" fill="none"/>
-          <!-- Buttons -->
-          <circle cx="85" cy="58" r="4" fill="rgba(255,255,255,.5)"/>
-          <circle cx="100" cy="55" r="4" fill="rgba(255,255,255,.5)"/>
-          <circle cx="115" cy="58" r="4" fill="rgba(255,255,255,.5)"/>
-          <!-- Bottom cap -->
-          <ellipse cx="100" cy="218" rx="45" ry="10" fill="#b8af9f"/>
-        </svg>
-      </div>
-
-      <!-- Side view -->
-      <div class="view-card dark">
-        <div class="view-label">Side · 侧视图</div>
-        <svg viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Same gradients but narrower -->
-          <path d="M70,35 L70,205 Q70,218 100,220 Q130,218 130,205 L130,35 Z" fill="url(#fvBody)"/>
-          <clipPath id="svClip"><path d="M69,35 L69,72 Q69,85 100,87 Q131,85 131,72 L131,35 Z"/></clipPath>
-          <g clip-path="url(#svClip)">
-            <rect x="65" y="30" width="70" height="60" fill="url(#fvFabric)"/>
-            <rect x="65" y="30" width="70" height="60" fill="url(#fabricPattern)"/>
-          </g>
-          <path d="M69,72 Q69,85 100,87 Q131,85 131,72" stroke="rgba(196,98,58,.4)" stroke-width="1" fill="none"/>
-          <ellipse cx="100" cy="220" rx="30" ry="8" fill="#b8af9f"/>
-        </svg>
-      </div>
-
-      <!-- Top view -->
-      <div class="view-card dark">
-        <div class="view-label">Top · 顶视图</div>
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <radialGradient id="tvGrad" cx="0.4" cy="0.35" r="0.6">
-            <stop offset="0%" stop-color="#f5f2ec"/><stop offset="40%" stop-color="#e0dad0"/><stop offset="100%" stop-color="#b8af9f"/>
-          </radialGradient>
-          <ellipse cx="100" cy="100" rx="72" ry="22" fill="url(#tvGrad)"/>
-          <ellipse cx="100" cy="100" rx="64" ry="18" fill="#2e2b27"/>
-          <ellipse cx="100" cy="100" rx="56" ry="15" fill="url(#fabricPattern)" opacity="0.5"/>
-          <!-- Buttons on top -->
-          <circle cx="85" cy="96" r="5" fill="rgba(255,255,255,.4)"/>
-          <circle cx="100" cy="94" r="5" fill="rgba(255,255,255,.4)"/>
-          <circle cx="115" cy="96" r="5" fill="rgba(255,255,255,.4)"/>
-          <ellipse cx="100" cy="110" rx="4" ry="2" fill="var(--accent)" opacity="0.6"/>
-        </svg>
-      </div>
-    </div>
-
-    <!-- Specs table -->
-    <div class="reveal" style="max-width:var(--max-text);margin:48px auto 0">
+    <div class="reveal" style="max-width:var(--max-text);margin:0 auto">
       <table class="spec-table">
         <tr><td>产品名称</td><td>Rift 便携蓝牙音箱</td></tr>
         <tr><td>尺寸</td><td>Ø88mm × 210mm</td></tr>
@@ -718,101 +371,63 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
         <tr><td>防水等级</td><td>IPX4（防溅水）</td></tr>
         <tr><td>电池续航</td><td>12 小时（50% 音量）</td></tr>
         <tr><td>充电接口</td><td>USB-C · 支持快充</td></tr>
-        <tr><td>材料</td><td>Kvadrat 声学织物 · 6063 铝合金 · 硅胶</td></tr>
+        <tr><td>核心材料</td><td>Kvadrat 声学织物 · 6063 铝合金 · 硅胶</td></tr>
+        <tr><td>配色方案</td><td>暖沙色 / 深空灰 / 苔藓绿</td></tr>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ============ SCENARIO ============ -->
+<!-- ============ 06 · STRUCTURE ============ -->
 <section class="sec">
   <div class="sec-inner">
-    <span class="sec-tag reveal">07 · Context</span>
-    <h2 class="sec-title reveal">使用场景</h2>
-    <p class="sec-desc reveal" style="margin-bottom:40px">
-      Rift 被设计为静止时的一件陈设，与激活后的一个乐器——两种身份之间的转换，就是用户每天的仪式感。
-    </p>
+    <span class="sec-tag reveal">06 · Technical Design</span>
+    <h2 class="sec-title reveal">结构分解 · 爆炸视图</h2>
+    <p class="sec-desc reveal" style="margin-bottom:32px">7 层组件精密堆叠，每层之间有明确的装配关系。设计考虑了可制造性和可维修性——爆炸视图不是展示技巧，是逼自己把每一层堆叠关系和装配顺序想清楚。</p>
 
-    <div class="col2 reveal">
-      <!-- Scenario illustration 1 -->
-      <div style="background:linear-gradient(160deg,#f5f2ee 0%,#ece7df 40%,#e8e3d9 100%);border:1px solid var(--border-light);border-radius:2px;padding:48px;display:flex;flex-direction:column;align-items:center;gap:24px">
-        <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Bookshelf scene -->
-          <rect x="20" y="120" width="260" height="12" rx="2" fill="#c8bfae"/>
-          <rect x="30" y="132" width="10" height="60" fill="#d5cec2"/>
-          <rect x="260" y="132" width="10" height="60" fill="#d5cec2"/>
-          <!-- Books -->
-          <rect x="50" y="80" width="14" height="42" rx="1" fill="#a08060"/>
-          <rect x="68" y="70" width="12" height="52" rx="1" fill="#7a9a80"/>
-          <rect x="84" y="85" width="16" height="37" rx="1" fill="#c0a880"/>
-          <!-- Rift speaker on shelf -->
-          <g transform="translate(160,65)">
-            <rect x="-14" y="-55" width="28" height="55" rx="12" fill="#e8e3d8"/>
-            <rect x="-14" y="-55" width="28" height="22" rx="12" fill="#2e2b27"/>
-            <rect x="-14" y="-35" width="28" height="2" fill="rgba(196,98,58,.3)"/>
-          </g>
-          <!-- More books -->
-          <rect x="195" y="78" width="13" height="44" rx="1" fill="#6078a0"/>
-          <rect x="212" y="82" width="15" height="40" rx="1" fill="#a07060"/>
-        </svg>
-        <p style="font-size:14px;color:var(--text-secondary);text-align:center;line-height:1.8">
-          <strong style="color:var(--text)">书架一隅</strong><br>静止时，它是书架上的一件雕塑——与书籍、器物同处一个空间，不急不躁。
-        </p>
-      </div>
-
-      <!-- Scenario illustration 2 -->
-      <div style="background:linear-gradient(160deg,#1c1a17 0%,#22201c 40%,#1a1815 100%);border:1px solid rgba(255,255,255,.06);border-radius:2px;padding:48px;display:flex;flex-direction:column;align-items:center;gap:24px">
-        <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Table surface -->
-          <rect x="10" y="120" width="280" height="8" rx="2" fill="rgba(255,255,255,.06)"/>
-          <!-- Coffee cup -->
-          <ellipse cx="80" cy="118" rx="18" ry="4" fill="rgba(255,255,255,.08)"/>
-          <path d="M62,118 L66,85 Q66,82 80,82 Q94,82 94,85 L98,118" stroke="rgba(255,255,255,.15)" fill="rgba(255,255,255,.04)"/>
-          <ellipse cx="80" cy="82" rx="16" ry="4" fill="rgba(255,255,255,.1)"/>
-          <!-- Steam -->
-          <path d="M75,72 Q72,60 78,50" stroke="rgba(255,255,255,.08)" stroke-width="1" fill="none"/>
-          <path d="M82,68 Q85,55 80,45" stroke="rgba(255,255,255,.06)" stroke-width="1" fill="none"/>
-          <!-- Rift speaker -->
-          <g transform="translate(200,60)">
-            <rect x="-20" y="-60" width="40" height="60" rx="16" fill="#e8e3d8"/>
-            <rect x="-20" y="-60" width="40" height="24" rx="16" fill="#2e2b27"/>
-            <rect x="-20" y="-38" width="40" height="2" fill="rgba(196,98,58,.4)"/>
-          </g>
-          <!-- Sound waves -->
-          <path d="M175,68 Q168,60 175,52" stroke="rgba(255,255,255,.1)" stroke-width="1" fill="none"/>
-          <path d="M170,72 Q160,60 170,48" stroke="rgba(255,255,255,.06)" stroke-width="1" fill="none"/>
-        </svg>
-        <p style="font-size:14px;color:var(--dark-text-secondary);text-align:center;line-height:1.8">
-          <strong style="color:var(--dark-text)">晨间仪式</strong><br>播放时，声音从斜切面后透出——你知道音乐在哪，你的身体知道该面向哪里。
-        </p>
-      </div>
+    <!-- Keep SVG exploded view - it's accurate technical illustration -->
+    <div style="background:linear-gradient(180deg,#f7f5f1 0%,#f0ede6 50%,#ece7df 100%);border-radius:2px;border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;margin:24px 0;overflow:hidden" class="reveal">
+      <svg viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:650px;padding:clamp(32px,8vw,80px)">
+        <defs>
+          <linearGradient id="exAlum" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d5cec2"/><stop offset="30%" stop-color="#b8af9f"/><stop offset="70%" stop-color="#c8c0b2"/><stop offset="100%" stop-color="#a89e8c"/>
+          </linearGradient>
+          <linearGradient id="exFabric" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3a3632"/><stop offset="50%" stop-color="#1e1c1a"/><stop offset="100%" stop-color="#2e2b27"/>
+          </linearGradient>
+          <pattern id="fabPat" width="3" height="3" patternUnits="userSpaceOnUse">
+            <rect width="3" height="3" fill="transparent"/><circle cx="1.5" cy="1.5" r="0.4" fill="rgba(0,0,0,0.08)"/>
+          </pattern>
+        </defs>
+        <!-- 7 layers from top to bottom -->
+        <g transform="translate(250,60)"><ellipse cx="0" cy="0" rx="68" ry="18" fill="#e0d8cc"/><ellipse cx="0" cy="0" rx="64" ry="16" fill="#d5cec2"/><ellipse cx="0" cy="-4" rx="58" ry="14" fill="#e8e3d8"/><text x="74" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">顶盖 · ABS+PC</text><line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,140)"><ellipse cx="0" cy="0" rx="66" ry="17" fill="#d0c8ba"/><ellipse cx="0" cy="0" rx="62" ry="15" fill="#e0d8cc"/><circle cx="-25" cy="-3" r="5" fill="#c8bfae"/><circle cx="0" cy="-5" r="5" fill="#c8bfae"/><circle cx="25" cy="-3" r="5" fill="#c8bfae"/><text x="74" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">控制模块 · PCB</text><line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,230)"><path d="M-66,-25 L-66,22 Q-66,32 0,34 Q66,32 66,22 L66,-25 Z" fill="url(#exFabric)"/><path d="M-66,-25 L-66,22 Q-66,32 0,34 Q66,32 66,22 L66,-25 Z" fill="url(#fabPat)"/><ellipse cx="0" cy="-25" rx="66" ry="17" fill="#3a3632"/><text x="74" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">声学织物套 · Kvadrat</text><line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,320)"><ellipse cx="0" cy="0" rx="60" ry="16" fill="#555"/><ellipse cx="0" cy="0" rx="55" ry="14" fill="#3a3a3a"/><ellipse cx="0" cy="-2" rx="25" ry="7" fill="#222"/><ellipse cx="0" cy="-2" rx="18" ry="5" fill="#111"/><text x="68" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">扬声器单元 · Ø66mm</text><line x1="53" y1="2" x2="38" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,400)"><rect x="-45" y="-20" width="90" height="40" rx="4" fill="#444"/><rect x="-43" y="-18" width="86" height="36" rx="3" fill="#555"/><text x="0" y="4" text-anchor="middle" font-size="9" fill="#888" font-family="Inter">Li-ion 5000mAh</text><text x="53" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">电池组</text><line x1="43" y1="2" x2="28" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,490)"><path d="M-64,-30 L-64,28 Q-64,41 0,43 Q64,41 64,28 L64,-30 Z" fill="url(#exAlum)"/><ellipse cx="0" cy="-30" rx="64" ry="16" fill="#d5cec2"/><ellipse cx="0" cy="28" rx="64" ry="18" fill="#b8af9f"/><text x="74" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">铝制腔体 · 6063</text><line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <g transform="translate(250,550)"><ellipse cx="0" cy="0" rx="66" ry="19" fill="#c8bfae"/><ellipse cx="0" cy="0" rx="60" ry="16" fill="#b0a694"/><text x="72" y="4" font-size="10" fill="var(--text-tertiary)" font-family="Inter">硅胶底座环</text><line x1="55" y1="2" x2="40" y2="2" stroke="var(--border)" stroke-width=".5"/></g>
+        <line x1="150" y1="70" x2="150" y2="560" stroke="var(--border-light)" stroke-width="1" stroke-dasharray="4,6"/>
+      </svg>
     </div>
+    <p style="text-align:center;font-size:11px;color:var(--text-tertiary);margin-top:8px" class="reveal">7 层组件堆叠示意 · 顶盖 → PCB → 织物套 → 扬声器单元 → 电池组 → 铝腔体 → 硅胶底座环</p>
   </div>
 </section>
 
-<!-- ============ OUTCOME ============ -->
-<section class="sec">
+<!-- ============ 07 · REFLECTION ============ -->
+<section class="sec no-alt">
   <div class="sec-inner">
-    <span class="sec-tag reveal">08 · Reflection</span>
+    <span class="sec-tag reveal">07 · Reflection</span>
     <h2 class="sec-title reveal">设计反思</h2>
 
     <div class="quote-block reveal">
-      <p>这个项目的关键转折点，是在第5周放弃"做一只好看音箱"的模糊目标，转而聚焦一个具体的设计语言——斜切分割。一个好的设计概念，应该能用一句话描述，而这句话本身就应该是一个好的设计。</p>
+      <p>这个项目的关键转折点，是在第 5 周放弃"做一只好看音箱"的模糊目标，转而聚焦一个具体的设计语言——斜切分割。一个好的设计概念，应该能用一句话描述，而这句话本身就应该是一个好的设计。</p>
     </div>
 
     <div class="outcome-grid reveal">
-      <div class="outcome-stat">
-        <div class="stat-num">7</div>
-        <div class="stat-label">组件层数</div>
-      </div>
-      <div class="outcome-stat">
-        <div class="stat-num">3</div>
-        <div class="stat-label">CMF 配色方案</div>
-      </div>
-      <div class="outcome-stat">
-        <div class="stat-num">12</div>
-        <div class="stat-label">周设计周期</div>
-      </div>
+      <div class="outcome-stat"><div class="stat-num">7</div><div class="stat-label">组件层数</div></div>
+      <div class="outcome-stat"><div class="stat-num">3</div><div class="stat-label">CMF 配色方案</div></div>
+      <div class="outcome-stat"><div class="stat-num">12</div><div class="stat-label">周设计周期</div></div>
     </div>
 
     <div class="col2 reveal" style="margin-top:48px">
@@ -836,7 +451,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
   </div>
 </section>
 
-<!-- ============ FOOTER / CONTACT ============ -->
+<!-- ============ FOOTER ============ -->
 <footer class="footer">
   <div class="reveal">
     <h2>对这个项目感兴趣？</h2>
@@ -859,13 +474,12 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
 <script>
 (function(){
   'use strict';
-  const nav=document.getElementById('nav');
+  var nav=document.getElementById('nav');
   window.addEventListener('scroll',function(){
-    if(window.scrollY>60)nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
+    nav.classList[window.scrollY>60?'add':'remove']('scrolled');
   },{passive:true});
 
-  const obs=new IntersectionObserver(function(entries){
+  var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');obs.unobserve(e.target)}})
   },{rootMargin:'0px 0px -40px 0px',threshold:.08});
   document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
@@ -878,9 +492,10 @@ a{color:inherit;text-decoration:none}ul{list-style:none}
   });
 
   var wl=document.getElementById('wechatLink');
-  if(wl){wl.addEventListener('click',function(e){e.preventDefault();var id='JCX-1416907076';
+  if(wl){wl.addEventListener('click',function(e){e.preventDefault();
+    var id='JCX-1416907076';
+    function t(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#141310;color:#e8e6e2;padding:14px 28px;border-radius:3px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;font-family:"Inter","PingFang SC",sans-serif;';document.body.appendChild(d);requestAnimationFrame(function(){d.style.opacity='1'});setTimeout(function(){d.style.opacity='0';setTimeout(function(){document.body.removeChild(d)},300)},2500)}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(function(){t('微信号已复制：'+id)})['catch'](function(){t('微信号：'+id)})}else{t('微信号：'+id)}
-    function t(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#141310;color:#e8e6e2;padding:14px 28px;border-radius:3px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;font-family:"Inter","PingFang SC",sans-serif;letter-spacing:.03em;';document.body.appendChild(d);requestAnimationFrame(function(){d.style.opacity='1'});setTimeout(function(){d.style.opacity='0';setTimeout(function(){document.body.removeChild(d)},300)},2500)}
   })}
 })();
 </script>
