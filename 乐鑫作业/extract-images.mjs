@@ -12,6 +12,10 @@ const tasks = [
   { json: 'mascot.json', name: 'mascot' },
   { json: 'package-spicy.json', name: 'package-spicy' },
   { json: 'poster.json', name: 'poster' },
+  { json: 'package-garlic.json', name: 'package-garlic' },
+  { json: 'pack-herb.json', name: 'package-herb' },
+  { json: 'coldchain.json', name: 'coldchain' },
+  { json: 'takeout-bag.json', name: 'takeout-bag' },
 ];
 
 for (const t of tasks) {

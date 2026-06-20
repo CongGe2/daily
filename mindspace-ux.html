@@ -111,6 +111,11 @@ a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-wi
 
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.revealed{opacity:1;transform:translateY(0)}
+/* Fallback: show images even if JS doesn't run */
+@media(scripting:none){.reveal{opacity:1;transform:none}}
+.product-shot.reveal img{display:block;width:100%}
+/* Ensure reveal containers with images are visible */
+.reveal:has(img){min-height:100px}
 
 @media(max-width:1024px){
   .hero-inner{grid-template-columns:1fr;gap:40px}
@@ -160,7 +165,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-wi
       </div>
     </div>
     <div class="hero-visual reveal">
-      <img src="images/ux/optimized/mindspace-hero.jpg" alt="MindSpace 冥想App 主界面">
+      <img src="images/ux/optimized/mindspace-hero.jpg" alt="MindSpace 冥想App 主界面" style="width:100%;max-width:460px">
     </div>
   </div>
 </section>
@@ -203,7 +208,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-wi
     </p>
 
     <figure class="product-shot reveal">
-      <img src="images/ux/optimized/mindspace-concepts.jpg" alt="AI 生成的 6 种视觉方向探索" loading="lazy">
+      <img src="images/ux/optimized/mindspace-concepts.jpg" alt="AI 生成的 6 种视觉方向探索">
       <figcaption>Stable Diffusion 生成的 6 种视觉风格探索：水彩植物 · 星云渐变 · 几何暖色 · 禅意水墨 · 有机流体 · 山峦剪影</figcaption>
     </figure>
 
@@ -242,7 +247,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-wi
     </div>
 
     <figure class="product-shot reveal">
-      <img src="images/ux/optimized/mindspace-sd-workflow.jpg" alt="Stable Diffusion 工作流程：Prompt → 生成 → 筛选 → 落地" loading="lazy">
+      <img src="images/ux/optimized/mindspace-sd-workflow.jpg" alt="Stable Diffusion 工作流程：Prompt → 生成 → 筛选 → 落地">
       <figcaption>三阶段工作流：Prompt Engineering → 多方案生成与对比 → 入选方案的精修与 UI 整合</figcaption>
     </figure>
   </div>
@@ -288,7 +293,7 @@ a{color:inherit;text-decoration:none}ul{list-style:none}img{display:block;max-wi
     <p class="sec-desc reveal" style="margin-bottom:24px">从 AI 生成的数百张素材中精选整合，落地为 4 个核心界面的高保真原型。每个界面都体现了 AI 视觉探索与 UX 设计原则的结合。</p>
 
     <figure class="product-shot reveal">
-      <img src="images/ux/optimized/mindspace-screens.jpg" alt="MindSpace 四屏展示" loading="lazy">
+      <img src="images/ux/optimized/mindspace-screens.jpg" alt="MindSpace 四屏展示">
       <figcaption>从左至右：Onboarding（AI 渐变背景）· Home（呼吸计时器 + 分类卡片）· Session（音频播放 + AI 插图）· Profile（成就与数据）</figcaption>
     </figure>
 

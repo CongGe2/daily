@@ -3,231 +3,445 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>潜江虾局 · 品牌形象与包装设计 | 毕业设计</title>
-<meta name="description" content="潜江小龙虾预制菜品牌形象与包装设计 — 完整品牌视觉系统">
+<title>潜江虾局 · 品牌形象与包装设计 | 金乐鑫 毕业设计</title>
+<meta name="description" content="潜江小龙虾预制菜品牌形象与包装设计">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --brand-red: #E8462C; --brand-gold: #F5A623; --brand-black: #1C1915;
-  --brand-white: #FFF8F0; --spicy: #E8462C; --garlic: #F5A623; --herb: #8B3A1F;
-  --border: #e8e4de; --text: #1C1915; --text-secondary: #6e6a64;
-  --font-sans: "Noto Sans SC","Inter","PingFang SC",sans-serif;
+  --red: #E8462C; --gold: #F5A623; --black: #1C1915; --white: #FFF8F0;
+  --spicy: #E8462C; --garlic: #F5A623; --herb: #8B3A1F;
+  --border: #e8e4de; --text: #1C1915; --text2: #6e6a64;
+  --sans: "Noto Sans SC","Inter","PingFang SC",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:var(--font-sans);font-size:16px;line-height:1.8;color:var(--text);background:var(--brand-white);overflow-x:hidden}
+body{font-family:var(--sans);font-size:16px;line-height:1.8;color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* ── Floating crayfish decorations ── */
+.floating-crayfish{position:fixed;pointer-events:none;z-index:0;opacity:0.06;font-size:80px;animation:floatAround 20s infinite ease-in-out}
+.floating-crayfish:nth-child(1){top:10%;left:5%;animation-delay:0s;font-size:60px}
+.floating-crayfish:nth-child(2){top:60%;right:3%;animation-delay:-7s;font-size:90px}
+.floating-crayfish:nth-child(3){top:30%;right:8%;animation-delay:-14s;font-size:50px}
+.floating-crayfish:nth-child(4){top:80%;left:8%;animation-delay:-3s;font-size:70px}
+.floating-crayfish:nth-child(5){top:50%;left:3%;animation-delay:-10s;font-size:55px}
+@keyframes floatAround{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(30px,-20px) rotate(5deg)}50%{transform:translate(-10px,25px) rotate(-3deg)}75%{transform:translate(-25px,-15px) rotate(2deg)}}
+
+/* ── Section dividers ── */
+.section-divider{text-align:center;padding:0;position:relative;z-index:1;font-size:28px;letter-spacing:0.3em;opacity:0.25;margin:-20px 0}
+
+/* ── Hot badge ── */
+.hot-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:5px 14px;border-radius:50px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,70,44,0.4)}50%{box-shadow:0 0 0 10px rgba(232,70,44,0)}}
+
+h2{font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:0.02em;position:relative;z-index:1}
+h3{font-size:20px;font-weight:700;position:relative;z-index:1}
+.section-label{font-size:11px;font-weight:700;letter-spacing:0.15em;color:var(--red);margin-bottom:16px;text-transform:uppercase;position:relative;z-index:1}
+.section-desc{font-size:15px;color:var(--text2);max-width:640px;line-height:1.9;margin-bottom:36px;position:relative;z-index:1}
 
 /* Hero */
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;position:relative;background:linear-gradient(180deg,var(--brand-red) 0%,#c0392b 60%,var(--brand-black) 100%);color:#fff}
-.hero-badge{font-size:14px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border:2px solid rgba(255,255,255,0.4);padding:8px 24px;border-radius:50px;margin-bottom:32px}
-.hero h1{font-size:clamp(48px,10vw,96px);font-weight:900;letter-spacing:0.06em;margin-bottom:16px;text-shadow:0 4px 24px rgba(0,0,0,0.3)}
-.hero-tagline{font-size:clamp(18px,3vw,24px);font-weight:400;opacity:0.9;margin-bottom:48px}
-.hero-scroll{font-size:12px;letter-spacing:0.1em;opacity:0.5;animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:linear-gradient(180deg,var(--red) 0%,#c0392b 60%,var(--black) 100%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext y='45' font-size='35'%3E🦞%3C/text%3E%3C/svg%3E") repeat;opacity:0.04;animation:slideBg 60s linear infinite}
+@keyframes slideBg{0%{transform:translate(0,0)}100%{transform:translate(60px,60px)}}
+.hero-badge{font-size:13px;font-weight:700;letter-spacing:0.2em;border:2px solid rgba(255,255,255,0.4);padding:8px 24px;border-radius:50px;margin-bottom:28px;position:relative;z-index:1}
+.hero h1{font-size:clamp(48px,10vw,96px);font-weight:900;letter-spacing:0.06em;margin-bottom:12px;text-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;z-index:1}
+.hero h1 .crayfish-emoji{display:inline-block;animation:bounceEmoji 1s infinite}
+@keyframes bounceEmoji{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+.hero-tag{font-size:clamp(16px,3vw,22px);opacity:0.9;margin-bottom:40px;position:relative;z-index:1}
+.hero-info{font-size:13px;opacity:0.5;position:relative;z-index:1}
+.hero-crayfish-row{display:flex;gap:16px;margin-top:32px;font-size:40px;position:relative;z-index:1;animation:slideUpDown 3s infinite ease-in-out}
+@keyframes slideUpDown{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 /* Sections */
-.section{padding:100px 24px;max-width:1100px;margin:0 auto}
-.section-label{font-size:12px;font-weight:700;letter-spacing:0.15em;color:var(--brand-red);margin-bottom:16px;text-transform:uppercase}
-.section-title{font-size:clamp(28px,4vw,42px);font-weight:900;margin-bottom:16px;letter-spacing:0.02em}
-.section-desc{font-size:16px;color:var(--text-secondary);max-width:600px;line-height:1.9;margin-bottom:40px}
+.section{padding:80px 24px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.section-alt{background:#fff}
 
-/* Brand Strategy Grid */
-.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.strategy-card{background:#fff;border:1px solid var(--border);padding:32px;border-radius:4px}
-.strategy-card h3{font-size:14px;font-weight:700;color:var(--brand-red);margin-bottom:8px;letter-spacing:0.05em}
-.strategy-card p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+/* Decorative section crayfish */
+.section-corner{position:absolute;font-size:60px;opacity:0.08;pointer-events:none;z-index:0}
+.section-corner.tl{top:20px;left:20px}
+.section-corner.br{bottom:20px;right:20px}
 
-/* Color system */
-.color-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-.color-swatch{height:120px;border-radius:4px;display:flex;align-items:flex-end;padding:16px;font-size:12px;font-weight:700;color:#fff}
-.color-swatch.light{color:var(--text)}
-.color-info{padding:8px 0;font-size:11px;color:var(--text-secondary)}
+/* Grid */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;position:relative;z-index:1}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;position:relative;z-index:1}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;position:relative;z-index:1}
+.card{background:#fff;border:1px solid var(--border);padding:28px;border-radius:4px;position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.06)}
+.card::after{content:'🦞';position:absolute;bottom:-10px;right:-8px;font-size:40px;opacity:0.04;pointer-events:none}
+.card h3{font-size:14px;font-weight:700;color:var(--red);margin-bottom:8px;letter-spacing:0.05em}
+.card p{font-size:14px;color:var(--text2);line-height:1.7}
 
-/* Flavor cards */
-.flavor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-.flavor-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
-.flavor-header{padding:24px 28px;color:#fff;font-weight:900;font-size:20px}
-.flavor-header.spicy{background:var(--spicy)}
-.flavor-header.garlic{background:var(--garlic)}
-.flavor-header.herb{background:var(--herb)}
-.flavor-body{padding:24px 28px}
-.flavor-body p{font-size:14px;color:var(--text-secondary)}
-.flavor-body ul{list-style:none;margin-top:12px}
-.flavor-body li{font-size:13px;padding:4px 0;padding-left:16px;position:relative;color:var(--text-secondary)}
-.flavor-body li::before{content:'';position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:50%;background:var(--brand-red)}
+/* Colors */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;position:relative;z-index:1}
+.swatch{height:100px;border-radius:4px;display:flex;align-items:flex-end;padding:12px;font-size:11px;font-weight:700;color:#fff}
+.swatch.light{color:var(--text)}
+.swatch-info{padding:6px 0;font-size:10px;color:var(--text2)}
 
-/* Packaging */
-.packaging-showcase{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-.packaging-img{border-radius:4px;border:1px solid var(--border);width:100%}
-.packaging-list{list-style:none}
-.packaging-list li{padding:12px 0;padding-left:24px;position:relative;font-size:15px;border-bottom:1px solid var(--border)}
-.packaging-list li::before{content:'';position:absolute;left:0;top:20px;width:6px;height:6px;background:var(--brand-red);border-radius:50%}
-.packaging-list strong{color:var(--text)}
+/* Flavors */
+.flavor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;position:relative;z-index:1}
+.flavor-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:transform 0.3s}
+.flavor-card:hover{transform:translateY(-4px)}
+.flavor-head{padding:20px 24px;color:#fff;font-weight:900;font-size:18px}
+.flavor-head.spicy{background:var(--spicy)}
+.flavor-head.garlic{background:var(--garlic)}
+.flavor-head.herb{background:var(--herb)}
+.flavor-body{padding:20px 24px;font-size:13px;color:var(--text2)}
+.flavor-body ul{list-style:none;margin-top:8px}
+.flavor-body li{font-size:12px;padding:3px 0 3px 14px;position:relative}
+.flavor-body li::before{content:'🦞';position:absolute;left:0;top:7px;font-size:8px}
 
-/* Mascot showcase */
-.mascot-section{background:var(--brand-black);color:#fff;text-align:center}
-.mascot-section .section-label{color:var(--brand-gold)}
-.mascot-section .section-title{color:#fff}
-.mascot-section .section-desc{color:rgba(255,255,255,0.6);margin:0 auto 40px}
-.mascot-img{max-width:500px;margin:0 auto;display:block;border-radius:8px}
+/* ── PACKAGING SELECTOR ── */
+.packaging-showcase{background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:1;box-shadow:0 4px 32px rgba(0,0,0,0.04)}
+.packaging-main{padding:40px;text-align:center;position:relative}
+.packaging-main img{max-width:600px;width:100%;border-radius:4px;transition:opacity 0.3s}
+.packaging-main .pack-label{position:absolute;top:20px;right:30px;background:var(--red);color:#fff;padding:6px 16px;border-radius:50px;font-size:13px;font-weight:700}
+.flavor-selector{display:flex;border-top:1px solid var(--border)}
+.flavor-btn{flex:1;padding:18px 12px;border:none;background:#faf9f6;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px;position:relative}
+.flavor-btn:hover{background:#fff}
+.flavor-btn.active{background:#fff;color:var(--red)}
+.flavor-btn.active::after{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:var(--red)}
+.flavor-btn:nth-child(1).active{color:var(--spicy)}
+.flavor-btn:nth-child(1).active::after{background:var(--spicy)}
+.flavor-btn:nth-child(2).active{color:var(--garlic)}
+.flavor-btn:nth-child(2).active::after{background:var(--garlic)}
+.flavor-btn:nth-child(3).active{color:var(--herb)}
+.flavor-btn:nth-child(3).active::after{background:var(--herb)}
+.flavor-btn .btn-emoji{font-size:24px}
+.flavor-btn .btn-label{text-align:left}
+.flavor-btn .btn-label small{display:block;font-size:10px;font-weight:400;color:var(--text2);margin-top:2px}
+.packaging-details{padding:32px 40px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.packaging-details h4{font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px;letter-spacing:0.05em}
+.packaging-details ul{list-style:none}
+.packaging-details li{font-size:13px;padding:4px 0;color:var(--text2);padding-left:16px;position:relative}
+.packaging-details li::before{content:'▸';position:absolute;left:0;color:var(--red);font-size:8px;top:7px}
 
-/* Poster */
-.poster-img{width:100%;max-width:700px;margin:0 auto;display:block;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,0.15)}
+/* Pack grid */
+.pack-row{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-bottom:40px;position:relative;z-index:1}
+.pack-row.reverse .pack-img{order:2}
+.pack-row.reverse .pack-text{order:1}
+.pack-img{width:100%;border-radius:4px;border:1px solid var(--border)}
+.pack-list{list-style:none}
+.pack-list li{padding:10px 0 10px 20px;position:relative;font-size:14px;border-bottom:1px solid var(--border);color:var(--text2)}
+.pack-list li::before{content:'🦞';position:absolute;left:0;top:15px;font-size:10px}
+.pack-list strong{color:var(--text)}
 
-/* Full-width image */
-.full-img{width:100%;border-radius:4px;border:1px solid var(--border)}
+/* Mascot */
+.dark-section{background:var(--black);color:#fff;text-align:center;position:relative;overflow:hidden}
+.dark-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(232,70,44,0.15) 0%,transparent 60%),radial-gradient(circle at 70% 50%,rgba(245,166,35,0.1) 0%,transparent 50%);pointer-events:none}
+.dark-section .section-label{color:var(--gold)}
+.dark-section .section-title{color:#fff}
+.dark-section .section-desc{color:rgba(255,255,255,0.6);margin:0 auto 36px}
+.mascot-display{max-width:450px;margin:0 auto;border-radius:8px;display:block;position:relative;z-index:1}
+
+/* Table */
+.research-table{width:100%;border-collapse:collapse;font-size:13px;margin:20px 0;position:relative;z-index:1}
+.research-table th{background:var(--red);color:#fff;padding:12px 16px;text-align:left;font-weight:600;font-size:11px;letter-spacing:0.05em}
+.research-table td{padding:10px 16px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.research-table tr:nth-child(even) td{background:#fdfbf8}
+
+/* Quote */
+.quote{border-left:3px solid var(--red);padding:24px 32px;margin:32px 0;background:#fff;font-size:16px;font-style:italic;color:var(--text2);position:relative;z-index:1}
+.quote strong{color:var(--red);font-style:normal}
+.quote::after{content:'🦞';position:absolute;bottom:-5px;right:16px;font-size:30px;opacity:0.08}
+
+/* Marquee strip */
+.marquee-strip{background:var(--red);color:#fff;padding:12px 0;overflow:hidden;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:0.1em;position:relative;z-index:1}
+.marquee-strip span{display:inline-block;animation:marquee 25s linear infinite}
+.marquee-strip span::after{content:'🦞 开锅即虾局 · 年轻人的夜宵预制菜 · QIANJIANG SHRIMP BUREAU · 潜江原产地直供 · 麻辣 | 蒜蓉 | 十三香 · GET THE PARTY CRAWLING 🦞 开锅即虾局 · 年轻人的夜宵预制菜 · QIANJIANG SHRIMP BUREAU · 潜江原产地直供 · 麻辣 | 蒜蓉 | 十三香 · GET THE PARTY CRAWLING 🦞 开锅即虾局 · 年轻人的夜宵预制菜 · QIANJIANG SHRIMP BUREAU'}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Stats strip */
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);background:var(--black);color:#fff;text-align:center;position:relative;z-index:1}
+.stat-item{padding:24px 12px}
+.stat-num{font-size:28px;font-weight:900;color:var(--gold)}
+.stat-label{font-size:11px;opacity:0.6;margin-top:4px;letter-spacing:0.05em}
 
 /* Footer */
-footer{background:var(--brand-black);color:rgba(255,255,255,0.5);text-align:center;padding:48px 24px;font-size:13px}
+footer{background:var(--black);color:rgba(255,255,255,0.5);text-align:center;padding:48px 24px;font-size:12px;position:relative}
+footer::before{content:'🦞🦞🦞';display:block;font-size:24px;letter-spacing:0.5em;margin-bottom:16px;opacity:0.3}
 
 @media(max-width:768px){
-  .packaging-showcase{grid-template-columns:1fr}
-  .hero h1{font-size:clamp(36px,12vw,56px)}
+  .pack-row{grid-template-columns:1fr}
+  .pack-row.reverse .pack-img{order:-1}
+  .packaging-details{grid-template-columns:1fr}
+  .flavor-btn{font-size:13px;padding:14px 8px}
+  .flavor-btn .btn-emoji{font-size:18px}
+  .stats-strip{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- Floating decorations -->
+<div class="floating-crayfish">🦞</div>
+<div class="floating-crayfish">🦞</div>
+<div class="floating-crayfish">🦞</div>
+<div class="floating-crayfish">🦞</div>
+<div class="floating-crayfish">🦞</div>
+
+<!-- ═══════ HERO ═══════ -->
 <header class="hero">
   <div class="hero-badge">QIANJIANG SHRIMP BUREAU</div>
-  <h1>潜江虾局</h1>
-  <p class="hero-tagline">开锅即虾局 · 年轻人的夜宵预制菜</p>
-  <p class="hero-scroll">▼ 向下探索品牌系统</p>
+  <h1>潜江<span class="crayfish-emoji">🦞</span>虾局</h1>
+  <p class="hero-tag">开锅即虾局 · 年轻人的夜宵预制菜</p>
+  <div class="hero-crayfish-row">🦞 🦞 🦞</div>
+  <p class="hero-info">金乐鑫 毕业设计作品 · 品牌形象与包装设计</p>
 </header>
 
-<!-- BRAND STRATEGY -->
-<section class="section">
+<!-- Marquee -->
+<div class="marquee-strip"><span></span></div>
+
+<!-- Stats -->
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">经典口味</div></div>
+  <div class="stat-item"><div class="stat-num">潜江</div><div class="stat-label">地理标志产地</div></div>
+  <div class="stat-item"><div class="stat-num">18-28</div><div class="stat-label">目标年龄层</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">包装SKU</div></div>
+</div>
+
+<!-- ═══════ RESEARCH ═══════ -->
+<section class="section" style="position:relative">
+  <div class="section-corner tl">🦞</div>
+  <div class="section-corner br">🦞</div>
+  <p class="section-label"><span class="hot-badge">HOT</span> &nbsp; Market Research</p>
+  <h2>口味调研与竞品分析</h2>
+  <p class="section-desc">基于潜江龙虾地域品牌、预制菜市场和年轻夜宵场景的系统调研，确定三大核心口味的消费者需求与包装设计方向。</p>
+
+  <h3 style="margin-bottom:16px">🦞 三大口味消费者画像</h3>
+  <table class="research-table">
+    <tr><th>口味</th><th>目标人群</th><th>消费场景</th><th>口味特点</th><th>包装策略</th></tr>
+    <tr><td>🌶️ 麻辣</td><td>重口味爱好者 · 18-25岁男性为主</td><td>兄弟局 · 看球 · 夜宵摊 · 宿舍</td><td>重麻重辣 · 江湖气 · 过瘾感</td><td>烈焰红主色 · 辣椒符号 · "开锅即辣"</td></tr>
+    <tr><td>🧄 蒜蓉</td><td>大众口味 · 18-28岁男女均衡</td><td>闺蜜局 · 露营 · 约会 · 聚餐</td><td>金蒜浓香 · 温和不呛 · 接受度最高</td><td>金蒜黄主色 · 蒜瓣图形 · "蒜你识货"</td></tr>
+    <tr><td>🫚 十三香</td><td>品质追求者 · 22-30岁有烹饪经验</td><td>家庭局 · 独享 · 品鉴 · 送礼</td><td>十三味香料慢熬 · 层次丰富 · 回味长</td><td>香料棕主色 · 香料图谱 · "一锅十三味"</td></tr>
+  </table>
+
+  <h3 style="margin:32px 0 16px">🦞 预制菜竞品对标</h3>
+  <div class="grid3">
+    <div class="card"><h3>自嗨锅</h3><p>强口味识别 · 货架冲击力 · 便利食用说明<br>借鉴：口味色块面积化、三步食用图示</p></div>
+    <div class="card"><h3>小龙坎食品</h3><p>餐饮品牌快消化 · 场景化营销 · 年轻市场<br>借鉴：堂食→到家场景转化、"局"文化塑造</p></div>
+    <div class="card"><h3>盒马鲜生</h3><p>线上线下融合 · 冷链全链路 · 扫码溯源<br>借鉴：冷链外箱设计、电商详情信息层级</p></div>
+  </div>
+
+  <blockquote class="quote"><strong>核心发现：</strong>小龙虾预制菜的竞争不在"谁的小龙虾更好吃"，而在"谁的包装让年轻人更想拍照发朋友圈"。口味差异化的终点不是味觉，是视觉——货架上三秒识别、社交平台一秒种草。</blockquote>
+</section>
+
+<!-- ═══════ BRAND STRATEGY ═══════ -->
+<section class="section-alt section" style="position:relative">
+  <div class="section-corner tl">🦞</div>
   <p class="section-label">Brand Strategy</p>
-  <h2 class="section-title">品牌定位</h2>
-  <p class="section-desc">把潜江地域优势转化为年轻化品牌语言，把"虾局"打造成年轻人的社交夜宵场景——不是卖一只虾，是卖一场局。</p>
-  <div class="strategy-grid">
-    <div class="strategy-card">
-      <h3>品牌名</h3>
-      <p>潜江虾局<br>QIANJIANG SHRIMP BUREAU</p>
-    </div>
-    <div class="strategy-card">
-      <h3>定位</h3>
-      <p>年轻人的夜宵社交预制菜品牌</p>
-    </div>
-    <div class="strategy-card">
-      <h3>口号</h3>
-      <p>开锅即虾局<br>Get the Party Crawling</p>
-    </div>
-    <div class="strategy-card">
-      <h3>目标</h3>
-      <p>18-28岁大学生与城市青年<br>宿舍/聚会/露营/外卖场景</p>
-    </div>
+  <h2>品牌定位</h2>
+  <p class="section-desc">把潜江的地域优势转化为年轻化品牌语言，把"虾局"打造成社交夜宵场景——不卖一只虾，卖一场局。</p>
+  <div class="grid4">
+    <div class="card"><h3>品牌名</h3><p>潜江虾局<br>QIANJIANG<br>SHRIMP BUREAU</p></div>
+    <div class="card"><h3>定位</h3><p>年轻人夜宵社交<br>预制菜品牌</p></div>
+    <div class="card"><h3>口号</h3><p>开锅即虾局<br>Get the Party<br>Crawling</p></div>
+    <div class="card"><h3>目标消费者</h3><p>18-28岁大学生<br>与城市青年<br>宿舍 / 聚会 / 露营</p></div>
   </div>
 </section>
 
-<!-- COLOR SYSTEM -->
-<section class="section" style="background:#fff">
+<!-- ═══════ COLOR SYSTEM ═══════ -->
+<section class="section" style="position:relative">
+  <div class="section-corner br">🦞</div>
   <p class="section-label">Visual System</p>
-  <h2 class="section-title">色彩系统</h2>
-  <p class="section-desc">三重口味对应三套色彩，在货架上形成强识别。</p>
+  <h2>色彩系统与口味编码</h2>
+  <p class="section-desc">三种口味对应三种独立色彩体系，货架上形成即时区隔。品牌主色虾红贯穿所有SKU保证品牌统一性。</p>
   <div class="color-grid">
-    <div><div class="color-swatch" style="background:var(--brand-red)">虾红 #E8462C</div><div class="color-info">品牌主色 · 麻辣口味</div></div>
-    <div><div class="color-swatch" style="background:var(--brand-gold);color:var(--text)">料金 #F5A623</div><div class="color-info">品牌辅色 · 蒜蓉口味</div></div>
-    <div><div class="color-swatch" style="background:var(--herb)">麻棕 #8B3A1F</div><div class="color-info">十三香口味</div></div>
-    <div><div class="color-swatch" style="background:var(--brand-black)">局黑 #1C1915</div><div class="color-info">文字 · 力量感</div></div>
-    <div><div class="color-swatch light" style="background:var(--brand-white)">壳白 #FFF8F0</div><div class="color-info">底色 · 包装底</div></div>
+    <div><div class="swatch" style="background:var(--red)">虾红 #E8462C</div><div class="swatch-info">品牌主色 · 麻辣口味</div></div>
+    <div><div class="swatch" style="background:var(--gold);color:var(--text)">料金 #F5A623</div><div class="swatch-info">品牌辅色 · 蒜蓉口味</div></div>
+    <div><div class="swatch" style="background:var(--herb)">麻棕 #8B3A1F</div><div class="swatch-info">十三香口味</div></div>
+    <div><div class="swatch" style="background:var(--black)">局黑 #1C1915</div><div class="swatch-info">文字 · 力量感</div></div>
+    <div><div class="swatch" style="background:var(--white);color:var(--text)">壳白 #FFF8F0</div><div class="swatch-info">底色 · 包装底</div></div>
+  </div>
+
+  <div class="flavor-grid" style="margin-top:40px">
+    <div class="flavor-card">
+      <div class="flavor-head spicy">🌶️ 麻辣小龙虾 · 烈焰红</div>
+      <div class="flavor-body"><p>重辣重麻，江湖气最重的一款——给无辣不欢的夜宵硬核玩家。</p><ul><li>辣度 ★★★★☆</li><li>搭配：冰啤酒 / 可乐</li><li>场景：兄弟局 · 看球 · 夜宵摊</li></ul></div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-head garlic">🧄 蒜蓉小龙虾 · 金蒜黄</div>
+      <div class="flavor-body"><p>金蒜浓香，最"大众友好"的一款——吃完不呛人，社交场合无压力。</p><ul><li>辣度 ★★☆☆☆</li><li>搭配：冰茶 / 柠檬水</li><li>场景：闺蜜局 · 露营 · 约会</li></ul></div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-head herb">🫚 十三香小龙虾 · 香料棕</div>
+      <div class="flavor-body"><p>十三味香料慢熬入味——层次最丰富，给"会吃"的人。</p><ul><li>辣度 ★★★☆☆</li><li>搭配：黄酒 / 乌龙茶</li><li>场景：家庭局 · 品鉴 · 送礼</li></ul></div>
+    </div>
   </div>
 </section>
 
-<!-- BRAND IP -->
-<section class="mascot-section">
+<!-- ═══════ BRAND IP ═══════ -->
+<div class="dark-section">
   <div class="section" style="padding:80px 24px">
     <p class="section-label">Brand IP</p>
-    <h2 class="section-title">超级符号 · 虾局长</h2>
-    <p class="section-desc">潮酷小龙虾 IP——墨镜+大钳+金链。不是可爱的卡通虾，是有态度、懂吃、能组局的夜宵文化代言人。</p>
-    <img src="images/optimized/mascot-thumb.jpg" alt="虾局长品牌IP" class="mascot-img" loading="lazy">
+    <h2 class="section-title">超级符号 · 虾局长 🦞</h2>
+    <p class="section-desc">潮酷小龙虾人格化IP——墨镜、大钳、金链。不是可爱的卡通虾，是有态度、懂吃、能组局的夜宵文化代言人。</p>
+    <img src="images/optimized/mascot-thumb.jpg" alt="虾局长品牌IP" class="mascot-display" loading="lazy">
   </div>
-</section>
+</div>
 
-<!-- FLAVOR SYSTEM -->
-<section class="section">
-  <p class="section-label">Flavor System</p>
-  <h2 class="section-title">三大口味 · 三套视觉</h2>
-  <p class="section-desc">每种口味独立色彩编码，货架上三秒识别——红色麻辣、金色蒜蓉、棕色十三香。</p>
-  <div class="flavor-grid">
-    <div class="flavor-card">
-      <div class="flavor-header spicy">🌶️ 麻辣小龙虾</div>
-      <div class="flavor-body">
-        <p>重辣重麻，江湖气最重的一款——给"无辣不欢"的夜宵硬核玩家。</p>
-        <ul><li>辣度：★★★★☆</li><li>搭配：冰啤酒 / 可乐</li><li>场景：兄弟局 · 看球 · 撸串</li></ul>
-      </div>
-    </div>
-    <div class="flavor-card">
-      <div class="flavor-header garlic">🧄 蒜蓉小龙虾</div>
-      <div class="flavor-body">
-        <p>金蒜浓香，最"大众友好"的一款——吃完不呛人，适合社交场合。</p>
-        <ul><li>辣度：★★☆☆☆</li><li>搭配：冰茶 / 柠檬水</li><li>场景：闺蜜局 · 露营 · 约会</li></ul>
-      </div>
-    </div>
-    <div class="flavor-card">
-      <div class="flavor-header herb">🫚 十三香小龙虾</div>
-      <div class="flavor-body">
-        <p>十三种香料慢熬入味——层次最丰富的一款，给"会吃"的人。</p>
-        <ul><li>辣度：★★★☆☆</li><li>搭配：黄酒 / 乌龙茶</li><li>场景：家庭局 · 品鉴 · 独享</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PACKAGING -->
-<section class="section" style="background:#fff">
+<!-- ═══════ PACKAGING SELECTOR ═══════ -->
+<section class="section" style="position:relative">
+  <div class="section-corner tl">🦞</div>
+  <div class="section-corner br">🦞</div>
   <p class="section-label">Packaging Design</p>
-  <h2 class="section-title">包装系统</h2>
-  <p class="section-desc">从内盒到冷链外箱，从调料包到加热说明卡——完整的预制菜包装链路设计。</p>
+  <h2>包装系统 · 口味切换</h2>
+  <p class="section-desc">点击下方按钮切换三种口味包装——每种口味独立色彩编码与视觉策略，货架上三秒区隔。</p>
 
-  <div class="packaging-showcase" style="margin-bottom:60px">
-    <img src="images/optimized/package-spicy-thumb.jpg" alt="麻辣口味包装盒" class="packaging-img" loading="lazy">
-    <div>
-      <h3 style="font-size:22px;font-weight:900;margin-bottom:20px">口味包装盒</h3>
-      <ul class="packaging-list">
-        <li><strong>结构</strong>：天地盖纸盒 + 开窗展示</li>
-        <li><strong>材质</strong>：食品级白卡纸 + 内衬铝箔保温</li>
-        <li><strong>视觉</strong>：口味色铺底 + 虾局长IP居中 + 口味标签</li>
-        <li><strong>背面</strong>：三步加热说明 + 营养成分 + 产地溯源码</li>
-      </ul>
+  <div class="packaging-showcase">
+    <div class="packaging-main">
+      <img id="mainPackImg" src="images/optimized/package-spicy-thumb.jpg" alt="口味包装盒">
+      <span class="pack-label" id="packLabel">麻辣鲜香</span>
+    </div>
+
+    <div class="flavor-selector">
+      <button class="flavor-btn active" data-flavor="spicy" onclick="switchFlavor('spicy')">
+        <span class="btn-emoji">🌶️</span>
+        <span class="btn-label">麻辣<small>烈焰红 · 重麻重辣</small></span>
+      </button>
+      <button class="flavor-btn" data-flavor="garlic" onclick="switchFlavor('garlic')">
+        <span class="btn-emoji">🧄</span>
+        <span class="btn-label">蒜蓉<small>金蒜黄 · 浓香温和</small></span>
+      </button>
+      <button class="flavor-btn" data-flavor="herb" onclick="switchFlavor('herb')">
+        <span class="btn-emoji">🫚</span>
+        <span class="btn-label">十三香<small>香料棕 · 层次丰富</small></span>
+      </button>
+    </div>
+
+    <div class="packaging-details" id="packDetails">
+      <div>
+        <h4>结构规格</h4>
+        <ul>
+          <li>天地盖纸盒 + 开窗展示小龙虾实物</li>
+          <li>食品级白卡纸 + 内衬铝箔保温</li>
+          <li>背面：三步加热图示 + 营养成分表 + 产地溯源码</li>
+        </ul>
+      </div>
+      <div>
+        <h4>视觉策略</h4>
+        <ul>
+          <li>口味色大面积铺底 + 虾局长IP居中</li>
+          <li>辣椒超级符号 + "开锅即辣"记忆点</li>
+          <li>金色字体增强品质感与食欲刺激</li>
+        </ul>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="strategy-grid" style="margin-top:40px">
-    <div class="strategy-card"><h3>冷链外箱</h3><p>瓦楞纸+防水涂层<br>品牌色+白色字标<br>"冷藏运输"标识</p></div>
-    <div class="strategy-card"><h3>调料包</h3><p>三连包撕线设计<br>口味色区分<br>大字口味名</p></div>
-    <div class="strategy-card"><h3>外卖袋</h3><p>牛皮纸+品牌色带<br>虾局长IP大图<br>"开锅即虾局"口号</p></div>
-    <div class="strategy-card"><h3>加热说明卡</h3><p>三折小卡<br>虾局长教你三步加热<br>背面：潜江龙虾产地故事</p></div>
+<!-- ═══════ ADDITIONAL PACKAGING ═══════ -->
+<section class="section-alt section" style="position:relative">
+  <div class="section-corner br">🦞</div>
+  <p class="section-label">Packaging System</p>
+  <h2>全套包装展示</h2>
+  <p class="section-desc">从口味包装盒到冷链外箱、外卖手提袋——完整的五件套包装链路，每一件都独立成立，合在一起形成统一品牌识别。</p>
+
+  <div class="pack-row">
+    <img src="images/optimized/package-spicy-thumb.jpg" alt="麻辣包装" class="pack-img" loading="lazy">
+    <div><h3>🌶️ 麻辣口味</h3><ul class="pack-list"><li><strong>色彩</strong>：烈焰红全面铺底</li><li><strong>记忆点</strong>：辣椒图标 + "开锅即辣"</li><li><strong>结构</strong>：天地盖 + 开窗 + 铝箔内衬</li></ul></div>
+  </div>
+  <div class="pack-row reverse">
+    <img src="images/optimized/package-garlic-thumb.jpg" alt="蒜蓉包装" class="pack-img" loading="lazy">
+    <div><h3>🧄 蒜蓉口味</h3><ul class="pack-list"><li><strong>色彩</strong>：金蒜黄铺底，温暖食欲感</li><li><strong>记忆点</strong>：蒜瓣超级图形 + "蒜你识货"</li><li><strong>差异化</strong>：三款中最具大众接受度</li></ul></div>
+  </div>
+  <div class="pack-row">
+    <img src="images/optimized/package-herb-thumb.jpg" alt="十三香包装" class="pack-img" loading="lazy">
+    <div><h3>🫚 十三香口味</h3><ul class="pack-list"><li><strong>色彩</strong>：香料棕，沉稳高级</li><li><strong>记忆点</strong>：十三香图谱纹样 + "一锅十三味"</li><li><strong>差异化</strong>：送礼属性最强</li></ul></div>
+  </div>
+  <div class="pack-row reverse">
+    <img src="images/optimized/coldchain-thumb.jpg" alt="冷链外箱" class="pack-img" loading="lazy">
+    <div><h3>📦 冷链快递外箱</h3><ul class="pack-list"><li><strong>材质</strong>：瓦楞牛皮纸 + 防水涂层</li><li><strong>视觉</strong>：品牌红 + 白色字标 + 冷藏标识</li><li><strong>开箱体验</strong>：内侧印"虾局长欢迎您"</li></ul></div>
+  </div>
+  <div class="pack-row">
+    <img src="images/optimized/takeout-bag-thumb.jpg" alt="外卖袋" class="pack-img" loading="lazy">
+    <div><h3>🛍️ 外卖手提袋</h3><ul class="pack-list"><li><strong>材质</strong>：牛皮纸 + 品牌红色带</li><li><strong>视觉</strong>：虾局长IP大幅面 + 口号</li><li><strong>社交属性</strong>：拿在街上就是行走的广告牌</li></ul></div>
   </div>
 </section>
 
-<!-- POSTER -->
-<section class="section">
+<!-- ═══════ POSTER ═══════ -->
+<section class="section" style="position:relative">
+  <div class="section-corner tl">🦞</div>
   <p class="section-label">Social Media</p>
-  <h2 class="section-title">社媒海报</h2>
-  <p class="section-desc">小红书 / 朋友圈传播物料——年轻化视觉语言，让预制菜也能被拍照发圈。</p>
-  <img src="images/optimized/poster-thumb.jpg" alt="潜江虾局社媒海报" class="poster-img" loading="lazy">
+  <h2>社媒传播海报</h2>
+  <p class="section-desc">小红书 / 朋友圈风格——让预制菜也值得被拍照发圈，让"虾局长"成为社交内容的一部分。</p>
+  <img src="images/optimized/poster-thumb.jpg" alt="社媒海报" style="width:100%;max-width:650px;margin:0 auto;display:block;border-radius:4px;box-shadow:0 16px 48px rgba(0,0,0,0.1)" loading="lazy">
 </section>
 
-<!-- DELIVERABLES -->
-<section class="section" style="background:#fff">
+<!-- ═══════ DELIVERABLES ═══════ -->
+<section class="section-alt section" style="position:relative">
+  <div class="section-corner br">🦞</div>
   <p class="section-label">Deliverables</p>
-  <h2 class="section-title">设计交付清单</h2>
-  <div class="strategy-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
-    <div class="strategy-card"><h3>品牌基础</h3><p>品牌标志<br>品牌IP/超级符号<br>口号<br>色彩系统<br>字体规范</p></div>
-    <div class="strategy-card"><h3>包装系统</h3><p>口味包装盒×3<br>冷链快递箱<br>调料包×3<br>加热说明卡<br>外卖袋 / 餐盒</p></div>
-    <div class="strategy-card"><h3>传播物料</h3><p>社媒海报×3<br>电商详情页<br>夜宵陈列效果<br>打卡墙设计</p></div>
-    <div class="strategy-card"><h3>成果输出</h3><p>包装实物/模型<br>效果图<br>过程册<br>展板<br>答辩PPT</p></div>
+  <h2>设计交付清单</h2>
+  <div class="grid3" style="margin-top:24px">
+    <div class="card"><h3>品牌基础系统</h3><p>品牌标志 · 品牌IP虾局长 · 口号 · 色彩系统 · 字体规范 · 品牌策略文档</p></div>
+    <div class="card"><h3>包装系统</h3><p>口味包装盒 ×3 · 冷链快递外箱 · 调料三连包 · 加热说明卡 · 外卖手提袋 · 餐盒</p></div>
+    <div class="card"><h3>传播物料</h3><p>社媒海报 ×3 · 电商详情页 · 夜宵场景陈列效果 · 便利店冰柜陈列 · 打卡墙设计</p></div>
+    <div class="card"><h3>设计规范</h3><p>品牌VI手册 · 包装刀版图 · 印刷色值规范 · 材质工艺说明 · 信息排版规范</p></div>
+    <div class="card"><h3>成果输出</h3><p>包装实物/模型拍摄 · 全链路效果图 · 设计过程册 · 毕业展板 · 答辩PPT</p></div>
+    <div class="card"><h3>延伸应用</h3><p>电商详情页 · 抖音/小红书内容模板 · 线下快闪店视觉 · 联名合作视觉规范</p></div>
   </div>
 </section>
 
 <footer>
-  <p>潜江虾局 · QIANJIANG SHRIMP BUREAU &nbsp;|&nbsp; 毕业设计作品 &nbsp;|&nbsp; 金乐鑫</p>
-  <p style="margin-top:4px">品牌形象与包装设计 · 2026</p>
+  <p>潜江虾局 · QIANJIANG SHRIMP BUREAU &nbsp;|&nbsp; 毕业设计作品 &nbsp;|&nbsp; 金乐鑫 &nbsp;|&nbsp; 2026</p>
+  <p style="margin-top:4px">品牌形象与包装设计 · 澳门科技大学</p>
 </footer>
+
+<script>
+const flavorData = {
+  spicy: {
+    img: 'images/optimized/package-spicy-thumb.jpg',
+    label: '麻辣鲜香',
+    details: {
+      struct: ['天地盖纸盒 + 开窗展示小龙虾实物','食品级白卡纸 + 内衬铝箔保温','背面：三步加热图示 + 营养成分表 + 产地溯源码'],
+      visual: ['烈焰红全面铺底 + 虾局长IP居中','辣椒超级符号 + "开锅即辣"记忆点','金色字体增强品质感与食欲刺激']
+    }
+  },
+  garlic: {
+    img: 'images/optimized/package-garlic-thumb.jpg',
+    label: '金蒜浓香',
+    details: {
+      struct: ['天地盖纸盒 + 开窗展示小龙虾实物','食品级白卡纸 + 内衬铝箔保温','背面：三步加热图示 + 营养成分表 + 产地溯源码'],
+      visual: ['金蒜黄铺底，温暖食欲感','蒜瓣超级图形 + "蒜你识货"记忆点','三款中大众接受度最高，金银配色提升品质']
+    }
+  },
+  herb: {
+    img: 'images/optimized/package-herb-thumb.jpg',
+    label: '十三香韵',
+    details: {
+      struct: ['天地盖纸盒 + 开窗展示小龙虾实物','食品级白卡纸 + 内衬铝箔保温','背面：三步加热图示 + 营养成分表 + 产地溯源码'],
+      visual: ['香料棕铺底，沉稳高级质感','十三香图谱纹样 + "一锅十三味"记忆点','送礼属性最强，适合礼盒场景延伸']
+    }
+  }
+};
+
+function switchFlavor(flavor) {
+  const data = flavorData[flavor];
+
+  // Update main image with fade
+  const img = document.getElementById('mainPackImg');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = data.img;
+    img.style.opacity = '1';
+  }, 150);
+
+  // Update label
+  document.getElementById('packLabel').textContent = data.label;
+
+  // Update details
+  const detailsDiv = document.getElementById('packDetails');
+  detailsDiv.innerHTML = `
+    <div><h4>结构规格</h4><ul>${data.details.struct.map(s=>'<li>'+s+'</li>').join('')}</ul></div>
+    <div><h4>视觉策略</h4><ul>${data.details.visual.map(s=>'<li>'+s+'</li>').join('')}</ul></div>
+  `;
+
+  // Update active button
+  document.querySelectorAll('.flavor-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-flavor="${flavor}"]`).classList.add('active');
+}
+</script>
 
 </body>
 </html>
