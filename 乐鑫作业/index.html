@@ -161,6 +161,24 @@ h3{font-size:20px;font-weight:700;position:relative;z-index:1}
 footer{background:var(--black);color:rgba(255,255,255,0.5);text-align:center;padding:48px 24px;font-size:12px;position:relative}
 footer::before{content:'🦞🦞🦞';display:block;font-size:24px;letter-spacing:0.5em;margin-bottom:16px;opacity:0.3}
 
+/* ── Print: clean page breaks ── */
+@media print {
+  body{font-size:12px;line-height:1.6}
+  .section,section,.section-alt{padding:40px 24px;page-break-inside:avoid;page-break-after:auto}
+  .section+.section,.section-alt+.section,section+section,section+.section-alt{page-break-before:auto}
+  .hero{min-height:auto;padding:60px 24px;page-break-after:avoid}
+  .pack-row{page-break-inside:avoid}
+  .packaging-showcase{page-break-inside:avoid}
+  .flavor-grid{page-break-inside:avoid}
+  .research-table{page-break-inside:avoid}
+  .grid3{page-break-inside:avoid}
+  .grid4{page-break-inside:avoid}
+  .floating-crayfish,.marquee-strip{display:none}
+  .dark-section{page-break-inside:avoid}
+  h2{font-size:28px}
+  h3{font-size:16px}
+}
+
 @media(max-width:768px){
   .pack-row{grid-template-columns:1fr}
   .pack-row.reverse .pack-img{order:-1}

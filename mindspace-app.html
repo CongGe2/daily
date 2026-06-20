@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>MindSpace · 冥想与专注力</title>
+<meta name="description" content="MindSpace - 交互式冥想App原型">
+<meta name="theme-color" content="#0f0e1a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-deep:#0f0e1a;--bg-card:rgba(255,255,255,0.06);--bg-card-hover:rgba(255,255,255,0.10);
+  --text:#f0ecff;--text-dim:rgba(240,236,255,0.55);
+  --accent:#8b6ce7;--accent-light:#b8a4f0;--accent-glow:rgba(139,108,231,0.25);
+  --success:#5ce7b8;--warn:#f0c878;
+  --radius:18px;--radius-sm:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:"Inter","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.5;color:var(--text);background:var(--bg-deep);
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+  user-select:none;-webkit-user-select:none;
+}
+.app{width:100%;max-width:430px;height:100vh;height:100dvh;margin:0 auto;position:relative;overflow:hidden;background:var(--bg-deep)}
+.bg-ambient{position:fixed;inset:0;pointer-events:none;z-index:0}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;transition:all 1.5s ease}
+.bg-orb.orb1{width:300px;height:300px;background:var(--accent);top:-10%;left:-20%}
+.bg-orb.orb2{width:250px;height:250px;background:#e78b6c;bottom:-5%;right:-15%;opacity:0.08}
+.bg-orb.orb3{width:200px;height:200px;background:var(--accent-light);top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06}
+
+/* Screens */
+.screen{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  padding:env(safe-area-inset-top,24px) 24px env(safe-area-inset-bottom,24px);
+  transition:transform 0.45s cubic-bezier(0.32,0.72,0,1),opacity 0.35s ease;
+  overflow-y:auto;overflow-x:hidden;z-index:1;
+}
+.screen.hidden-right{transform:translateX(110%);opacity:0;pointer-events:none}
+.screen.hidden-left{transform:translateX(-110%);opacity:0;pointer-events:none}
+.status-spacer{height:20px;flex-shrink:0}
+
+/* Onboarding */
+.onboard-slides{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px}
+.onboard-slide{text-align:center;display:none;animation:fadeIn .5s ease}
+.onboard-slide.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.onboard-icon{font-size:72px;margin-bottom:8px;display:block}
+.onboard-slide h2{font-size:28px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.onboard-slide p{font-size:15px;color:var(--text-dim);max-width:280px;margin:0 auto;line-height:1.7}
+.onboard-dots{display:flex;gap:8px;justify-content:center;margin:20px 0}
+.onboard-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);transition:all .3s}
+.onboard-dot.active{background:var(--accent-light);width:24px;border-radius:4px}
+.onboard-btn{
+  width:100%;padding:18px;border-radius:var(--radius);
+  background:var(--accent);color:#fff;font-size:17px;font-weight:600;
+  border:none;cursor:pointer;transition:all .2s;letter-spacing:.02em;margin-top:8px;
+}
+.onboard-btn:hover{background:#9b7cf0;transform:scale(1.02)}
+.onboard-btn.ghost{background:transparent;color:var(--text-dim)}
+.onboard-btn.ghost:hover{color:var(--text);background:rgba(255,255,255,0.04);transform:none}
+
+/* Home */
+.home-header{display:flex;align-items:center;justify-content:space-between;padding:8px 0 24px}
+.home-header h1{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.streak{font-size:13px;color:var(--accent-light);background:var(--accent-glow);padding:6px 14px;border-radius:20px;font-weight:600}
+
+/* ---- BREATHING ---- */
+.breath-section{display:flex;flex-direction:column;align-items:center;padding:16px 0 20px}
+.breath-ring-wrapper{position:relative;width:240px;height:240px;margin-bottom:16px}
+.breath-ring{
+  width:100%;height:100%;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,rgba(139,108,231,0.3) 0%,rgba(139,108,231,0.05) 60%,transparent 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:2;
+  box-shadow:0 0 60px var(--accent-glow),inset 0 0 60px rgba(139,108,231,0.05);
+  transition:box-shadow 0.8s ease;
+}
+.breath-ring.phase-inhale{box-shadow:0 0 120px rgba(139,108,231,0.55),0 0 200px rgba(180,164,240,0.18),inset 0 0 80px rgba(139,108,231,0.12)}
+.breath-ring.phase-hold{box-shadow:0 0 50px rgba(240,200,120,0.35),inset 0 0 50px rgba(240,200,120,0.08);animation:holdPulse 1s ease-in-out infinite}
+.breath-ring.phase-exhale{box-shadow:0 0 35px rgba(92,231,184,0.22),inset 0 0 35px rgba(92,231,184,0.05)}
+@keyframes holdPulse{0%,100%{box-shadow:0 0 50px rgba(240,200,120,0.35),inset 0 0 50px rgba(240,200,120,0.08)}50%{box-shadow:0 0 80px rgba(240,200,120,0.55),inset 0 0 70px rgba(240,200,120,0.15)}}
+.breath-ring.spinning::before{
+  content:'';position:absolute;
+  width:calc(100% + 4px);height:calc(100% + 4px);border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:var(--accent-light);border-right-color:var(--accent);
+  animation:ringSpin 4s linear infinite;
+}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+.breath-circle{
+  width:140px;height:140px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,rgba(255,255,255,0.15) 0%,rgba(139,108,231,0.2) 50%,rgba(139,108,231,0.05) 100%);
+  transition:transform 4s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 0 40px var(--accent-glow);
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.breath-circle.inhale{transform:translate(-50%,-50%) scale(1.35)}
+.breath-circle.exhale{transform:translate(-50%,-50%) scale(0.8)}
+.breath-circle.hold{transform:translate(-50%,-50%) scale(1.35);animation:holdGlow 1s ease-in-out infinite}
+@keyframes holdGlow{0%,100%{box-shadow:0 0 40px rgba(240,200,120,0.3)}50%{box-shadow:0 0 80px rgba(240,200,120,0.6)}}
+.breath-text{
+  font-size:16px;color:var(--text-dim);font-weight:500;letter-spacing:.04em;
+  z-index:5;position:absolute;transition:color .5s;
+}
+.breath-text.phase-inhale{color:#d4c4ff}
+.breath-text.phase-hold{color:var(--warn)}
+.breath-text.phase-exhale{color:var(--success)}
+.breath-timer{font-size:13px;color:var(--text-dim);font-weight:400;margin-top:4px}
+
+/* Bubbles */
+.breath-bubbles{position:absolute;inset:-50px;pointer-events:none;z-index:1;overflow:hidden;border-radius:50%}
+.breath-bubble{
+  position:absolute;border-radius:50%;pointer-events:none;
+  animation:bubbleRise var(--dur) ease-out forwards;
+  opacity:0;
+}
+@keyframes bubbleRise{
+  0%{opacity:0;transform:translate(0,0) scale(0)}
+  15%{opacity:0.9}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1)}
+}
+
+/* Controls row */
+.breath-controls{display:flex;gap:12px;align-items:center}
+.breath-btn{
+  padding:14px 32px;border-radius:30px;font-size:15px;font-weight:600;
+  border:none;cursor:pointer;letter-spacing:.02em;
+  background:var(--accent);color:#fff;
+  transition:all .2s;box-shadow:0 8px 30px var(--accent-glow);
+}
+.breath-btn:hover{background:#9b7cf0;transform:translateY(-2px)}
+.breath-btn.running{background:rgba(255,255,255,0.08);color:var(--text-dim);box-shadow:none}
+.breath-btn.reset-btn{
+  background:rgba(255,255,255,0.04);color:var(--text-dim);box-shadow:none;
+  padding:14px 18px;font-size:18px;
+}
+.breath-btn.reset-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+.breath-btn:disabled{opacity:0.3;pointer-events:none}
+
+/* Categories */
+.categories{margin-top:6px}
+.categories h3{font-size:14px;color:var(--text-dim);font-weight:500;margin-bottom:14px;letter-spacing:.03em}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cat-card{
+  background:var(--bg-card);border-radius:var(--radius-sm);padding:20px 14px;
+  text-align:center;cursor:pointer;transition:all .2s;border:1px solid rgba(255,255,255,0.03);
+}
+.cat-card:hover{background:var(--bg-card-hover);transform:translateY(-2px)}
+.cat-card .cat-icon{font-size:28px;display:block;margin-bottom:8px}
+.cat-card .cat-name{font-size:14px;font-weight:600;margin-bottom:2px}
+.cat-card .cat-dur{font-size:11px;color:var(--text-dim)}
+
+/* Bottom nav */
+.bottom-nav{
+  display:flex;justify-content:space-around;align-items:center;
+  padding:12px 8px;margin-top:auto;
+  background:rgba(15,14,26,0.8);backdrop-filter:blur(20px);
+  border-radius:var(--radius);border:1px solid rgba(255,255,255,0.04);
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;
+  transition:all .2s;font-size:11px;color:var(--text-dim);
+  background:none;border:none;font-family:inherit;
+}
+.nav-item.active{color:var(--accent-light);background:rgba(139,108,231,0.1)}
+.nav-item .nav-icon{font-size:22px;transition:transform .2s}
+.nav-item.active .nav-icon{transform:scale(1.1)}
+
+/* Session */
+.session-header{display:flex;align-items:center;gap:16px;padding:8px 0 32px}
+.session-back{
+  width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--bg-card);border:none;color:var(--text);cursor:pointer;font-size:18px;
+}
+.session-header h2{font-size:20px;font-weight:600}
+.session-timer-section{display:flex;flex-direction:column;align-items:center;padding:20px 0}
+.session-big-timer{font-size:72px;font-weight:200;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-family:"SF Mono","Consolas",monospace}
+.session-label{font-size:14px;color:var(--text-dim);margin-top:4px}
+.viz-bar{display:flex;align-items:flex-end;gap:3px;height:80px;justify-content:center;margin:24px 0}
+.viz-bar span{
+  width:4px;background:var(--accent);border-radius:2px;
+  animation:vizBounce 0.8s ease-in-out infinite;animation-delay:var(--d);
+}
+@keyframes vizBounce{0%,100%{height:12px;opacity:.4}50%{height:60px;opacity:1}}
+.session-controls{display:flex;align-items:center;gap:24px;margin-top:16px}
+.session-ctrl{
+  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--bg-card);border:1px solid rgba(255,255,255,0.06);
+  color:var(--text);cursor:pointer;font-size:20px;transition:all .2s;
+}
+.session-ctrl:hover{background:var(--bg-card-hover)}
+.session-ctrl.play-btn{
+  width:72px;height:72px;background:var(--accent);font-size:28px;
+  box-shadow:0 8px 30px var(--accent-glow);
+}
+.session-ctrl.play-btn:hover{background:#9b7cf0;transform:scale(1.05)}
+
+/* Profile */
+.profile-header{text-align:center;padding:16px 0 28px}
+.profile-avatar{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-light));
+  display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;
+  margin:0 auto 12px;box-shadow:0 12px 40px var(--accent-glow);
+}
+.profile-name{font-size:22px;font-weight:700}
+.profile-email{font-size:13px;color:var(--text-dim)}
+.stat-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.stat-card{
+  background:var(--bg-card);border-radius:var(--radius-sm);padding:24px 20px;
+  text-align:center;border:1px solid rgba(255,255,255,0.03);
+}
+.stat-card .stat-val{font-size:36px;font-weight:700;color:var(--accent-light)}
+.stat-card .stat-lbl{font-size:12px;color:var(--text-dim);margin-top:4px}
+.achieve-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.achieve-item{
+  display:flex;align-items:center;gap:14px;padding:16px;
+  background:var(--bg-card);border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,0.03);
+}
+.achieve-icon{font-size:28px;width:44px;text-align:center}
+.achieve-info{flex:1}
+.achieve-info .achieve-title{font-size:14px;font-weight:600}
+.achieve-info .achieve-desc{font-size:12px;color:var(--text-dim)}
+.achieve-check{color:var(--success);font-size:18px}
+.screen::-webkit-scrollbar{width:0}
+.toast{
+  position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+  background:rgba(30,28,50,0.95);color:var(--text);padding:12px 28px;
+  border-radius:30px;font-size:14px;z-index:999;pointer-events:none;
+  opacity:0;transition:opacity .3s;backdrop-filter:blur(10px);
+}
+.toast.show{opacity:1}
+
+@media(max-width:380px){
+  .breath-ring-wrapper{width:200px;height:200px}
+  .breath-circle{width:120px;height:120px}
+  .session-big-timer{font-size:56px}
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div class="bg-ambient">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+    <div class="bg-orb orb3"></div>
+  </div>
+
+  <!-- ========== ONBOARDING ========== -->
+  <div class="screen" id="screen-onboard">
+    <div class="status-spacer"></div>
+    <div class="onboard-slides">
+      <div class="onboard-slide active" data-slide="0">
+        <span class="onboard-icon">🧘</span>
+        <h2>找到你的平静</h2>
+        <p>每天 5 分钟，在呼吸中重新连接自己。</p>
+      </div>
+      <div class="onboard-slide" data-slide="1">
+        <span class="onboard-icon">🎯</span>
+        <h2>专注、睡眠、放松</h2>
+        <p>三种模式覆盖一天中的不同需求。</p>
+      </div>
+      <div class="onboard-slide" data-slide="2">
+        <span class="onboard-icon">✨</span>
+        <h2>AI 驱动的视觉氛围</h2>
+        <p>Stable Diffusion 生成的沉浸式视觉场景。</p>
+      </div>
+    </div>
+    <div class="onboard-dots" id="onboardDots">
+      <span class="onboard-dot active"></span><span class="onboard-dot"></span><span class="onboard-dot"></span>
+    </div>
+    <button class="onboard-btn" id="onboardNext">继续</button>
+    <button class="onboard-btn ghost" id="onboardSkip">跳过</button>
+  </div>
+
+  <!-- ========== HOME ========== -->
+  <div class="screen hidden-right" id="screen-home">
+    <div class="status-spacer"></div>
+    <div class="home-header">
+      <h1>MindSpace</h1>
+      <span class="streak" id="streakBadge">🔥 7 天</span>
+    </div>
+
+    <div class="breath-section">
+      <div class="breath-ring-wrapper" id="breathWrapper">
+        <div class="breath-ring" id="breathRing">
+          <span class="breath-text" id="breathLabel">准备</span>
+          <div class="breath-bubbles" id="breathBubbles"></div>
+        </div>
+        <div class="breath-circle" id="breathCircle"></div>
+      </div>
+      <div class="breath-timer" id="breathTimer">01:00</div>
+      <div class="breath-controls">
+        <button class="breath-btn reset-btn" id="resetBtn" disabled title="重置" onclick="resetBreathing()">↺</button>
+        <button class="breath-btn" id="breathBtn" onclick="toggleBreathing()">开始呼吸练习</button>
+      </div>
+    </div>
+
+    <div class="categories">
+      <h3>选择模式</h3>
+      <div class="cat-grid">
+        <div class="cat-card" onclick="startSession('Focus','🎯')">
+          <span class="cat-icon">🎯</span><div class="cat-name">专注</div><div class="cat-dur">5 分钟</div>
+        </div>
+        <div class="cat-card" onclick="startSession('Sleep','🌙')">
+          <span class="cat-icon">🌙</span><div class="cat-name">睡眠</div><div class="cat-dur">15 分钟</div>
+        </div>
+        <div class="cat-card" onclick="startSession('Relax','🌿')">
+          <span class="cat-icon">🌿</span><div class="cat-name">放松</div><div class="cat-dur">10 分钟</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item active" data-screen="home"><span class="nav-icon">🏠</span>首页</button>
+      <button class="nav-item" data-screen="profile"><span class="nav-icon">👤</span>我的</button>
+    </div>
+  </div>
+
+  <!-- ========== SESSION ========== -->
+  <div class="screen hidden-right" id="screen-session">
+    <div class="status-spacer"></div>
+    <div class="session-header">
+      <button class="session-back" onclick="endSession()">←</button>
+      <h2 id="sessionTitle">专注</h2>
+    </div>
+    <div class="session-timer-section">
+      <div class="session-big-timer" id="sessionTimer">05:00</div>
+      <div class="session-label" id="sessionLabel">剩余时间</div>
+    </div>
+    <div class="viz-bar" id="vizBar"></div>
+    <div class="session-controls">
+      <button class="session-ctrl" onclick="adjustTime(-60)">⏪</button>
+      <button class="session-ctrl play-btn" id="sessionPlayBtn" onclick="toggleSession()">▶</button>
+      <button class="session-ctrl" onclick="adjustTime(60)">⏩</button>
+    </div>
+  </div>
+
+  <!-- ========== PROFILE ========== -->
+  <div class="screen hidden-right" id="screen-profile">
+    <div class="status-spacer"></div>
+    <div class="profile-header">
+      <div class="profile-avatar">J</div>
+      <div class="profile-name">金承旭</div>
+      <div class="profile-email">1416907076@qq.com</div>
+    </div>
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-val" id="totalSessions">24</div><div class="stat-lbl">完成次数</div></div>
+      <div class="stat-card"><div class="stat-val" id="totalMinutes">186</div><div class="stat-lbl">总分钟数</div></div>
+      <div class="stat-card"><div class="stat-val" id="streakDays">7</div><div class="stat-lbl">连续天数</div></div>
+      <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">解锁成就</div></div>
+    </div>
+    <h3 style="font-size:14px;color:var(--text-dim);margin-bottom:12px">成就</h3>
+    <div class="achieve-list">
+      <div class="achieve-item"><span class="achieve-icon">🌟</span><div class="achieve-info"><div class="achieve-title">初学者</div><div class="achieve-desc">完成第一次冥想</div></div><span class="achieve-check">✓</span></div>
+      <div class="achieve-item"><span class="achieve-icon">🔥</span><div class="achieve-info"><div class="achieve-title">连续 7 天</div><div class="achieve-desc">一周不间断练习</div></div><span class="achieve-check">✓</span></div>
+      <div class="achieve-item" style="opacity:0.4"><span class="achieve-icon">⏰</span><div class="achieve-info"><div class="achieve-title">10 小时</div><div class="achieve-desc">累计冥想 10 小时</div></div><span style="color:var(--text-dim)">🔒</span></div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-item" data-screen="home"><span class="nav-icon">🏠</span>首页</button>
+      <button class="nav-item active" data-screen="profile"><span class="nav-icon">👤</span>我的</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ==================== STATE ====================
+let currentScreen = 'onboard', onboardSlide = 0;
+let isBreathing = false, breathPhase = 'inhale', breathSeconds = 60;
+let breathInterval = null, breathTimeout = null, bubbleInterval = null;
+let sessionTotal = 300, sessionRemaining = 300, sessionInterval = null, isSessionRunning = false;
+let stats = { sessions: 24, minutes: 186, streak: 7 };
+
+// Audio context (lazy init on first user interaction)
+let audioCtx = null;
+function initAudio() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// ==================== SOUNDS ====================
+function playTone(freq, duration, type = 'sine', vol = 0.06) {
+  if (!audioCtx) return;
+  const t = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+  osc.frequency.exponentialRampToValueAtTime(freq * 0.5, t + duration);
+  gain.gain.setValueAtTime(vol, t);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + duration);
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.start(t); osc.stop(t + duration);
+}
+
+function soundInhale() { playTone(528, 3.5, 'sine', 0.07); }
+function soundHold()  { playTone(396, 1.5, 'triangle', 0.03); }
+function soundExhale(){ playTone(352, 3.5, 'sine', 0.05); }
+
+// ==================== SCREENS ====================
+function goTo(screen) {
+  ['onboard','home','session','profile'].forEach((s,i) => {
+    const el = document.getElementById('screen-'+s);
+    const target = ['onboard','home','session','profile'].indexOf(screen);
+    el.classList.remove('hidden-right','hidden-left');
+    if (s !== screen) el.classList.add(i < target ? 'hidden-left' : 'hidden-right');
+  });
+  currentScreen = screen;
+}
+
+// ==================== ONBOARDING ====================
+document.getElementById('onboardNext').addEventListener('click', () => {
+  initAudio();
+  if (onboardSlide < 2) { onboardSlide++; updateOnboard(); }
+  else goTo('home');
+});
+document.getElementById('onboardSkip').addEventListener('click', () => { initAudio(); goTo('home'); });
+
+function updateOnboard() {
+  document.querySelectorAll('.onboard-slide').forEach((s,i) => s.classList.toggle('active', i===onboardSlide));
+  document.querySelectorAll('.onboard-dot').forEach((d,i) => d.classList.toggle('active', i===onboardSlide));
+  document.getElementById('onboardNext').textContent = onboardSlide === 2 ? '开始体验' : '继续';
+}
+
+// ==================== BREATHING ====================
+function toggleBreathing() {
+  initAudio();
+  if (isBreathing) { stopBreathing(); return; }
+  startBreathing();
+}
+
+function startBreathing() {
+  isBreathing = true;
+  breathSeconds = 60;
+  breathPhase = 'inhale';
+  const btn = document.getElementById('breathBtn');
+  btn.textContent = '停止';
+  btn.classList.add('running');
+  document.getElementById('resetBtn').disabled = false;
+  document.getElementById('breathRing').classList.add('spinning');
+  updateBreathTimer();
+  runBreathCycle();
+  breathInterval = setInterval(() => {
+    breathSeconds--;
+    updateBreathTimer();
+    if (breathSeconds <= 0) { completeBreathing(); }
+  }, 1000);
+}
+
+function stopBreathing() {
+  isBreathing = false;
+  clearInterval(breathInterval);
+  clearTimeout(breathTimeout);
+  clearInterval(bubbleInterval);
+  breathInterval = null; breathTimeout = null; bubbleInterval = null;
+  const btn = document.getElementById('breathBtn');
+  btn.textContent = '开始呼吸练习';
+  btn.classList.remove('running');
+  document.getElementById('resetBtn').disabled = false; // keep enabled to allow reset
+  document.getElementById('breathRing').classList.remove('spinning','phase-inhale','phase-hold','phase-exhale');
+  document.getElementById('breathCircle').classList.remove('inhale','exhale','hold');
+  document.getElementById('breathLabel').textContent = '准备';
+  document.getElementById('breathLabel').className = 'breath-text';
+  document.getElementById('breathBubbles').innerHTML = '';
+}
+
+function resetBreathing() {
+  stopBreathing();
+  breathSeconds = 60;
+  updateBreathTimer();
+  document.getElementById('breathRing').classList.remove('spinning','phase-inhale','phase-hold','phase-exhale');
+  document.getElementById('breathCircle').classList.remove('inhale','exhale','hold');
+  document.getElementById('breathLabel').textContent = '准备';
+  document.getElementById('breathLabel').className = 'breath-text';
+  document.getElementById('breathBubbles').innerHTML = '';
+  document.getElementById('resetBtn').disabled = true;
+}
+
+function completeBreathing() {
+  stopBreathing();
+  updateBreathTimer();
+  document.getElementById('breathTimer').textContent = '00:00';
+  document.getElementById('breathLabel').textContent = '完成 ✨';
+  document.getElementById('breathLabel').className = 'breath-text phase-exhale';
+  stats.minutes++;
+  stats.sessions++;
+  saveStats();
+  showToast('✨ 呼吸练习完成！');
+  setTimeout(() => {
+    document.getElementById('breathTimer').textContent = '01:00';
+    document.getElementById('breathLabel').textContent = '准备';
+    document.getElementById('breathLabel').className = 'breath-text';
+    document.getElementById('resetBtn').disabled = true;
+  }, 2500);
+}
+
+function updateBreathTimer() {
+  const m = Math.floor(breathSeconds / 60);
+  const s = breathSeconds % 60;
+  document.getElementById('breathTimer').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function runBreathCycle() {
+  if (!isBreathing) return;
+  const circle = document.getElementById('breathCircle');
+  const label = document.getElementById('breathLabel');
+  const ring = document.getElementById('breathRing');
+
+  if (breathPhase === 'inhale') {
+    label.textContent = '吸气';
+    label.className = 'breath-text phase-inhale';
+    circle.classList.remove('exhale','hold'); circle.classList.add('inhale');
+    ring.className = 'breath-ring spinning phase-inhale';
+    soundInhale();
+    startBubbles();
+    breathPhase = 'hold';
+    breathTimeout = setTimeout(runBreathCycle, 4000);
+  } else if (breathPhase === 'hold') {
+    label.textContent = '屏息';
+    label.className = 'breath-text phase-hold';
+    circle.classList.remove('inhale'); circle.classList.add('hold');
+    ring.className = 'breath-ring spinning phase-hold';
+    soundHold();
+    stopBubbles();
+    breathPhase = 'exhale';
+    breathTimeout = setTimeout(runBreathCycle, 2000);
+  } else {
+    label.textContent = '呼气';
+    label.className = 'breath-text phase-exhale';
+    circle.classList.remove('inhale','hold'); circle.classList.add('exhale');
+    ring.className = 'breath-ring spinning phase-exhale';
+    soundExhale();
+    stopBubbles();
+    breathPhase = 'inhale';
+    breathTimeout = setTimeout(runBreathCycle, 4000);
+  }
+}
+
+// ==================== BUBBLES ====================
+function startBubbles() {
+  stopBubbles();
+  const container = document.getElementById('breathBubbles');
+  function spawn() {
+    if (!isBreathing || breathPhase === 'exhale') return;
+    const bubble = document.createElement('div');
+    bubble.className = 'breath-bubble';
+    const size = Math.random() * 16 + 6;
+    const colors = ['rgba(180,164,240,0.7)','rgba(200,180,255,0.6)','rgba(255,255,255,0.5)','rgba(160,140,240,0.5)','rgba(220,200,255,0.4)'];
+    bubble.style.cssText = `
+      width:${size}px;height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${Math.random()*60+20}%;bottom:${Math.random()*30}%;
+      --dx:${(Math.random()-0.5)*120}px;--dy:-${Math.random()*160+60}px;
+      --dur:${Math.random()*1.5+1.5}s;
+      box-shadow:0 0 ${size*2}px currentColor;
+    `;
+    container.appendChild(bubble);
+    setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, 3000);
+  }
+  spawn();
+  bubbleInterval = setInterval(spawn, 300);
+}
+
+function stopBubbles() {
+  clearInterval(bubbleInterval);
+  bubbleInterval = null;
+}
+
+// ==================== SESSION ====================
+function startSession(type, icon) {
+  initAudio();
+  document.getElementById('sessionTitle').textContent = icon + ' ' + type;
+  const durations = { Focus: 300, Sleep: 900, Relax: 600 };
+  sessionTotal = durations[type] || 300;
+  sessionRemaining = sessionTotal;
+  updateSessionDisplay();
+  goTo('session');
+  generateVizBars();
+  setTimeout(() => toggleSession(), 500);
+}
+
+function toggleSession() {
+  initAudio();
+  if (isSessionRunning) {
+    clearInterval(sessionInterval); isSessionRunning = false;
+    document.getElementById('sessionPlayBtn').textContent = '▶';
+  } else {
+    isSessionRunning = true;
+    document.getElementById('sessionPlayBtn').textContent = '⏸';
+    sessionInterval = setInterval(() => {
+      sessionRemaining--;
+      updateSessionDisplay();
+      if (sessionRemaining <= 0) completeSession();
+    }, 1000);
+  }
+}
+
+function updateSessionDisplay() {
+  const m = Math.floor(sessionRemaining/60), s = sessionRemaining%60;
+  document.getElementById('sessionTimer').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function adjustTime(sec) {
+  sessionRemaining = Math.max(0, Math.min(3600, sessionRemaining + sec));
+  updateSessionDisplay();
+}
+
+function endSession() {
+  clearInterval(sessionInterval); isSessionRunning = false;
+  goTo('home');
+}
+
+function completeSession() {
+  clearInterval(sessionInterval); isSessionRunning = false;
+  stats.sessions++; stats.minutes += Math.round(sessionTotal/60);
+  saveStats();
+  showToast('✨ 冥想完成！');
+  document.getElementById('sessionPlayBtn').textContent = '▶';
+  document.getElementById('sessionTimer').textContent = '00:00';
+  setTimeout(() => goTo('home'), 1500);
+}
+
+function generateVizBars() {
+  const c = document.getElementById('vizBar'); c.innerHTML = '';
+  for (let i=0;i<40;i++) {
+    const b = document.createElement('span');
+    b.style.setProperty('--d',(i*0.08)+'s');
+    b.style.height = (Math.random()*50+8)+'px';
+    c.appendChild(b);
+  }
+}
+
+// ==================== PROFILE ====================
+function updateProfileStats() {
+  document.getElementById('totalSessions').textContent = stats.sessions;
+  document.getElementById('totalMinutes').textContent = stats.minutes;
+  document.getElementById('streakDays').textContent = stats.streak;
+  document.getElementById('streakBadge').textContent = '🔥 ' + stats.streak + ' 天';
+}
+
+// ==================== PERSISTENCE ====================
+try { const s = JSON.parse(localStorage.getItem('mindspace-stats')); if(s) stats = s; } catch(e) {}
+function saveStats() { localStorage.setItem('mindspace-stats', JSON.stringify(stats)); updateProfileStats(); }
+
+// ==================== NAV ====================
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    initAudio();
+    const screen = btn.dataset.screen;
+    goTo(screen);
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b.dataset.screen===screen));
+    document.querySelectorAll('#screen-home .nav-item, #screen-profile .nav-item').forEach(b => b.classList.toggle('active', b.dataset.screen===screen));
+  });
+});
+
+// ==================== TOAST ====================
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ==================== SWIPE ====================
+let touchX = 0;
+document.getElementById('screen-onboard').addEventListener('touchstart', e => { touchX = e.touches[0].clientX });
+document.getElementById('screen-onboard').addEventListener('touchend', e => {
+  const d = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(d) > 50) {
+    if (d > 0 && onboardSlide < 2) { onboardSlide++; updateOnboard(); }
+    else if (d < 0 && onboardSlide > 0) { onboardSlide--; updateOnboard(); }
+  }
+});
+
+// ==================== INIT ====================
+updateProfileStats();
+generateVizBars();
+</script>
+</body>
+</html>
