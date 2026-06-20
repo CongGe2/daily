@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartDorm · 智能宿舍收纳系统 | 金承旭</title>
+<meta name="description" content="SmartDorm——3人跨专业团队项目：澳门高校宿舍智能收纳系统，产品设计 + 微信小程序UI">
+<meta property="og:image" content="images/optimized/smartdorm-thumb.jpg">
+<meta name="theme-color" content="#5a7a6a">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #fafaf8; --bg-alt: #f4f2ee; --text: #1a1a18;
+  --text-secondary: #6b6965; --text-tertiary: #9e9b96;
+  --accent: #5a7a6a; --border: #e4e1dc; --border-light: #edeae6;
+  --dark: #1a1f1c; --dark-text: #e0e4e1; --dark-text-secondary: #949a96;
+  --font-serif: "Noto Serif SC","STSong","SimSun",serif;
+  --font-sans: "Inter","PingFang SC","Microsoft YaHei",sans-serif;
+  --max: 1000px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.75;color:var(--text);background:var(--bg)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;background:rgba(250,250,248,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border-light)}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-back{font-size:13px;color:var(--text-secondary)}
+
+.hero{background:linear-gradient(180deg,#1a1f1c 0%,#2a352e 40%,#3a4a3f 70%,var(--bg) 100%);padding:120px 24px 80px;text-align:center}
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:20px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(36px,7vw,60px);font-weight:700;color:#fff;margin-bottom:16px}
+.hero h1 span{color:#8cb89a}
+.hero-sub{font-size:18px;color:rgba(255,255,255,.55);max-width:560px;margin:0 auto 40px;line-height:1.8}
+.hero-meta{display:flex;gap:40px;justify-content:center;font-size:12px;color:rgba(255,255,255,.4);flex-wrap:wrap}
+.hero-meta strong{display:block;font-size:14px;color:rgba(255,255,255,.8);font-weight:600}
+.tag-team{display:inline-block;background:rgba(140,184,154,.2);color:#8cb89a;font-size:11px;font-weight:600;padding:4px 16px;border-radius:20px;margin-top:24px;letter-spacing:.06em}
+
+.sec{padding:80px 24px}
+.sec:nth-child(even){background:var(--bg-alt)}
+.sec-inner{max-width:var(--max);margin:0 auto}
+.sec-tag{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.sec-title{font-family:var(--font-serif);font-size:clamp(28px,4vw,40px);font-weight:700;margin-bottom:16px}
+.sec-desc{font-size:16px;color:var(--text-secondary);line-height:1.85;max-width:680px;margin-bottom:32px}
+
+.img-full{width:100%;border-radius:2px;border:1px solid var(--border-light);margin:8px 0}
+.img-caption{font-size:11px;color:var(--text-tertiary);text-align:center;margin:12px 0 32px}
+
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--border-light);padding:32px;border-radius:2px}
+.card h4{font-family:var(--font-serif);font-size:17px;margin-bottom:8px}
+.card p{font-size:14px;color:var(--text-secondary);line-height:1.75}
+
+.quote{margin:48px 0;padding:40px 48px;background:var(--bg-alt);border-left:2px solid var(--accent)}
+.quote p{font-family:var(--font-serif);font-size:18px;font-style:italic;color:var(--text-secondary);line-height:1.85}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:40px 0}
+.stat{text-align:center;padding:28px;background:#fff;border:1px solid var(--border-light)}
+.stat .num{font-family:var(--font-serif);font-size:40px;font-weight:700;color:var(--accent)}
+.stat .label{font-size:13px;color:var(--text-secondary);margin-top:4px}
+
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:32px 0}
+.role-card{text-align:center;padding:32px 20px;background:#fff;border:1px solid var(--border-light);border-radius:2px}
+.role-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;margin:0 auto 12px}
+.role-mine{background:var(--accent);color:#fff}
+.role-other{background:var(--bg-alt);color:var(--text-secondary)}
+.role-name{font-weight:600;font-size:15px;margin-bottom:4px}
+.role-title{font-size:12px;color:var(--text-tertiary);margin-bottom:8px}
+.role-task{font-size:12px;color:var(--text-secondary);line-height:1.6}
+
+.footer{background:var(--dark);color:var(--dark-text);padding:64px 24px 32px;text-align:center}
+.footer h2{font-family:var(--font-serif);font-size:clamp(24px,4vw,36px);margin-bottom:12px}
+.footer p{color:var(--dark-text-secondary);font-size:15px;margin-bottom:32px}
+.footer-links{display:flex;gap:24px;justify-content:center}
+.footer-links a{font-size:14px;color:#8cb89a;font-weight:500;border-bottom:1px solid transparent;padding-bottom:2px}
+.footer-links a:hover{border-color:#8cb89a}
+.footer-sep{color:rgba(255,255,255,.15)}
+.footer-bottom{padding-top:40px;font-size:11px;color:var(--dark-text-secondary)}
+
+@media(max-width:768px){
+  .col2,.col3,.roles,.stats{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(28px,8vw,40px)}
+  .hero-meta{gap:24px}
+  .quote{padding:28px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-back">← 返回作品集</a>
+    <span style="font-family:var(--font-serif);font-size:14px;font-weight:600;color:var(--text-secondary)">SmartDorm · 团队项目</span>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">Product Design · Team Project · 2025.09 — 2025.12</p>
+  <h1>SmartDorm<br><span>智能宿舍收纳系统</span></h1>
+  <p class="hero-sub">澳门高校宿舍人均不足 4㎡——3 人跨专业团队，从 12 位学生深度访谈出发，设计模块化收纳产品 + 微信小程序</p>
+  <div class="hero-meta">
+    <div><strong>团队规模</strong>3 人（产品设计 + 室内设计 + 软件工程）</div>
+    <div><strong>我的角色</strong>用户研究 · 产品外观/CMF · 小程序 UI</div>
+    <div><strong>成果</strong>模块化产品 3 件 · 小程序 5 屏 · CMF 方案 ×3</div>
+  </div>
+  <div class="tag-team">👥 跨专业团队协作</div>
+</section>
+
+<!-- 01 · PROBLEM -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">01 · Problem Discovery</p>
+    <h2 class="sec-title">不到 4㎡ 的生活容器</h2>
+    <p class="sec-desc">
+      澳门高校宿舍标准间面积约 12㎡，两人共用，人均居住面积不足 4㎡。传统宿舍家具——上床下桌 + 衣柜——无法适应学生"学习-睡眠-社交-储物"多场景快速切换需求。<strong>核心矛盾：空间固定，但使用场景高度动态。</strong>
+    </p>
+    <div class="col3">
+      <div class="card"><h4>🔍 现象</h4><p>书桌堆满杂物无法学习；换季衣物无处收纳；室友作息冲突时无独立空间；外卖/快递包装占据走廊。</p></div>
+      <div class="card"><h4>🎯 设计机会</h4><p>如何在不改造宿舍结构的前提下，用模块化产品系统提升空间使用效率？关键在于"灵活切换"而非"更多柜子"。</p></div>
+      <div class="card"><h4>📐 约束条件</h4><p>不能钻孔/不可永久改造 · 需适配不同宿舍户型 · 成本控制在学生可承受范围 · 单人可独立安装。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · USER RESEARCH -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">02 · User Research</p>
+    <h2 class="sec-title">12 位学生的真实声音</h2>
+    <p class="sec-desc">我主持了 12 位澳门高校住宿生的深度访谈（单人 30-45 分钟），覆盖大一至大四、不同专业、不同宿舍楼型。同时收集了 38 份宿舍实拍照片用于场景分析。</p>
+
+    <div class="col3">
+      <div class="card"><h4>😤 最大痛点</h4><p>76% 受访者表示"桌面永远不够用"——吃饭、学习、化妆全部在同一张桌上完成，场景切换靠"把东西推到一边"。</p></div>
+      <div class="card"><h4>📦 收纳行为</h4><p>超过半数学生使用自购收纳盒（塑料抽屉、挂袋），但产品之间不兼容，空间利用率反而下降。</p></div>
+      <div class="card"><h4>🏠 改造意愿</h4><p>83% 愿意购买改善宿舍空间的方案，但心理价位集中在 200-500 元，且要求"毕业能带走或转卖"。</p></div>
+    </div>
+
+    <div class="quote">
+      <p>"我不是不想整理——是这房间根本没有'整理'的逻辑。所有东西都堆在一起，收拾完两天又乱了。" —— 大三受访者</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · DESIGN SOLUTION -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">03 · Design Solution</p>
+    <h2 class="sec-title">模块化系统：搭积木一样收纳</h2>
+    <p class="sec-desc">核心设计理念——<strong>不是做"更多家具"，而是做一套"空间乐高"</strong>。3 件模块化产品可以独立使用，也可以互相组合，适配不同宿舍户型和使用场景。</p>
+
+    <div class="col3">
+      <div class="card"><h4>🧱 A 模块：桌面扩展板</h4><p>折叠式扩展台面，展开后桌面深度从 60cm 延伸至 90cm。折叠时占用厚度仅 6cm，可兼作留言板/照片墙。滑轨结构支持单手操作。</p></div>
+      <div class="card"><h4>📦 B 模块：堆叠储物箱</h4><p>3 尺寸可选（衣物/文具/杂物），顶部凹槽与底部凸起咬合，堆叠后稳固不滑落。透明视窗设计无需打开即可看到内容物。可横放/竖放。</p></div>
+      <div class="card"><h4>🪝 C 模块：床边挂架系统</h4><p>无需打孔的快装挂架，利用床架结构承重。集成手机支架 + USB 充电走线槽 + 水杯位。解决"上床后什么都想带着"的痛点。</p></div>
+    </div>
+
+    <img src="images/optimized/smartdorm-thumb.jpg" alt="SmartDorm 模块化收纳系统" class="img-full" style="margin-top:32px">
+    <p class="img-caption">SmartDorm 三件套：桌面扩展板 + 堆叠储物箱 ×2 + 床边挂架系统</p>
+  </div>
+</section>
+
+<!-- 04 · CMF + PROTOTYPE -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">04 · CMF & Prototype</p>
+    <h2 class="sec-title">材料、色彩与原型验证</h2>
+    <p class="sec-desc">3 套 CMF 方案应对不同宿舍风格：原木暖色系适配老式宿舍、灰白极简系适配新建宿舍、莫兰迪彩色系面向女性用户。1:5 白模快速验证结构比例与组合方式。</p>
+
+    <div class="col2">
+      <div class="card"><h4>🎨 CMF 方案 A · 原木暖色</h4><p>桦木纹贴面 + 米白色 ABS。适配传统宿舍的木色家具，视觉上"融入原有空间"而非"增加一件东西"。</p></div>
+      <div class="card"><h4>🎨 CMF 方案 B · 灰白极简</h4><p>浅灰纹理 + 纯白哑光。面向新建宿舍的现代风格，与白色墙面和金属家具协调。</p></div>
+      <div class="card"><h4>🎨 CMF 方案 C · 莫兰迪色</h4><p>雾蓝 + 豆沙绿 + 奶油黄。调研发现女性用户对收纳产品外观要求显著更高，推出彩色系列。</p></div>
+      <div class="card"><h4>🔧 原型验证</h4><p>Rhino 7 全尺寸建模，3D 打印 1:5 白模。邀请 4 位受访者进行"桌面模拟摆放"测试，验证模块组合直觉性和尺寸适配性。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · MINI PROGRAM UI -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">05 · Mini Program UI</p>
+    <h2 class="sec-title">微信小程序：把收纳数字化</h2>
+    <p class="sec-desc">产品之外的数字化延伸——我独立完成全部 UI 设计。核心功能：扫码识别物品 → 收纳方案推荐 → 空间可视化预览。</p>
+
+    <div class="col2">
+      <div class="card"><h4>📱 首页 · 我的宿舍</h4><p>房间平面图视图，拖拽模块到对应位置预览效果。底部 Tab 导航：首页 / 物品 / 方案 / 我的。</p></div>
+      <div class="card"><h4>📷 物品识别</h4><p>拍照或从相册上传，AI 识别物品类型（衣物/书籍/电子/杂物），自动推荐存放模块和位置。</p></div>
+      <div class="card"><h4>💡 收纳方案</h4><p>预设 6 种常见宿舍户型的模块搭配方案。用户可以按"最大化书桌空间""最大化衣物收纳"等目标筛选。</p></div>
+      <div class="card"><h4>🛒 购买与管理</h4><p>模块产品购买链接、订单追踪、已购模块的电子说明书与安装视频。二手转卖信息发布。</p></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">5</div><div class="label">小程序界面</div></div>
+      <div class="stat"><div class="num">6</div><div class="label">户型预设方案</div></div>
+      <div class="stat"><div class="num">Figma</div><div class="label">设计工具</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · TEAM -->
+<section class="sec">
+  <div class="sec-inner">
+    <p class="sec-tag">06 · Team Collaboration</p>
+    <h2 class="sec-title">跨专业协作是怎样运作的</h2>
+
+    <div class="roles">
+      <div class="role-card">
+        <div class="role-avatar role-mine">我</div>
+        <div class="role-name">金承旭</div>
+        <div class="role-title">产品设计</div>
+        <div class="role-task">主持用户访谈 · 产品外观/CMF · 小程序全部 UI · 设计汇报</div>
+      </div>
+      <div class="role-card">
+        <div class="role-avatar role-other">L</div>
+        <div class="role-name">林同学</div>
+        <div class="role-title">室内设计</div>
+        <div class="role-task">宿舍空间测绘 · 户型数据分析 · 家具尺度与人机工程验证</div>
+      </div>
+      <div class="role-card">
+        <div class="role-avatar role-other">Z</div>
+        <div class="role-name">张同学</div>
+        <div class="role-title">软件工程</div>
+        <div class="role-task">小程序前端开发 · 物品识别 API 对接 · 空间预览 WebGL 实现</div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>最难的既不是建模也不是画 UI——而是三个人对"什么是好的收纳"有完全不同的定义。产品设计师想的是用户体验，室内设计师想的是空间效率，工程师想的是可行性。让三种语言对齐，是这个项目真正的收获。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <h2>对团队项目或收纳设计感兴趣？</h2>
+  <p>这个项目展示了跨专业协作的设计流程——从用户研究到 CMF 到数字化延伸。</p>
+  <div class="footer-links">
+    <a href="mailto:1416907076@qq.com">发送邮件</a>
+    <span class="footer-sep">/</span>
+    <a href="index.html">返回作品集</a>
+    <span class="footer-sep">/</span>
+    <a href="#" id="wechatLink">微信联系</a>
+  </div>
+  <div class="footer-bottom">© 2026 金承旭 · SmartDorm Design Case Study</div>
+</footer>
+
+<script>
+document.getElementById('wechatLink').addEventListener('click',function(e){e.preventDefault();
+  var id='JCX-1416907076';
+  function t(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#13111a;color:#e8e6f0;padding:14px 28px;border-radius:3px;font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;font-family:"Inter","PingFang SC",sans-serif;';document.body.appendChild(d);requestAnimationFrame(function(){d.style.opacity='1'});setTimeout(function(){d.style.opacity='0';setTimeout(function(){document.body.removeChild(d)},300)},2500)}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(function(){t('微信号已复制：'+id)})}else{t('微信号：'+id)}
+});
+</script>
+</body>
+</html>
