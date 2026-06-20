@@ -21,6 +21,7 @@ h1{font-size:28px;color:#c8a050}.ss{font-size:11px;color:rgba(200,180,150,.4)}
 </style></head><body>
 <canvas id="c"></canvas>
 
+<div id="err" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#f44;font-size:20px;z-index:50;text-align:center;pointer-events:none;display:none"></div>
 <div class="s" id="m1"><div style="text-align:center">
 <h1>ECLIPSE ARENA</h1><div class="ss">Pick Character</div>
 <div class="cards">
@@ -36,6 +37,8 @@ h1{font-size:28px;color:#c8a050}.ss{font-size:11px;color:rgba(200,180,150,.4)}
 </div></div>
 
 <script>
+window.onerror=function(m,s,l){document.getElementById('err').style.display='block';document.getElementById('err').textContent='ERROR: '+m+' line '+l;return!1};
+try{
 const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
 let W=innerWidth,H=innerHeight;canvas.width=W;canvas.height=H;onresize=()=>{W=canvas.width=innerWidth;H=canvas.height=innerHeight};
 let ac;function ia(){if(!ac)try{ac=new AudioContext()}catch(e){}if(ac?.state==='suspended')ac.resume()}
@@ -69,7 +72,7 @@ function go(lv){lvl=lv;ia();document.getElementById('m1').classList.add('h');doc
   run=!0}
 
 // ==== SPAWN ====
-function sE(){const a=Math.random()*Math.PI*2,d=130+Math.random()*50;const t=ET[Math.floor(Math.random()*ET.length)],hm=1+lv*.05;en.push({x:pl.x+Math.cos(a)*d,y:pl.y+Math.sin(a)*d,hp:Math.floor(t.hp*hm),mh:Math.floor(t.hp*hm),sp:t.sp*(1+lv*.03),sz:t.sz,dmg:Math.floor(t.dmg*(1+lv*.03)),co:t.co,sc:Math.floor(t.sc*(1+lv*.04)),r:t.r||!1,h:t.h||!1,shCD:0,hCD:0,stun:0,alive:!0})}
+function sE(){const a=Math.random()*Math.PI*2,d=130+Math.random()*50;const t=ET[Math.floor(Math.random()*ET.length)],hm=1+lvl*.05;en.push({x:pl.x+Math.cos(a)*d,y:pl.y+Math.sin(a)*d,hp:Math.floor(t.hp*hm),mh:Math.floor(t.hp*hm),sp:t.sp*(1+lv*.03),sz:t.sz,dmg:Math.floor(t.dmg*(1+lv*.03)),co:t.co,sc:Math.floor(t.sc*(1+lv*.04)),r:t.r||!1,h:t.h||!1,shCD:0,hCD:0,stun:0,alive:!0})}
 function sI(){const a=Math.random()*Math.PI*2;const t=IT[Math.floor(Math.random()*IT.length)];it.push({x:pl.x+Math.cos(a)*(30+Math.random()*100),y:pl.y+Math.sin(a)*(30+Math.random()*100),type:t,l:500})}
 
 // ==== HELPERS ====
@@ -183,4 +186,5 @@ function R2(){
 let lt=performance.now();
 function loop(){const dt=(performance.now()-lt)/1000;lt=performance.now();U(dt);R2();requestAnimationFrame(loop)}
 loop();
+}catch(e){document.getElementById('err').style.display='block';document.getElementById('err').textContent='JS ERROR: '+e.message+' at line '+e.lineNumber}
 </script></body></html>
