@@ -21,24 +21,21 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-    body{font-family:var(--font-sans);font-size:16px;line-height:1.8;color:var(--text);background:var(--bg)}
+    body{font-family:var(--font-sans);font-size:16px;line-height:1.8;color:var(--text);background:var(--bg);overflow-x:hidden}
     ::selection{background:var(--accent-dim);color:var(--text)}
 
-    /* Nav */
     .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;background:rgba(250,250,248,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border-light)}
     .nav-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
-    .nav-back{font-size:13px;color:var(--text-secondary);transition:color 0.2s}
+    .nav-back{font-size:13px;color:var(--text-secondary);transition:color 0.2s;text-decoration:none}
     .nav-back:hover{color:var(--text)}
     .nav-title{font-family:var(--font-serif);font-size:16px;font-weight:600}
 
-    /* Hero */
     .case-hero{padding:120px 24px 64px;text-align:center;max-width:var(--max-width);margin:0 auto}
     .case-overline{font-size:11px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:16px}
     .case-hero h1{font-family:var(--font-serif);font-size:clamp(32px,5vw,48px);font-weight:700;margin-bottom:16px;letter-spacing:0.02em}
     .case-subtitle{font-size:18px;color:var(--text-secondary);margin-bottom:32px}
     .case-hero-img{width:100%;max-width:800px;border-radius:2px;border:1px solid var(--border);margin-top:32px}
 
-    /* Flow bar */
     .flow-bar{background:var(--bg-alt);padding:24px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow-x:auto}
     .flow-inner{max-width:var(--max-width);margin:0 auto;padding:0 24px;display:flex;gap:0;justify-content:center}
     .flow-step{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-secondary);white-space:nowrap}
@@ -46,39 +43,54 @@
     .flow-arrow{margin:0 8px;color:var(--text-tertiary);font-size:14px;flex-shrink:0}
     .flow-label{font-size:12px}
 
-    /* Section */
     .case-section{padding:80px 24px;max-width:var(--max-width);margin:0 auto}
-    .case-section:nth-child(even){background:var(--bg-alt)}
+    .case-section.alt{background:var(--bg-alt)}
     .section-num{font-size:11px;font-weight:500;letter-spacing:0.15em;color:var(--accent);margin-bottom:8px}
     .section-title{font-family:var(--font-serif);font-size:clamp(24px,4vw,32px);font-weight:600;margin-bottom:24px}
     .section-desc{font-size:15px;color:var(--text-secondary);max-width:640px;line-height:1.85;margin-bottom:24px}
 
-    /* Design evolution cards */
+    /* Sketch toggle */
+    .sketch-toggle{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--accent);cursor:pointer;padding:6px 0;border:none;background:none;font-family:var(--font-sans);transition:gap 0.2s;margin-bottom:8px}
+    .sketch-toggle:hover{gap:10px}
+    .sketch-toggle::after{content:'▸';font-size:10px;transition:transform 0.3s}
+    .sketch-toggle.open::after{transform:rotate(90deg)}
+    .sketch-panel{display:none;margin-bottom:24px;padding:16px;background:var(--card);border:1px solid var(--border-light);border-radius:2px}
+    .sketch-panel.open{display:block}
+    .sketch-panel img{width:100%;max-width:100%;border:1px solid var(--border-light);margin-bottom:8px}
+    .sketch-caption{font-size:11px;color:var(--text-tertiary);text-align:center}
+    .sketch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+
     .evo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:32px}
     .evo-card{background:var(--card);border:1px solid var(--border-light);padding:28px;border-radius:2px}
     .evo-phase{font-size:11px;font-weight:500;letter-spacing:0.08em;color:var(--accent);margin-bottom:12px}
     .evo-title{font-family:var(--font-serif);font-size:20px;font-weight:600;margin-bottom:8px}
     .evo-desc{font-size:14px;color:var(--text-secondary);line-height:1.75}
 
-    /* Quote */
     .case-quote{margin:48px 0;padding:40px;background:var(--bg-alt);border-left:2px solid var(--accent-soft)}
     .case-quote p{font-family:var(--font-serif);font-size:18px;font-style:italic;color:var(--text-secondary);line-height:1.8}
+    .case-quote cite{display:block;margin-top:12px;font-size:12px;font-style:normal;color:var(--text-tertiary);font-family:var(--font-sans)}
 
-    /* Final */
-    .final-highlight{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;margin-top:32px}
+    .final-highlight{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:32px}
     .final-img{border-radius:2px;border:1px solid var(--border);width:100%}
     .final-specs{list-style:none}
     .final-specs li{font-size:14px;padding:8px 0;padding-left:20px;position:relative;color:var(--text-secondary)}
     .final-specs li::before{content:'';position:absolute;left:0;top:16px;width:6px;height:1px;background:var(--accent-soft)}
 
-    .back-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--accent);margin-top:48px;transition:gap 0.2s}
+    .back-link{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--accent);margin-top:48px;transition:gap 0.2s;text-decoration:none}
     .back-link:hover{gap:14px}
 
     footer{text-align:center;padding:48px 24px;color:var(--text-tertiary);font-size:12px;border-top:1px solid var(--border-light)}
 
+    /* Lightbox */
+    .lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.9);cursor:pointer}
+    .lightbox.open{display:flex;align-items:center;justify-content:center}
+    .lightbox img{max-width:90vw;max-height:90vh;object-fit:contain}
+    .lightbox-close{position:absolute;top:24px;right:24px;color:#fff;font-size:32px;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+
     @media(max-width:768px){
       .final-highlight{grid-template-columns:1fr}
       .evo-grid{grid-template-columns:1fr}
+      .sketch-grid{grid-template-columns:1fr}
       .flow-inner{justify-content:flex-start}
       .flow-label{display:none}
     }
@@ -96,11 +108,10 @@
 <header class="case-hero">
   <p class="case-overline">Case Study</p>
   <h1>磁吸悬浮 VR 体感辅助设备</h1>
-  <p class="case-subtitle">从电影道具调研到产品原型落地的完整设计推导<br>课程项目 · 独立设计 · 2026.01—2026.05</p>
+  <p class="case-subtitle">从电影道具调研到产品原型落地的完整设计推导<br>课程项目 · 独立设计 · 2026.01 — 2026.05</p>
   <img src="images/optimized/vr-device-v2-hero.jpg" alt="VR 体感辅助设备" class="case-hero-img" loading="eager">
 </header>
 
-<!-- Design Process Flow -->
 <div class="flow-bar">
   <div class="flow-inner">
     <div class="flow-step"><span class="flow-num">1</span><span class="flow-label">电影调研</span></div><span class="flow-arrow">→</span>
@@ -113,93 +124,135 @@
   </div>
 </div>
 
-<!-- Phase 1: Film Research -->
+<!-- PHASE 01: Film Research -->
 <section class="case-section">
   <p class="section-num">PHASE 01</p>
   <h2 class="section-title">电影调研 · 建立素材基础</h2>
-  <p class="section-desc">以《黑豹2》和《头号玩家》两部科幻电影为研究对象，通过像素马赛克分析和电影海报研究，提取两部影片的视觉语言与道具设计风格，为后续道具选择与概念延伸奠定基础。</p>
+  <p class="section-desc">以《黑豹2》和《头号玩家》两部科幻电影为研究对象，通过像素马赛克分析和电影海报研究，提取两部影片的视觉语言与道具设计风格，为后续道具选择与概念延伸奠定分析框架。</p>
+
+  <button class="sketch-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">查看调研草图</button>
+  <div class="sketch-panel">
+    <div class="sketch-grid">
+      <div><img src="images/case-study/page-04.jpg" alt="像素马赛克 · 黑豹二" loading="lazy"><p class="sketch-caption">作业一 · 像素马赛克 —《黑豹2》</p></div>
+      <div><img src="images/case-study/page-05.jpg" alt="像素马赛克 · 头号玩家" loading="lazy"><p class="sketch-caption">作业一 · 像素马赛克 —《头号玩家》</p></div>
+      <div><img src="images/case-study/page-06.jpg" alt="电影海报研究" loading="lazy"><p class="sketch-caption">作业二 · 电影海报分析</p></div>
+    </div>
+  </div>
+
   <div class="evo-grid">
     <div class="evo-card">
       <p class="evo-phase">作业一</p>
       <h3 class="evo-title">像素马赛克分析</h3>
-      <p class="evo-desc">对《黑豹2》与《头号玩家》关键帧进行像素化处理，提炼色彩构成与视觉重心，识别两部电影在道具设计上的差异化策略。</p>
+      <p class="evo-desc">对《黑豹2》与《头号玩家》关键帧进行像素化处理，提炼色彩构成与视觉重心，识别两部电影在道具设计上的差异化策略——黑豹偏向有机形态与非洲未来主义，头号玩家强调机械结构与赛博朋克质感。</p>
     </div>
     <div class="evo-card">
       <p class="evo-phase">作业二</p>
       <h3 class="evo-title">电影海报研究</h3>
-      <p class="evo-desc">分析两部电影海报的构图逻辑与信息层级，理解科幻类型片的视觉传达规范，为后续产品视觉呈现建立参考框架。</p>
+      <p class="evo-desc">分析电影海报的构图逻辑与信息层级，理解科幻类型片的视觉传达规范，为后续产品视觉呈现建立参考框架。</p>
     </div>
     <div class="evo-card">
       <p class="evo-phase">作业三</p>
       <h3 class="evo-title">场景叙事创作</h3>
-      <p class="evo-desc">创作《头号玩家：红灯笼离线中》原创故事场景，通过叙事构建深入理解电影世界观与道具在情境中的使用逻辑——这是后续设计决策的重要背景。</p>
+      <p class="evo-desc">创作原创故事场景《头号玩家：红灯笼离线中》——设定在春节的叠楼区，探讨"数字斋戒"情境下的人际连接。叙事构建帮助深入理解电影世界观与道具在真实情境中的使用逻辑。</p>
     </div>
   </div>
 </section>
 
-<!-- Phase 2: Prop Analysis -->
-<section class="case-section">
+<!-- PHASE 02: Prop Analysis -->
+<section class="case-section alt">
   <p class="section-num">PHASE 02</p>
   <h2 class="section-title">道具分析 · 确定设计切入点</h2>
-  <p class="section-desc">系统研究《头号玩家》中的核心道具，从多视角分析道具形态、功能逻辑与使用场景，将电影中的虚构道具作为现实产品设计的起点。</p>
+  <p class="section-desc">系统研究《头号玩家》中的核心道具，从多视角分析道具形态、功能逻辑与使用场景。关键洞察：现实 VR 设备受"地面限制"——用户在虚拟世界自由飞行，身体却被困在地面——这种沉浸感断层正是设计机会点。</p>
+
+  <button class="sketch-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">查看道具分析草图</button>
+  <div class="sketch-panel">
+    <div class="sketch-grid">
+      <div><img src="images/case-study/page-16.jpg" alt="道具不同视角" loading="lazy"><p class="sketch-caption">作业四 · 道具多视角分析</p></div>
+      <div><img src="images/case-study/page-18.jpg" alt="道具现实产品" loading="lazy"><p class="sketch-caption">作业五 · 道具→现实产品映射</p></div>
+      <div><img src="images/case-study/page-21.jpg" alt="三种状况" loading="lazy"><p class="sketch-caption">作业六 · 三种使用状况分析</p></div>
+    </div>
+  </div>
+
   <div class="evo-grid">
     <div class="evo-card">
       <p class="evo-phase">作业四</p>
-      <h3 class="evo-title">道具多视角分析</h3>
-      <p class="evo-desc">从正视图、侧视图、顶视图等多角度拆解道具形态，建立对道具三维结构的完整认知。</p>
+      <h3 class="evo-title">道具多视角拆解</h3>
+      <p class="evo-desc">从正视图、侧视图、顶视图等多角度拆解道具形态，建立对道具三维结构的完整认知，为后续三维建模提供形态参考。</p>
     </div>
     <div class="evo-card">
       <p class="evo-phase">作业五</p>
       <h3 class="evo-title">道具 → 现实产品映射</h3>
-      <p class="evo-desc">将电影道具的功能逻辑映射到现实产品需求，识别 VR 体感设备的核心用户痛点：地面限制导致的沉浸感断层。</p>
+      <p class="evo-desc">将电影道具的功能逻辑映射到现实产品需求。核心发现：VR 用户需要的是在物理空间中自由移动的能力，而非更多的虚拟反馈。</p>
     </div>
     <div class="evo-card">
       <p class="evo-phase">作业六</p>
-      <h3 class="evo-title">三种使用状况分析</h3>
-      <p class="evo-desc">定义产品的三种核心使用场景，从不同情境反推功能需求，确保设计的通用性与场景适应性。</p>
+      <h3 class="evo-title">三种使用状况</h3>
+      <p class="evo-desc">定义产品的三种核心使用场景——单人训练、多人竞技、康复辅助。从不同情境反推功能需求，确保设计的通用性与场景适应性。</p>
     </div>
   </div>
 </section>
 
-<!-- Phase 3: Concept Development -->
+<!-- PHASE 03: Concept Development -->
 <section class="case-section">
   <p class="section-num">PHASE 03</p>
   <h2 class="section-title">概念发展 · 从发散到收敛</h2>
-  <p class="section-desc">运用 AI 生图工具（Midjourney / NanoBanana2）进行外骨骼概念发散，生成多方向方案后进行系统性评估与收敛。</p>
+  <p class="section-desc">运用 AI 生图工具进行外骨骼概念发散，生成多方向方案后进行系统性评估。核心收敛逻辑：从"能做多少"转向"用户真正愿意穿戴多少"。</p>
 
   <blockquote class="case-quote">
-    <p>"最初的全身外骨骼套装设计，因为过于庞大以及不能飞行等设计缺陷进行了修改——改进了便捷程度和深入了链接设备的考虑，让人能够做到更多的动作。"</p>
+    <p>"最初的全身外骨骼套装设计，因为过于庞大以及不能飞行等设计缺陷进行了修改——改进了便捷程度和深入了链接设备的考虑，让人能够做到更多的动作，但是想要实现电影中的效果还是需要改进。"</p>
+    <cite>—— 设计笔记 · 作业八</cite>
   </blockquote>
+
+  <button class="sketch-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">查看概念迭代草图 ⬇</button>
+  <div class="sketch-panel">
+    <div class="sketch-grid">
+      <div><img src="images/case-study/page-24.jpg" alt="作业七 道具设计" loading="lazy"><p class="sketch-caption">作业七 · 道具设计初稿</p></div>
+      <div><img src="images/case-study/page-29.jpg" alt="作业八 草图" loading="lazy"><p class="sketch-caption">作业八 · 方案深入探索</p></div>
+      <div><img src="images/case-study/page-30.jpg" alt="全身外骨骼" loading="lazy"><p class="sketch-caption">迭代一 · 全身外骨骼套装（因体积过大被否决）</p></div>
+      <div><img src="images/case-study/page-31.jpg" alt="便捷改进" loading="lazy"><p class="sketch-caption">迭代二 · 优化便携性与连接机制</p></div>
+      <div><img src="images/case-study/page-32.jpg" alt="磁吸按钮" loading="lazy"><p class="sketch-caption">迭代三 · 腰/腿/肩部磁吸按钮概念</p></div>
+      <div><img src="images/case-study/page-33.jpg" alt="连接部件" loading="lazy"><p class="sketch-caption">迭代四 · 多角度磁吸连接方案</p></div>
+    </div>
+  </div>
 
   <div class="evo-grid">
     <div class="evo-card">
       <p class="evo-phase">作业七</p>
-      <h3 class="evo-title">道具设计</h3>
-      <p class="evo-desc">基于道具分析结论进行初步设计，将电影中的视觉元素转化为可实现的产品形态语言。</p>
+      <h3 class="evo-title">道具设计初稿</h3>
+      <p class="evo-desc">基于道具分析结论进行初步设计，将电影中的视觉元素转化为可实现的产品形态语言。此阶段仍以"酷"为优先级，尚未充分考虑人体工学约束。</p>
     </div>
     <div class="evo-card">
       <p class="evo-phase">作业八</p>
-      <h3 class="evo-title">草图与方案深入</h3>
-      <p class="evo-desc">从全身外骨骼方案出发，经历数轮迭代：缩减体量 → 优化便携性 → 引入磁吸连接机制 → 聚焦腿部核心模块。</p>
+      <h3 class="evo-title">草图迭代与方案收敛</h3>
+      <p class="evo-desc">四轮迭代的核心决策链：全身外骨骼（否决·体积过大、无飞行能力）→ 便携化减重 → 引入磁吸连接机制 → 聚焦腰腿部核心模块。每一轮都在"可实现性"与"体验效果"之间寻找平衡点。</p>
     </div>
   </div>
 </section>
 
-<!-- Phase 4: Final Design -->
-<section class="case-section">
+<!-- PHASE 04: Final Design -->
+<section class="case-section alt">
   <p class="section-num">PHASE 04</p>
   <h2 class="section-title">最终方案 · 磁吸悬浮系统</h2>
-  <p class="section-desc">经过多轮迭代，从庞大的全身外骨骼收敛至聚焦腰腿部的磁吸悬浮轻量化方案——从腰部到腿部和肩部都设计了磁吸按钮，外接磁吸设备可在需要时快速连接，帮助用户实现腾空、空翻等复杂动作。</p>
+  <p class="section-desc">从庞大的全身外骨骼收敛至聚焦腰腿部的磁吸悬浮轻量化方案。腿部双磁吸接口支持设备自动延伸配对，腰部磁吸扩展坞支持多角度外接——在便携性、功能性和穿戴体验之间找到了最优解。</p>
+
+  <button class="sketch-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">查看最终方案草图 ⬇</button>
+  <div class="sketch-panel">
+    <div class="sketch-grid">
+      <div><img src="images/case-study/page-34.jpg" alt="作业九 最终方案" loading="lazy"><p class="sketch-caption">作业九 · 最终方案总览</p></div>
+      <div><img src="images/case-study/page-35.jpg" alt="腿部模块" loading="lazy"><p class="sketch-caption">最终腿部模块 · 使用逻辑与建模</p></div>
+      <div><img src="images/case-study/page-36.jpg" alt="设备尺寸" loading="lazy"><p class="sketch-caption">设备尺寸规范</p></div>
+    </div>
+  </div>
 
   <div class="final-highlight">
-    <img src="images/optimized/vr-device-v2-thumb.jpg" alt="VR体感设备最终方案" class="final-img" loading="lazy">
+    <img src="images/optimized/vr-device-v2-thumb.jpg" alt="VR体感设备最终方案渲染" class="final-img" loading="lazy">
     <div>
       <h3 style="font-family:var(--font-serif);font-size:22px;margin-bottom:16px">技术规格</h3>
       <ul class="final-specs">
-        <li>腿部双磁吸接口，启动后设备自动延伸配对</li>
-        <li>快速佩戴绑带系统，即时穿戴无延迟</li>
-        <li>腰部磁吸扩展坞，支持多角度外接</li>
-        <li>碳纤维轻量化主体 + 钛合金磁吸连接器</li>
+        <li>腿部双磁吸接口 · 启动后自动延伸配对</li>
+        <li>快速佩戴绑带系统 · 即时穿戴</li>
+        <li>腰部磁吸扩展坞 · 多角度外接</li>
+        <li>碳纤维轻量化主体 + 钛合金连接器</li>
         <li>Rhino 7 复杂曲面建模</li>
         <li>KeyShot 产品级渲染</li>
         <li>3D 打印原型验证人机尺度</li>
@@ -208,15 +261,15 @@
   </div>
 </section>
 
-<!-- Phase 5: Outcome -->
+<!-- OUTCOME -->
 <section class="case-section">
   <p class="section-num">OUTCOME</p>
-  <h2 class="section-title">设计成果与反思</h2>
+  <h2 class="section-title">设计反思</h2>
   <p class="section-desc">
-    本项目的核心收获不在于最终渲染图的视觉效果，而在于<span style="color:var(--text)">从虚构道具到现实产品的完整推导能力</span>。电影调研不是装饰性的灵感板，而是建立设计约束与机会点的分析工具；概念发散需要 AI 工具的加速，但收敛依赖设计师的判断力——每一轮迭代都意味着对"这个产品到底要解决什么问题"的更深入理解。
+    本项目的核心收获不在于最终渲染图的视觉效果，而在<span style="color:var(--text);font-weight:500">从虚构道具到现实产品的完整推导能力</span>。电影调研不是装饰性的灵感板，而是建立设计约束与机会点的分析工具；概念发散需要 AI 工具的加速，但收敛依赖设计师的判断力。
   </p>
   <p class="section-desc">
-    全身外骨骼的浪漫想象最终让位于腰腿部磁吸方案的务实选择——这不是妥协，而是产品设计最核心的能力：在约束中做出正确的取舍。
+    全身外骨骼的浪漫想象最终让位于腰腿部磁吸方案的务实选择——这不是妥协，而是产品设计最核心的能力：<span style="color:var(--text);font-weight:500">在约束中做出正确的取舍</span>。
   </p>
 </section>
 
@@ -227,6 +280,33 @@
 <footer>
   <p>© 2026 金承旭 JIN CHENGXU · 澳门科技大学产品设计</p>
 </footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
+<script>
+// Sketch toggle handler
+document.querySelectorAll('.sketch-toggle').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.classList.toggle('open');
+    this.nextElementSibling.classList.toggle('open');
+  });
+});
+
+// Lightbox for sketch images
+document.querySelectorAll('.sketch-panel img').forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightbox-img').src = this.src;
+    lb.classList.add('open');
+  });
+});
+</script>
 
 </body>
 </html>
