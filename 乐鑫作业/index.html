@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>潜江虾局 · 品牌形象与包装设计 | 毕业设计</title>
+<meta name="description" content="潜江小龙虾预制菜品牌形象与包装设计 — 完整品牌视觉系统">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand-red: #E8462C; --brand-gold: #F5A623; --brand-black: #1C1915;
+  --brand-white: #FFF8F0; --spicy: #E8462C; --garlic: #F5A623; --herb: #8B3A1F;
+  --border: #e8e4de; --text: #1C1915; --text-secondary: #6e6a64;
+  --font-sans: "Noto Sans SC","Inter","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.8;color:var(--text);background:var(--brand-white);overflow-x:hidden}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;position:relative;background:linear-gradient(180deg,var(--brand-red) 0%,#c0392b 60%,var(--brand-black) 100%);color:#fff}
+.hero-badge{font-size:14px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border:2px solid rgba(255,255,255,0.4);padding:8px 24px;border-radius:50px;margin-bottom:32px}
+.hero h1{font-size:clamp(48px,10vw,96px);font-weight:900;letter-spacing:0.06em;margin-bottom:16px;text-shadow:0 4px 24px rgba(0,0,0,0.3)}
+.hero-tagline{font-size:clamp(18px,3vw,24px);font-weight:400;opacity:0.9;margin-bottom:48px}
+.hero-scroll{font-size:12px;letter-spacing:0.1em;opacity:0.5;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+
+/* Sections */
+.section{padding:100px 24px;max-width:1100px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;letter-spacing:0.15em;color:var(--brand-red);margin-bottom:16px;text-transform:uppercase}
+.section-title{font-size:clamp(28px,4vw,42px);font-weight:900;margin-bottom:16px;letter-spacing:0.02em}
+.section-desc{font-size:16px;color:var(--text-secondary);max-width:600px;line-height:1.9;margin-bottom:40px}
+
+/* Brand Strategy Grid */
+.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.strategy-card{background:#fff;border:1px solid var(--border);padding:32px;border-radius:4px}
+.strategy-card h3{font-size:14px;font-weight:700;color:var(--brand-red);margin-bottom:8px;letter-spacing:0.05em}
+.strategy-card p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+/* Color system */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.color-swatch{height:120px;border-radius:4px;display:flex;align-items:flex-end;padding:16px;font-size:12px;font-weight:700;color:#fff}
+.color-swatch.light{color:var(--text)}
+.color-info{padding:8px 0;font-size:11px;color:var(--text-secondary)}
+
+/* Flavor cards */
+.flavor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.flavor-card{background:#fff;border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.flavor-header{padding:24px 28px;color:#fff;font-weight:900;font-size:20px}
+.flavor-header.spicy{background:var(--spicy)}
+.flavor-header.garlic{background:var(--garlic)}
+.flavor-header.herb{background:var(--herb)}
+.flavor-body{padding:24px 28px}
+.flavor-body p{font-size:14px;color:var(--text-secondary)}
+.flavor-body ul{list-style:none;margin-top:12px}
+.flavor-body li{font-size:13px;padding:4px 0;padding-left:16px;position:relative;color:var(--text-secondary)}
+.flavor-body li::before{content:'';position:absolute;left:0;top:11px;width:4px;height:4px;border-radius:50%;background:var(--brand-red)}
+
+/* Packaging */
+.packaging-showcase{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.packaging-img{border-radius:4px;border:1px solid var(--border);width:100%}
+.packaging-list{list-style:none}
+.packaging-list li{padding:12px 0;padding-left:24px;position:relative;font-size:15px;border-bottom:1px solid var(--border)}
+.packaging-list li::before{content:'';position:absolute;left:0;top:20px;width:6px;height:6px;background:var(--brand-red);border-radius:50%}
+.packaging-list strong{color:var(--text)}
+
+/* Mascot showcase */
+.mascot-section{background:var(--brand-black);color:#fff;text-align:center}
+.mascot-section .section-label{color:var(--brand-gold)}
+.mascot-section .section-title{color:#fff}
+.mascot-section .section-desc{color:rgba(255,255,255,0.6);margin:0 auto 40px}
+.mascot-img{max-width:500px;margin:0 auto;display:block;border-radius:8px}
+
+/* Poster */
+.poster-img{width:100%;max-width:700px;margin:0 auto;display:block;border-radius:4px;box-shadow:0 20px 60px rgba(0,0,0,0.15)}
+
+/* Full-width image */
+.full-img{width:100%;border-radius:4px;border:1px solid var(--border)}
+
+/* Footer */
+footer{background:var(--brand-black);color:rgba(255,255,255,0.5);text-align:center;padding:48px 24px;font-size:13px}
+
+@media(max-width:768px){
+  .packaging-showcase{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(36px,12vw,56px)}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">QIANJIANG SHRIMP BUREAU</div>
+  <h1>潜江虾局</h1>
+  <p class="hero-tagline">开锅即虾局 · 年轻人的夜宵预制菜</p>
+  <p class="hero-scroll">▼ 向下探索品牌系统</p>
+</header>
+
+<!-- BRAND STRATEGY -->
+<section class="section">
+  <p class="section-label">Brand Strategy</p>
+  <h2 class="section-title">品牌定位</h2>
+  <p class="section-desc">把潜江地域优势转化为年轻化品牌语言，把"虾局"打造成年轻人的社交夜宵场景——不是卖一只虾，是卖一场局。</p>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <h3>品牌名</h3>
+      <p>潜江虾局<br>QIANJIANG SHRIMP BUREAU</p>
+    </div>
+    <div class="strategy-card">
+      <h3>定位</h3>
+      <p>年轻人的夜宵社交预制菜品牌</p>
+    </div>
+    <div class="strategy-card">
+      <h3>口号</h3>
+      <p>开锅即虾局<br>Get the Party Crawling</p>
+    </div>
+    <div class="strategy-card">
+      <h3>目标</h3>
+      <p>18-28岁大学生与城市青年<br>宿舍/聚会/露营/外卖场景</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR SYSTEM -->
+<section class="section" style="background:#fff">
+  <p class="section-label">Visual System</p>
+  <h2 class="section-title">色彩系统</h2>
+  <p class="section-desc">三重口味对应三套色彩，在货架上形成强识别。</p>
+  <div class="color-grid">
+    <div><div class="color-swatch" style="background:var(--brand-red)">虾红 #E8462C</div><div class="color-info">品牌主色 · 麻辣口味</div></div>
+    <div><div class="color-swatch" style="background:var(--brand-gold);color:var(--text)">料金 #F5A623</div><div class="color-info">品牌辅色 · 蒜蓉口味</div></div>
+    <div><div class="color-swatch" style="background:var(--herb)">麻棕 #8B3A1F</div><div class="color-info">十三香口味</div></div>
+    <div><div class="color-swatch" style="background:var(--brand-black)">局黑 #1C1915</div><div class="color-info">文字 · 力量感</div></div>
+    <div><div class="color-swatch light" style="background:var(--brand-white)">壳白 #FFF8F0</div><div class="color-info">底色 · 包装底</div></div>
+  </div>
+</section>
+
+<!-- BRAND IP -->
+<section class="mascot-section">
+  <div class="section" style="padding:80px 24px">
+    <p class="section-label">Brand IP</p>
+    <h2 class="section-title">超级符号 · 虾局长</h2>
+    <p class="section-desc">潮酷小龙虾 IP——墨镜+大钳+金链。不是可爱的卡通虾，是有态度、懂吃、能组局的夜宵文化代言人。</p>
+    <img src="images/optimized/mascot-thumb.jpg" alt="虾局长品牌IP" class="mascot-img" loading="lazy">
+  </div>
+</section>
+
+<!-- FLAVOR SYSTEM -->
+<section class="section">
+  <p class="section-label">Flavor System</p>
+  <h2 class="section-title">三大口味 · 三套视觉</h2>
+  <p class="section-desc">每种口味独立色彩编码，货架上三秒识别——红色麻辣、金色蒜蓉、棕色十三香。</p>
+  <div class="flavor-grid">
+    <div class="flavor-card">
+      <div class="flavor-header spicy">🌶️ 麻辣小龙虾</div>
+      <div class="flavor-body">
+        <p>重辣重麻，江湖气最重的一款——给"无辣不欢"的夜宵硬核玩家。</p>
+        <ul><li>辣度：★★★★☆</li><li>搭配：冰啤酒 / 可乐</li><li>场景：兄弟局 · 看球 · 撸串</li></ul>
+      </div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-header garlic">🧄 蒜蓉小龙虾</div>
+      <div class="flavor-body">
+        <p>金蒜浓香，最"大众友好"的一款——吃完不呛人，适合社交场合。</p>
+        <ul><li>辣度：★★☆☆☆</li><li>搭配：冰茶 / 柠檬水</li><li>场景：闺蜜局 · 露营 · 约会</li></ul>
+      </div>
+    </div>
+    <div class="flavor-card">
+      <div class="flavor-header herb">🫚 十三香小龙虾</div>
+      <div class="flavor-body">
+        <p>十三种香料慢熬入味——层次最丰富的一款，给"会吃"的人。</p>
+        <ul><li>辣度：★★★☆☆</li><li>搭配：黄酒 / 乌龙茶</li><li>场景：家庭局 · 品鉴 · 独享</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGING -->
+<section class="section" style="background:#fff">
+  <p class="section-label">Packaging Design</p>
+  <h2 class="section-title">包装系统</h2>
+  <p class="section-desc">从内盒到冷链外箱，从调料包到加热说明卡——完整的预制菜包装链路设计。</p>
+
+  <div class="packaging-showcase" style="margin-bottom:60px">
+    <img src="images/optimized/package-spicy-thumb.jpg" alt="麻辣口味包装盒" class="packaging-img" loading="lazy">
+    <div>
+      <h3 style="font-size:22px;font-weight:900;margin-bottom:20px">口味包装盒</h3>
+      <ul class="packaging-list">
+        <li><strong>结构</strong>：天地盖纸盒 + 开窗展示</li>
+        <li><strong>材质</strong>：食品级白卡纸 + 内衬铝箔保温</li>
+        <li><strong>视觉</strong>：口味色铺底 + 虾局长IP居中 + 口味标签</li>
+        <li><strong>背面</strong>：三步加热说明 + 营养成分 + 产地溯源码</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="strategy-grid" style="margin-top:40px">
+    <div class="strategy-card"><h3>冷链外箱</h3><p>瓦楞纸+防水涂层<br>品牌色+白色字标<br>"冷藏运输"标识</p></div>
+    <div class="strategy-card"><h3>调料包</h3><p>三连包撕线设计<br>口味色区分<br>大字口味名</p></div>
+    <div class="strategy-card"><h3>外卖袋</h3><p>牛皮纸+品牌色带<br>虾局长IP大图<br>"开锅即虾局"口号</p></div>
+    <div class="strategy-card"><h3>加热说明卡</h3><p>三折小卡<br>虾局长教你三步加热<br>背面：潜江龙虾产地故事</p></div>
+  </div>
+</section>
+
+<!-- POSTER -->
+<section class="section">
+  <p class="section-label">Social Media</p>
+  <h2 class="section-title">社媒海报</h2>
+  <p class="section-desc">小红书 / 朋友圈传播物料——年轻化视觉语言，让预制菜也能被拍照发圈。</p>
+  <img src="images/optimized/poster-thumb.jpg" alt="潜江虾局社媒海报" class="poster-img" loading="lazy">
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section" style="background:#fff">
+  <p class="section-label">Deliverables</p>
+  <h2 class="section-title">设计交付清单</h2>
+  <div class="strategy-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="strategy-card"><h3>品牌基础</h3><p>品牌标志<br>品牌IP/超级符号<br>口号<br>色彩系统<br>字体规范</p></div>
+    <div class="strategy-card"><h3>包装系统</h3><p>口味包装盒×3<br>冷链快递箱<br>调料包×3<br>加热说明卡<br>外卖袋 / 餐盒</p></div>
+    <div class="strategy-card"><h3>传播物料</h3><p>社媒海报×3<br>电商详情页<br>夜宵陈列效果<br>打卡墙设计</p></div>
+    <div class="strategy-card"><h3>成果输出</h3><p>包装实物/模型<br>效果图<br>过程册<br>展板<br>答辩PPT</p></div>
+  </div>
+</section>
+
+<footer>
+  <p>潜江虾局 · QIANJIANG SHRIMP BUREAU &nbsp;|&nbsp; 毕业设计作品 &nbsp;|&nbsp; 金乐鑫</p>
+  <p style="margin-top:4px">品牌形象与包装设计 · 2026</p>
+</footer>
+
+</body>
+</html>
