@@ -9,7 +9,8 @@ const PDF_BASE64 = fs.readFileSync(PDF_PATH).toString('base64');
 const OUT = path.join(__dirname, 'images', 'case-study');
 if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
 
-const PAGES = [2,3,4,5,6,9,16,18,21,24,29,30,31,32,33,34,35,36,37];
+// Only content pages (skip title-only pages 3,6,9,16,18,21,24,29,34, and empties)
+const PAGES = [2,4,5,10,11,17,19,22,25,26,30,31,32,33,35,36];
 
 // Write an HTML file that loads the PDF and can render any page
 const viewerHtml = `<!DOCTYPE html>

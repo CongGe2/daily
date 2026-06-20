@@ -479,6 +479,57 @@ h1, h2, h3, h4 {
     radial-gradient(ellipse at 40% 35%, #f0ece6 0%, #e6e2dc 50%, #eae5df 100%);
 }
 
+.project-img-placeholder.rift-speaker {
+  background:
+    linear-gradient(155deg,
+      #f0ece5 0%, #e8e3d8 20%, #f5f1e8 40%,
+      #e0d9cc 55%, #ece6db 70%, #f2ede4 100%
+    );
+}
+.project-img-placeholder.rift-speaker::before {
+  content: '';
+  position: absolute;
+  inset: 18% 30%;
+  border-top: 2px solid rgba(196,98,58,0.25);
+  border-radius: 0;
+  transform: rotate(-8deg);
+  box-shadow: 0 4px 0 rgba(196,98,58,0.08);
+}
+
+.project-img-placeholder.eclipse-arena {
+  background:
+    linear-gradient(135deg,
+      #0a0e1a 0%, #141b30 25%, #0f1425 50%,
+      #1c2540 70%, #0a0e1a 100%
+    );
+}
+.project-img-placeholder.eclipse-arena .placeholder-label {
+  color: #00e5ff;
+  text-shadow: 0 0 20px rgba(0,229,255,0.4);
+}
+.project-img-placeholder.eclipse-arena::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(0,229,255,0.08), inset 0 0 30px rgba(0,229,255,0.05);
+}
+.project-img-placeholder.eclipse-arena::after {
+  content: '⚔️';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  opacity: 0.5;
+  filter: grayscale(0.3);
+}
+
 .project-img-placeholder.art::before {
   content: '';
   position: absolute;
