@@ -3,330 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>骑士 · 四幕 4K 场景</title>
+<title>骑士 · 四幕 4K 实时渲染</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#000; overflow:hidden; font-family:'Inter',sans-serif; }
   canvas { display:block; }
-
   #ui {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
-    display:flex; gap:12px; z-index:10; align-items:center;
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+    display:flex; gap:10px; z-index:10; align-items:center; flex-wrap:wrap; justify-content:center;
   }
   #ui button {
-    padding:10px 20px; border:1px solid rgba(255,255,255,0.2);
-    background:rgba(0,0,0,0.7); color:#fff; border-radius:4px;
-    font-size:13px; cursor:pointer; backdrop-filter:blur(8px);
-    transition:all .2s; letter-spacing:.04em;
+    padding:10px 18px; border:1px solid rgba(255,255,255,0.15);
+    background:rgba(0,0,0,0.65); color:#ddd; border-radius:3px;
+    font-size:12px; cursor:pointer; backdrop-filter:blur(12px);
+    transition:all .2s; letter-spacing:.05em; font-family:inherit;
   }
-  #ui button:hover { border-color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.1); }
-  #ui button.active { border-color:#ffd740; color:#ffd740; background:rgba(255,215,64,0.15); }
-
-  #info {
-    position:fixed; top:16px; left:50%; transform:translateX(-50%);
-    color:rgba(255,255,255,0.5); font-size:11px; letter-spacing:.08em;
-    z-index:10; pointer-events:none;
-  }
-
-  #capture-msg {
-    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-    color:#ffd740; font-size:16px; letter-spacing:.1em;
-    pointer-events:none; opacity:0; transition:opacity .3s;
-    z-index:20;
-  }
-
-  /* Loading */
+  #ui button:hover { border-color:rgba(255,255,255,0.4); color:#fff; }
+  #ui button.active { border-color:#ffd740; color:#ffd740; background:rgba(255,215,64,0.12); }
+  #ui .sep { width:1px; height:20px; background:rgba(255,255,255,0.1); margin:0 6px; }
   #loading {
-    position:fixed; inset:0; display:flex; align-items:center;
-    justify-content:center; background:#000; z-index:100;
-    color:rgba(255,255,255,0.6); font-size:14px; letter-spacing:.1em;
+    position:fixed; inset:0; display:flex; flex-direction:column; gap:12px;
+    align-items:center; justify-content:center; background:#000; z-index:100;
+    color:rgba(255,255,255,0.5); font-size:13px; letter-spacing:.06em;
+  }
+  #loading .bar { width:200px; height:2px; background:rgba(255,255,255,0.1); border-radius:1px; overflow:hidden; }
+  #loading .bar div { height:100%; background:#ffd740; transition:width .3s; border-radius:1px; }
+  #toast {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    color:#ffd740; font-size:15px; letter-spacing:.08em;
+    pointer-events:none; opacity:0; transition:opacity .3s; z-index:20;
   }
 </style>
 </head>
 <body>
 
-<div id="loading">加载中...</div>
-<div id="capture-msg">📸 4K 截图已保存</div>
+<div id="loading">
+  <span id="load-text">加载 AI 场景图...</span>
+  <div class="bar"><div id="load-bar" style="width:0%"></div></div>
+</div>
+<div id="toast">📸 4K 已保存</div>
 
 <div id="ui">
   <button data-scene="0" class="active">🌅 晚霞</button>
   <button data-scene="1">🩸 血红</button>
   <button data-scene="2">☁️ 灰暗</button>
   <button data-scene="3">✨ 雨后光照</button>
-  <button id="btn-play" style="margin-left:16px;">▶ 自动播放</button>
-  <button id="btn-capture" style="margin-left:8px;">📸 4K截图</button>
-  <button id="btn-record" style="margin-left:8px;">⏺ 录4K视频</button>
+  <span class="sep"></span>
+  <button id="btn-play">▶ 自动播放</button>
+  <button id="btn-shot">📸 4K截图</button>
+  <button id="btn-rec">⏺ 录4K</button>
 </div>
 
-<div id="info">KNIGHT · THE WALKER — 4K Real-time Scene</div>
-
 <script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-  }
-}
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
 </script>
 
 <script type="module">
 import * as THREE from 'three';
 
-// ── Scene Config ──
-const SCENES = [
-  { // 0: Sunset
-    skyTop: '#1a0533', skyMid: '#8b2252', skyBot: '#d46a3e',
-    fogColor: '#d46a3e', fogDensity: 0.00015,
-    groundColor: '#2d1f0e', groundWet: 0,
-    lightColor: '#ffccaa', lightIntensity: 1.8,
-    particles: { color: '#ffd740', count: 60, opacity: 0.3, size: 0.08 },
-    rain: false,
-  },
-  { // 1: Blood Sky
-    skyTop: '#0a0005', skyMid: '#4a0a1a', skyBot: '#8b1a1a',
-    fogColor: '#3a0a0a', fogDensity: 0.00025,
-    groundColor: '#0d0d0d', groundWet: 0,
-    lightColor: '#cc4444', lightIntensity: 1.2,
-    particles: { color: '#ff4444', count: 120, opacity: 0.4, size: 0.06 },
-    rain: false,
-  },
-  { // 2: Gloom
-    skyTop: '#1a1a1a', skyMid: '#2d2d2d', skyBot: '#3d3d3d',
-    fogColor: '#2a2a2a', fogDensity: 0.00035,
-    groundColor: '#1a1a1a', groundWet: 0,
-    lightColor: '#aaaaaa', lightIntensity: 0.6,
-    particles: { color: '#888888', count: 30, opacity: 0.15, size: 0.04 },
-    rain: false,
-  },
-  { // 3: After Rain + Light Beam
-    skyTop: '#1a1a22', skyMid: '#2d3040', skyBot: '#3a3a44',
-    fogColor: '#3a3a40', fogDensity: 0.0002,
-    groundColor: '#1a1a18', groundWet: 0.6,
-    lightColor: '#ffddaa', lightIntensity: 2.5,
-    particles: { color: '#ffd740', count: 200, opacity: 0.5, size: 0.04 },
-    rain: false,
-    lightBeam: true,
-  }
+// ── 4K Config ──
+const W = 3840, H = 2160;
+
+// ── Image URLs ──
+const IMG_PATHS = [
+  'images/knight/knight-v2-01-sunset.png',
+  'images/knight/knight-v3-02-bloodsky.png',
+  'images/knight/knight-v3-03-gloom.png',
+  'images/knight/knight-v4-04-after-rain.png',
 ];
 
-// ── Three.js Setup ──
-const W = 3840, H = 2160; // 4K internal render
-const previewScale = 0.35; // Scale down for preview display
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+// ── Scene Data ──
+const SCENES = [
+  { name:'晚霞', particles:{color:'#ffd740',count:50,size:0.06,opacity:0.25,speed:0.3}, fogColor:'#d4a06a', fogDensity:0.00006, groundDarken:0.35, wetGround:0.0, beamOpacity:0 },
+  { name:'血红', particles:{color:'#ff4444',count:80,size:0.05,opacity:0.35,speed:0.5}, fogColor:'#3a0a0a', fogDensity:0.00012, groundDarken:0.55, wetGround:0.0, beamOpacity:0 },
+  { name:'灰暗', particles:{color:'#999999',count:25,size:0.04,opacity:0.12,speed:0.15}, fogColor:'#2a2a2a', fogDensity:0.00020, groundDarken:0.65, wetGround:0.0, beamOpacity:0 },
+  { name:'雨后光照', particles:{color:'#ffd740',count:160,size:0.035,opacity:0.45,speed:0.25}, fogColor:'#3a3a40', fogDensity:0.00010, groundDarken:0.40, wetGround:0.55, beamOpacity:0.18 },
+];
+
+// ── Renderer ──
+const renderer = new THREE.WebGLRenderer({ antialias:true, preserveDrawingBuffer:true, alpha:false });
 renderer.setSize(W, H, false);
 renderer.setPixelRatio(1);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.0;
+renderer.toneMappingExposure = 1.1;
 document.body.appendChild(renderer.domElement);
 
-// Scale canvas to fit screen for preview
 function fitPreview() {
-  const scale = Math.min(window.innerWidth / W, window.innerHeight / H);
-  renderer.domElement.style.width = (W * scale) + 'px';
-  renderer.domElement.style.height = (H * scale) + 'px';
+  const s = Math.min(window.innerWidth/W, window.innerHeight/H);
+  renderer.domElement.style.width = (W*s)+'px';
+  renderer.domElement.style.height = (H*s)+'px';
 }
 fitPreview();
 window.addEventListener('resize', fitPreview);
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 1000);
-camera.position.set(0, 30, 60);
-camera.lookAt(0, 0, -200);
 
-// ── Sky Dome ──
-const skyGeo = new THREE.SphereGeometry(400, 64, 32);
-const skyMat = new THREE.ShaderMaterial({
-  uniforms: {
-    uTop: { value: new THREE.Color('#1a0533') },
-    uMid: { value: new THREE.Color('#8b2252') },
-    uBot: { value: new THREE.Color('#d46a3e') },
-  },
-  vertexShader: /* glsl */ `
-    varying vec3 vWorldPos;
-    void main() {
-      vec4 worldPos = modelMatrix * vec4(position, 1.0);
-      vWorldPos = worldPos.xyz;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: /* glsl */ `
-    varying vec3 vWorldPos;
-    uniform vec3 uTop, uMid, uBot;
-    void main() {
-      float h = normalize(vWorldPos).y;
-      float t = smoothstep(-0.1, 0.7, h);
-      vec3 col = mix(uBot, uMid, smoothstep(0.0, 0.4, t));
-      col = mix(col, uTop, smoothstep(0.4, 1.0, t));
-      gl_FragColor = vec4(col, 1.0);
-    }
-  `,
-  side: THREE.BackSide,
-  depthWrite: false,
-});
-const sky = new THREE.Mesh(skyGeo, skyMat);
-scene.add(sky);
+// ── Camera ──
+const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 800);
+camera.position.set(0, 8, 45);
+camera.lookAt(0, -2, -30);
 
-// ── Fog ──
-scene.fog = new THREE.FogExp2('#d46a3e', 0.00015);
+// ── Background plane (displays AI image) ──
+const bgGeo = new THREE.PlaneGeometry(150, 84.375); // 16:9 at distance
+const bgTex = new THREE.TextureLoader();
+const bgMat = new THREE.MeshBasicMaterial({ map:null, depthTest:false, depthWrite:false });
+const bgPlane = new THREE.Mesh(bgGeo, bgMat);
+bgPlane.position.set(0, 10, -60);
+bgPlane.renderOrder = -1;
+scene.add(bgPlane);
 
-// ── Ground ──
-const groundGeo = new THREE.PlaneGeometry(800, 400, 128, 64);
-// Slightly undulate ground
-const pos = groundGeo.attributes.position;
-for (let i = 0; i < pos.count; i++) {
-  const x = pos.getX(i), y = pos.getY(i);
-  const dist = Math.abs(y) / 200;
-  pos.setZ(i, Math.sin(x * 0.02) * 0.3 + Math.cos(x * 0.05 + y * 0.03) * 0.2 - dist * 2);
+// ── Ground plane ──
+const groundGeo = new THREE.PlaneGeometry(200, 120, 100, 60);
+// Subtle undulation
+const gp = groundGeo.attributes.position;
+for (let i=0; i<gp.count; i++) {
+  const x=gp.getX(i), y=gp.getY(i);
+  gp.setZ(i, Math.sin(x*0.03)*0.4 + Math.sin(y*0.04)*0.3 + Math.cos(x*0.06+y*0.05)*0.2);
 }
 groundGeo.computeVertexNormals();
-
-const groundMat = new THREE.MeshStandardMaterial({
-  color: '#2d1f0e',
-  roughness: 1.0,
-  metalness: 0.0,
-  flatShading: true,
-});
+const groundMat = new THREE.MeshStandardMaterial({ color:'#1a1a10', roughness:0.95, metalness:0, flatShading:true });
 const ground = new THREE.Mesh(groundGeo, groundMat);
-ground.rotation.x = -Math.PI / 2;
-ground.position.set(0, -30, -150);
-ground.receiveShadow = true;
+ground.rotation.x = -Math.PI/2;
+ground.position.set(0, -17, -30);
 scene.add(ground);
 
-// ── Wet ground overlay (for rain scene) ──
-const wetGroundGeo = new THREE.PlaneGeometry(800, 400);
-const wetGroundMat = new THREE.MeshBasicMaterial({
-  color: '#000000',
-  transparent: true,
-  opacity: 0,
-  depthWrite: false,
-});
-const wetGround = new THREE.Mesh(wetGroundGeo, wetGroundMat);
-wetGround.rotation.x = -Math.PI / 2;
-wetGround.position.set(0, -29.95, -150);
-scene.add(wetGround);
+// Wet ground overlay
+const wetGeo = new THREE.PlaneGeometry(200, 120);
+const wetMat = new THREE.MeshBasicMaterial({ color:'#000', transparent:true, opacity:0, depthTest:true, depthWrite:false });
+const wetPlane = new THREE.Mesh(wetGeo, wetMat);
+wetPlane.rotation.x = -Math.PI/2;
+wetPlane.position.set(0, -16.9, -30);
+scene.add(wetPlane);
 
-// ── Knight Sprite ──
-const knightCanvas = document.createElement('canvas');
-knightCanvas.width = 256; knightCanvas.height = 512;
-const kctx = knightCanvas.getContext('2d');
-// Draw knight silhouette
-kctx.fillStyle = '#0a0a0a';
+// ── Knight (3D silhouette) ──
+const knightGroup = new THREE.Group();
 // Body
-kctx.beginPath();
-kctx.moveTo(128, 80);  // head top
-kctx.lineTo(140, 140); // shoulder right
-kctx.lineTo(148, 160); // arm
-kctx.lineTo(135, 180); // hand
-kctx.lineTo(130, 155); // waist
-kctx.lineTo(120, 160); // waist left
-kctx.lineTo(108, 140); // shoulder left
-kctx.closePath();
-kctx.fill();
-// Helmet
-kctx.beginPath();
-kctx.arc(128, 80, 12, Math.PI, 0);
-kctx.fill();
-// Cape (long tattered rectangle)
-kctx.fillStyle = '#111111';
-kctx.beginPath();
-kctx.moveTo(110, 150); // top left
-kctx.lineTo(145, 150); // top right
-kctx.lineTo(155, 400); // bottom right (longer = dragging)
-kctx.lineTo(140, 420); // tattered bottom
-kctx.lineTo(130, 390);
-kctx.lineTo(118, 410);
-kctx.lineTo(105, 380);
-kctx.lineTo(100, 350);
-kctx.closePath();
-kctx.fill();
-// Sword (dragging)
-kctx.fillStyle = '#1a1a1a';
-kctx.fillRect(120, 200, 4, 200); // blade
-kctx.fillRect(116, 180, 12, 22); // crossguard
-kctx.fillRect(122, 160, 6, 22);  // grip
+const bodyGeo = new THREE.CylinderGeometry(0.25, 0.35, 2.2, 8);
+const bodyMat = new THREE.MeshStandardMaterial({ color:'#111', roughness:0.7, metalness:0.3 });
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+body.position.y = 1.1;
+knightGroup.add(body);
+// Head/helmet
+const headGeo = new THREE.SphereGeometry(0.28, 8, 6);
+const head = new THREE.Mesh(headGeo, bodyMat);
+head.position.y = 2.4;
+knightGroup.add(head);
+// Cape (long rectangle, animated)
+const capeGeo = new THREE.PlaneGeometry(0.6, 4.5, 4, 12);
+const capeMat = new THREE.MeshStandardMaterial({ color:'#1a1a1a', roughness:1, side:THREE.DoubleSide });
+const cape = new THREE.Mesh(capeGeo, capeMat);
+cape.position.set(0, 0.2, 0.4);
+cape.rotation.x = 0.15;
+knightGroup.add(cape);
+// Sword
+const bladeGeo = new THREE.BoxGeometry(0.08, 4, 0.06);
+const bladeMat = new THREE.MeshStandardMaterial({ color:'#2a2a2a', roughness:0.4, metalness:0.7 });
+const blade = new THREE.Mesh(bladeGeo, bladeMat);
+blade.position.set(0.5, 0.3, -0.1);
+knightGroup.add(blade);
+const guardGeo = new THREE.BoxGeometry(0.6, 0.1, 0.12);
+const guard = new THREE.Mesh(guardGeo, bladeMat);
+guard.position.set(0.5, 2.2, -0.1);
+knightGroup.add(guard);
 
-const knightTex = new THREE.CanvasTexture(knightCanvas);
-knightTex.minFilter = THREE.LinearFilter;
-knightTex.magFilter = THREE.LinearFilter;
-
-const knightSpriteMat = new THREE.SpriteMaterial({
-  map: knightTex,
-  transparent: true,
-  depthTest: true,
-  depthWrite: true,
-});
-const knight = new THREE.Sprite(knightSpriteMat);
-knight.scale.set(12, 24, 1);
-knight.position.set(-W * 0.12, -26, -30);
-scene.add(knight);
+knightGroup.scale.set(0.1, 0.1, 0.1); // tiny
+knightGroup.position.set(-W*0.035, -14.5, -35);
+scene.add(knightGroup);
 
 // ── Light Beam (scene 4) ──
-const beamGeo = new THREE.CylinderGeometry(0.3, 6, 200, 16, 1, true);
-const beamMat = new THREE.MeshBasicMaterial({
-  color: '#ffddaa',
-  transparent: true,
-  opacity: 0,
-  depthWrite: false,
-  side: THREE.DoubleSide,
-});
+const beamGeo = new THREE.CylinderGeometry(0.3, 8, 180, 16, 1, true);
+const beamMat = new THREE.MeshBasicMaterial({ color:'#ffddaa', transparent:true, opacity:0, depthWrite:false, side:THREE.DoubleSide });
 const beam = new THREE.Mesh(beamGeo, beamMat);
-beam.position.copy(knight.position);
-beam.position.y += 80;
-beam.rotation.x = Math.PI / 2;
+beam.position.copy(knightGroup.position);
+beam.position.y += 90;
 scene.add(beam);
 
 // ── Lighting ──
-const ambientLight = new THREE.AmbientLight('#442233', 0.6);
-scene.add(ambientLight);
-const sunLight = new THREE.DirectionalLight('#ffccaa', 1.8);
-sunLight.position.set(100, 80, -50);
-scene.add(sunLight);
+const ambient = new THREE.AmbientLight('#554433', 0.5);
+scene.add(ambient);
+const sun = new THREE.DirectionalLight('#ffccaa', 2.0);
+sun.position.set(80, 60, -40);
+scene.add(sun);
 
 // ── Particles ──
-let particleSystem = null;
-function createParticles(cfg) {
-  if (particleSystem) { scene.remove(particleSystem); particleSystem.geometry.dispose(); particleSystem.material.dispose(); }
-  const geo = new THREE.BufferGeometry();
-  const positions = new Float32Array(cfg.count * 3);
-  for (let i = 0; i < cfg.count; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 200;
-    positions[i * 3 + 1] = Math.random() * 100 - 20;
-    positions[i * 3 + 2] = Math.random() * 300 - 200;
+let pts = null;
+function makeParticles(cfg) {
+  if (pts) { scene.remove(pts); pts.geometry.dispose(); pts.material.dispose(); }
+  const g = new THREE.BufferGeometry();
+  const arr = new Float32Array(cfg.count*3);
+  for (let i=0; i<cfg.count; i++) {
+    arr[i*3] = (Math.random()-0.5)*140;
+    arr[i*3+1] = Math.random()*60 - 10;
+    arr[i*3+2] = Math.random()*200 - 130;
   }
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const mat = new THREE.PointsMaterial({
-    color: cfg.color, size: cfg.size, transparent: true,
-    opacity: cfg.opacity, depthWrite: false, blending: THREE.AdditiveBlending,
-  });
-  particleSystem = new THREE.Points(geo, mat);
-  scene.add(particleSystem);
+  g.setAttribute('position', new THREE.BufferAttribute(arr,3));
+  const m = new THREE.PointsMaterial({ color:cfg.color, size:cfg.size, transparent:true, opacity:cfg.opacity, depthWrite:false, blending:THREE.AdditiveBlending });
+  pts = new THREE.Points(g, m);
+  scene.add(pts);
+  return cfg;
 }
+let partCfg = SCENES[0].particles;
+
+// ── Fog ──
+scene.fog = new THREE.FogExp2('#d4a06a', 0.00006);
 
 // ── State ──
-let currentScene = 0;
-let isPlaying = false;
-let playTimer = null;
-let time = 0;
-let knightBaseX = knight.position.x;
+let cur = 0, playing = false, timer = null, time = 0, rec = null, recChunks = [];
 
 // ── Apply Scene ──
-function applyScene(idx) {
-  const cfg = SCENES[idx];
-  skyMat.uniforms.uTop.value.set(cfg.skyTop);
-  skyMat.uniforms.uMid.value.set(cfg.skyMid);
-  skyMat.uniforms.uBot.value.set(cfg.skyBot);
-  scene.fog = new THREE.FogExp2(cfg.fogColor, cfg.fogDensity);
-  groundMat.color.set(cfg.groundColor);
-  wetGroundMat.opacity = cfg.groundWet;
-  ambientLight.color.set(cfg.lightColor);
-  ambientLight.intensity = cfg.lightIntensity * 0.3;
-  sunLight.color.set(cfg.lightColor);
-  sunLight.intensity = cfg.lightIntensity;
-  beamMat.opacity = cfg.lightBeam ? 0.15 : 0;
-  createParticles(cfg.particles);
+function applyScene(i) {
+  const s = SCENES[i];
+  partCfg = s.particles;
+  makeParticles(s.particles);
+  scene.fog = new THREE.FogExp2(s.fogColor, s.fogDensity);
+  groundMat.color.set(new THREE.Color('#1a1a10').multiplyScalar(1 - s.groundDarken));
+  wetMat.opacity = s.wetGround;
+  beamMat.opacity = s.beamOpacity;
+  sun.intensity = 1.5 + i * 0.2;
+  ambient.intensity = 0.3 + i * 0.1;
+  document.querySelectorAll('#ui button[data-scene]').forEach(b => b.classList.toggle('active', +b.dataset.scene===i));
+  cur = i;
+}
 
-  // Update UI
-  document.querySelectorAll('#ui button[data-scene]').forEach(b => {
-    b.classList.toggle('active', parseInt(b.dataset.scene) === idx);
+// ── Load image texture ──
+function loadImage(path) {
+  return new Promise((resolve, reject) => {
+    bgTex.load(path,
+      (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.minFilter = THREE.LinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        resolve(tex);
+      },
+      undefined,
+      () => reject(new Error('Failed: '+path))
+    );
   });
 }
 
@@ -335,162 +246,144 @@ function animate() {
   requestAnimationFrame(animate);
   time += 0.016;
 
-  // Knight bobbing
-  knight.position.y = -26 + Math.sin(time * 1.5) * 0.3;
-  knight.position.x = knightBaseX + Math.sin(time * 0.7) * 0.5;
-  knight.material.rotation = Math.sin(time * 1.2) * 0.02;
+  // Knight bob
+  knightGroup.position.y = -14.5 + Math.sin(time*1.3)*0.2;
+  knightGroup.position.z = -35 + Math.sin(time*0.6)*0.3;
 
   // Cape sway
-  if (knight.material.map) {
-    // Subtle rotation for cape effect
-  }
+  cape.rotation.z = Math.sin(time*1.5)*0.1;
+  cape.rotation.x = 0.15 + Math.sin(time*1.1)*0.08;
+
+  // Sword drag angle
+  blade.rotation.z = -0.15 + Math.sin(time*0.8)*0.04;
 
   // Beam follows knight
-  beam.position.x = knight.position.x;
-  beam.position.y = knight.position.y + 100;
-  beam.position.z = knight.position.z;
+  beam.position.x = knightGroup.position.x;
+  beam.position.z = knightGroup.position.z;
+  beam.position.y = knightGroup.position.y + 100;
 
-  // Particles drift
-  if (particleSystem) {
-    const pos = particleSystem.geometry.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      pos.array[i * 3 + 1] += 0.02 + Math.random() * 0.01;
-      pos.array[i * 3] += (Math.random() - 0.5) * 0.03;
-      if (pos.array[i * 3 + 1] > 80) pos.array[i * 3 + 1] = -30;
+  // Particles
+  if (pts) {
+    const arr = pts.geometry.attributes.position;
+    for (let i=0; i<arr.count; i++) {
+      arr.array[i*3+1] += (partCfg.speed + Math.random()*0.02) * 0.06;
+      arr.array[i*3] += (Math.random()-0.5)*0.04;
+      if (arr.array[i*3+1] > 50) arr.array[i*3+1] = -15;
     }
-    pos.needsUpdate = true;
+    arr.needsUpdate = true;
   }
 
-  // Clouds drift
-  sky.rotation.y += 0.00008;
+  // Sky rotation for cloud drift
+  bgPlane.position.x = Math.sin(time*0.03)*0.3;
 
   renderer.render(scene, camera);
 }
 
 // ── 4K Capture ──
-function capture4K() {
+function capture() {
   renderer.render(scene, camera);
-  const dataURL = renderer.domElement.toDataURL('image/png');
-  const link = document.createElement('a');
-  link.download = `knight-scene-${['sunset','bloodsky','gloom','afterrain'][currentScene]}-4k.png`;
-  link.href = dataURL;
-  link.click();
-  const msg = document.getElementById('capture-msg');
-  msg.style.opacity = '1';
-  setTimeout(() => { msg.style.opacity = '0'; }, 1500);
+  const a = document.createElement('a');
+  a.download = `knight-${SCENES[cur].name}-4k.png`;
+  a.href = renderer.domElement.toDataURL('image/png');
+  a.click();
+  showToast('📸 4K PNG 已保存');
 }
 
-// ── 4K Video Record ──
-let mediaRecorder = null;
-let recordedChunks = [];
-let isRecording = false;
-
-async function toggleRecord() {
-  const btn = document.getElementById('btn-record');
-  if (isRecording) {
-    mediaRecorder.stop();
-    isRecording = false;
-    btn.textContent = '⏺ 录4K视频';
+// ── Record ──
+async function toggleRec() {
+  const btn = document.getElementById('btn-rec');
+  if (rec) {
+    rec.stop();
+    rec = null;
+    btn.textContent = '⏺ 录4K';
     return;
   }
-
-  // Reduce resolution for recording to avoid memory issues
-  // Still 4K but lower framerate
-  const stream = renderer.domElement.captureStream(24); // 24fps
-  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
-    ? 'video/webm;codecs=vp9'
-    : 'video/webm';
-
-  mediaRecorder = new MediaRecorder(stream, {
-    mimeType,
-    videoBitsPerSecond: 50000000, // 50 Mbps for 4K
-  });
-
-  mediaRecorder.ondataavailable = (e) => {
-    if (e.data.size > 0) recordedChunks.push(e.data);
+  const stream = renderer.domElement.captureStream(24);
+  rec = new MediaRecorder(stream, { mimeType:MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm', videoBitsPerSecond:50000000 });
+  rec.ondataavailable = e => { if(e.data.size>0) recChunks.push(e.data); };
+  rec.onstop = () => {
+    const blob = new Blob(recChunks, {type:'video/webm'});
+    const a = document.createElement('a');
+    a.download = `knight-${SCENES[cur].name}-4k.webm`;
+    a.href = URL.createObjectURL(blob);
+    a.click();
+    recChunks = [];
+    showToast('🎬 4K 视频已保存');
   };
-
-  mediaRecorder.onstop = () => {
-    const blob = new Blob(recordedChunks, { type: 'video/webm' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = `knight-scene-${['sunset','bloodsky','gloom','afterrain'][currentScene]}-4k.webm`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-    recordedChunks = [];
-    const msg = document.getElementById('capture-msg');
-    msg.textContent = '🎬 4K 视频已保存';
-    msg.style.opacity = '1';
-    setTimeout(() => { msg.style.opacity = '0'; msg.textContent = '📸 4K 截图已保存'; }, 2000);
-  };
-
-  mediaRecorder.start();
-  isRecording = true;
-  btn.textContent = '⏹ 停止录制';
+  rec.start();
+  btn.textContent = '⏹ 停止';
 }
 
-// ── Scene switching ──
-function switchScene(idx) {
-  currentScene = idx;
-  applyScene(idx);
-
-  // Slightly vary knight position per scene (mimics walking)
-  knightBaseX = -W * 0.12 + idx * 0.5;
-  knight.position.x = knightBaseX;
-
-  // Adjust camera slightly per scene for variety
-  camera.position.set(idx * 0.4, 30 + idx * 0.3, 60);
-  camera.lookAt(0, 0, -200);
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.style.opacity='0', 1800);
 }
 
-// ── Auto play ──
+// ── Play ──
 function togglePlay() {
-  isPlaying = !isPlaying;
-  const btn = document.getElementById('btn-play');
-  btn.textContent = isPlaying ? '⏸ 停止' : '▶ 自动播放';
-
-  if (isPlaying) {
+  playing = !playing;
+  document.getElementById('btn-play').textContent = playing ? '⏸ 停止' : '▶ 自动播放';
+  if (playing) {
     let step = 0;
-    switchScene(0);
-    playTimer = setInterval(() => {
-      step = (step + 1) % 4;
-      switchScene(step);
-    }, 5000);
-  } else {
-    clearInterval(playTimer);
-  }
+    applyScene(0);
+    timer = setInterval(() => { step=(step+1)%4; applyScene(step); }, 5000);
+  } else { clearInterval(timer); }
 }
 
 // ── Init ──
-applyScene(0);
-document.getElementById('loading').style.display = 'none';
-animate();
+const loadBar = document.getElementById('load-bar');
+const loadText = document.getElementById('load-text');
+async function init() {
+  // Load all 4 images
+  for (let i=0; i<4; i++) {
+    loadText.textContent = `加载 ${SCENES[i].name} 场景图...`;
+    try {
+      const tex = await loadImage(IMG_PATHS[i]);
+      SCENES[i].texture = tex;
+      loadBar.style.width = ((i+1)/4*100)+'%';
+    } catch(e) {
+      console.error('Load error:', e.message);
+      // Use first loaded texture as fallback
+      SCENES[i].texture = SCENES[0]?.texture || null;
+      loadBar.style.width = ((i+1)/4*100)+'%';
+    }
+  }
 
-// ── Event Listeners ──
-document.querySelectorAll('#ui button[data-scene]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (isPlaying) togglePlay();
-    switchScene(parseInt(btn.dataset.scene));
+  // Set initial texture
+  bgMat.map = SCENES[0].texture;
+  bgMat.needsUpdate = true;
+
+  document.getElementById('loading').style.display = 'none';
+  applyScene(0);
+  animate();
+}
+init();
+
+// ── Events ──
+document.querySelectorAll('#ui button[data-scene]').forEach(b => {
+  b.addEventListener('click', () => {
+    if (playing) togglePlay();
+    const i = +b.dataset.scene;
+    bgMat.map = SCENES[i].texture;
+    bgMat.needsUpdate = true;
+    applyScene(i);
   });
 });
 document.getElementById('btn-play').addEventListener('click', togglePlay);
-document.getElementById('btn-capture').addEventListener('click', capture4K);
-document.getElementById('btn-record').addEventListener('click', toggleRecord);
+document.getElementById('btn-shot').addEventListener('click', capture);
+document.getElementById('btn-rec').addEventListener('click', toggleRec);
 
-// Keyboard
-window.addEventListener('keydown', (e) => {
-  if (e.key >= '1' && e.key <= '4') {
-    if (isPlaying) togglePlay();
-    switchScene(parseInt(e.key) - 1);
-  }
-  if (e.key === ' ') { e.preventDefault(); togglePlay(); }
-  if (e.key === 's' || e.key === 'S') capture4K();
-  if (e.key === 'r' || e.key === 'R') toggleRecord();
+window.addEventListener('keydown', e => {
+  if (e.key>='1' && e.key<='4') { if(playing)togglePlay(); const i=+e.key-1; bgMat.map=SCENES[i].texture; bgMat.needsUpdate=true; applyScene(i); }
+  if (e.key===' ') { e.preventDefault(); togglePlay(); }
+  if (e.key==='s'||e.key==='S') capture();
+  if (e.key==='r'||e.key==='R') toggleRec();
 });
 
-console.log('⚔️ Knight 4K Scene Ready');
-console.log('  1-4: Switch scenes | Space: Auto-play | S: 4K Screenshot | R: Record 4K Video');
+console.log('⚔️ Knight 4K Ready — AI backgrounds + 3D ground + animated knight');
 </script>
 </body>
 </html>
