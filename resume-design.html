@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金承旭 · 产品设计简历</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  :root { --text: #1a1a18; --text-secondary: #444; --accent: #b0926e; --border: #e4e1dc; --bg-alt: #f7f5f2; --font-serif: "Noto Serif SC","STSong","SimSun",serif; --font-sans: "Inter","PingFang SC","Microsoft YaHei",sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); font-size: 10.5px; line-height: 1.65; color: var(--text); max-width: 720px; margin: 0 auto; }
+  h1 { font-family: var(--font-serif); font-size: 28px; font-weight: 700; letter-spacing: 0.04em; }
+  h2 { font-family: var(--font-serif); font-size: 14px; font-weight: 600; margin: 24px 0 10px; padding-bottom: 4px; border-bottom: 1px solid var(--border); letter-spacing: 0.02em; }
+  h3 { font-size: 11.5px; font-weight: 600; margin-bottom: 2px; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .header-info { font-size: 10px; color: var(--text-secondary); line-height: 1.8; }
+  .header-info a { color: var(--text); text-decoration: none; }
+  .section { margin-bottom: 8px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .skill-tag { font-size: 9.5px; background: var(--bg-alt); padding: 3px 10px; border-radius: 2px; }
+  .project { margin-bottom: 14px; page-break-inside: avoid; }
+  .project-header { display: flex; justify-content: space-between; align-items: baseline; }
+  .project-title { font-weight: 600; font-size: 11px; }
+  .project-meta { font-size: 9.5px; color: var(--text-secondary); white-space: nowrap; }
+  .project-desc { font-size: 10px; color: var(--text-secondary); margin: 3px 0; }
+  .project-achievements { font-size: 9.5px; color: var(--text-secondary); padding-left: 14px; }
+  .project-achievements li { margin-bottom: 2px; position: relative; }
+  .project-achievements li::before { content: '▸'; position: absolute; left: -14px; color: var(--accent); font-size: 8px; top: 1px; }
+  .award { font-size: 10px; margin-bottom: 3px; }
+  .portfolio-link { font-size: 10px; color: var(--accent); text-decoration: none; }
+  @media print { body { padding: 0; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>金承旭</h1>
+    <p style="font-size:11px;color:var(--text-secondary);margin-top:4px">产品设计 / UI·UX / 工业设计 实习</p>
+  </div>
+  <div class="header-info">
+    177-6596-1764<br>
+    1416907076@qq.com<br>
+    澳门科技大学 · 珠海<br>
+    <a href="https://jin-chengxu-portfolio.pages.dev" style="color:var(--accent)">jin-chengxu-portfolio.pages.dev</a>
+  </div>
+</div>
+
+<h2>教育背景</h2>
+<p><strong>澳门科技大学</strong> · 产品设计专业 · 本科在读 &nbsp;&nbsp; 2023.09 — 2027.06</p>
+<p style="color:var(--text-secondary)">主修：设计概论 · 人机工程学 · 设计材料与工艺 · 设计心理学 · 三维建模与渲染</p>
+
+<div class="award" style="margin-top:6px">🏆 <strong>2026 年度澳门科技大学优秀学生奖</strong></div>
+
+<h2>核心技能</h2>
+<div class="skill-tags">
+  <span class="skill-tag"><strong>三维建模</strong> Rhino 7（复杂曲面/完整外观）· KeyShot（产品级渲染）· 3D 打印原型</span>
+  <span class="skill-tag"><strong>AI 设计</strong> Midjourney · Stable Diffusion · NanoBanana2 · AI 概念发散与方案迭代</span>
+  <span class="skill-tag"><strong>UI/UX</strong> Figma · 设计系统搭建 · 用户旅程设计 · 交互规范</span>
+  <span class="skill-tag"><strong>前端落地</strong> Vibe Coding · HTML/CSS · MVP 快速原型</span>
+  <span class="skill-tag"><strong>平面/排版</strong> Photoshop · Illustrator · 编辑级排版 · 板绘草图</span>
+</div>
+
+<h2>项目经历</h2>
+
+<!-- Rift Speaker -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">Rift 便携蓝牙音箱 · 产品设计全案</span>
+    <span class="project-meta">独立设计 · 2026</span>
+  </div>
+  <p class="project-desc">以"斜切分割"为设计语言，打破圆柱体音箱视觉惯性。Kvadrat 声学织物 × 阳极氧化铝沿斜切线对峙——定义视觉身份的同时自然划分声学功能区。</p>
+  <ul class="project-achievements">
+    <li>完整流程：用户研究 → 竞品分析 → 概念发散 → CMF 定义 → 结构爆炸图</li>
+    <li>Rhino 7 建模 + KeyShot 多角度渲染 + 爆炸视图结构分解</li>
+  </ul>
+</div>
+
+<!-- VR Device -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">磁吸悬浮 VR 体感辅助设备</span>
+    <span class="project-meta">课程项目 · 独立设计 · 2026.01 — 2026.05</span>
+  </div>
+  <p class="project-desc">从《黑豹2》《头号玩家》电影道具调研出发，发现 VR"地面限制"沉浸感断层。四轮方案迭代：全身外骨骼（否决·体积过大）→ 便携优化 → 磁吸连接机制 → 腰腿轻量化方案。</p>
+  <ul class="project-achievements">
+    <li>完整设计推导链：电影调研 → 道具分析 → AI 概念发散 → 方案收敛 → Rhino 7 曲面建模 → 3D 打印原型</li>
+    <li>独立建立 19 页设计过程档案，涵盖从调研笔记到最终方案的完整推导</li>
+  </ul>
+</div>
+
+<!-- Eclipse Arena -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">Eclipse Arena · 星蚀竞技场 游戏UI设计系统</span>
+    <span class="project-meta">独立项目 · 2026</span>
+  </div>
+  <p class="project-desc">科幻竞技场游戏完整 UI 设计语言系统，含主菜单、角色选择、战斗 HUD、背包系统、设置面板、商城 6 大核心界面。</p>
+  <ul class="project-achievements">
+    <li>React 18 + Framer Motion 高保真交互原型：AnimatePresence 转场 · Spring 物理 3D 卡片 · Canvas 粒子背景</li>
+    <li>15 个可复用 UI 组件 + 完整 Design Token 系统 + 实时 HUD 状态模拟</li>
+  </ul>
+</div>
+
+<!-- Terrin -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">Terrin 陶瓷首饰品牌官网 · UI 设计</span>
+    <span class="project-meta">独立项目 · 2025</span>
+  </div>
+  <p class="project-desc">以黑白植物影像构建 Hero Section，商品图默认黑白处理，Hover 渐变过渡至原始彩色——增强探索感与视觉惊喜。</p>
+  <ul class="project-achievements">
+    <li>设计系统搭建 · 交互规范制定 · 用户旅程设计</li>
+    <li>Vibe Coding 独立完成 MVP 前端落地并部署上线</li>
+  </ul>
+</div>
+
+<!-- Bench System -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">景区公共座椅系统 Redesign</span>
+    <span class="project-meta">个人项目 · 独立设计 · 2025.09 — 2025.12</span>
+  </div>
+  <p class="project-desc">2 小时现场行为观察，发现游客"弃椅选花坛"现象——贴墙座椅缺乏景观互动与社交属性。设计罗马柱式单人椅（人车分流）与景观长椅（并排观景）。</p>
+  <ul class="project-achievements">
+    <li>行为洞察驱动：从真实场景观察出发定位设计机会点</li>
+    <li>系统化方案：人车分流 + 观景体验 + 社交属性三维一体</li>
+    <li>Rhino 全尺寸建模 + 1:7 白膜验证结构比例与空间关系</li>
+  </ul>
+</div>
+
+<!-- Ceramic -->
+<div class="project">
+  <div class="project-header">
+    <span class="project-title">《汉魂·狮魄》陶瓷艺术装置</span>
+    <span class="project-meta">个人作品 · 2025</span>
+  </div>
+  <p class="project-desc">深入研究汉代虎形艺术造型语言，提炼力量美学与精神内核，将汉代意象转化为当代陶瓷狮塑。作品入选澳大利亚 Anlan Museum 公开展览。</p>
+  <ul class="project-achievements">
+    <li>文化溯源 → 意象提炼 → 当代转化 → 陶瓷成型，完整创作闭环</li>
+    <li>国际展览呈现：作为东方传统文化当代诠释代表作品展出</li>
+  </ul>
+</div>
+
+<h2>实践经历</h2>
+<p><strong>澳门科技大学 2025 双年展</strong> · 策展助理 & 展台设计 &nbsp;&nbsp; 2025</p>
+<p style="font-size:10px;color:var(--text-secondary)">以报纸为原材料手工打造沉船装置作为展厅视觉中心，统筹场地布置与空间叙事</p>
+<p style="margin-top:4px"><strong>校内舞台工作组</strong> · 跨部门资源协调与现场执行</p>
+
+<div style="text-align:center;margin-top:24px;padding-top:12px;border-top:1px solid var(--border);font-size:9px;color:var(--text-secondary)">
+  在线作品集：jin-chengxu-portfolio.pages.dev · 简历更新时间：2026.06
+</div>
+
+</body>
+</html>
