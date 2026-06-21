@@ -2,7 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>MindSpace · 呼吸练习</title>
 <meta name="theme-color" content="#0f0e1a">
 <style>
@@ -104,6 +106,7 @@ body{
 </head>
 <body>
 <div class="bg"><div class="bg-orb a"></div><div class="bg-orb b"></div></div>
+<canvas id="particleCanvas" style="position:fixed;inset:0;z-index:0;pointer-events:none"></canvas>
 
 <div class="app">
   <div class="header">
@@ -299,6 +302,85 @@ $('#targetMin').addEventListener('input', (e) => {
 });
 
 updateDisplay();
+
+// ── Particle system ──
+const canvas = document.getElementById('particleCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animId;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Particle {
+  constructor(x, y, phase) {
+    this.x = x;
+    this.y = y;
+    this.phase = phase;
+    this.size = Math.random() * 3 + 1;
+    this.speedX = (Math.random() - 0.5) * 1.5;
+    this.speedY = (Math.random() - 0.5) * 1.5;
+    this.life = 1;
+    this.decay = 0.008 + Math.random() * 0.015;
+    this.opacity = 0.6 + Math.random() * 0.4;
+    // Colors per phase
+    if (phase === 'inhale') this.color = '139,108,231'; // purple
+    else if (phase === 'hold') this.color = '240,200,120'; // gold
+    else this.color = '92,231,184'; // teal
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    // Gentle drift toward center
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    this.x += (cx - this.x) * 0.0005;
+    this.y += (cy - this.y) * 0.0005;
+    this.life -= this.decay;
+    this.size *= 0.998;
+  }
+  draw(ctx) {
+    const alpha = this.life * this.opacity;
+    ctx.fillStyle = `rgba(${this.color},${alpha})`;
+    ctx.shadowColor = `rgba(${this.color},${alpha * 0.6})`;
+    ctx.shadowBlur = 8;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+  get dead() { return this.life <= 0; }
+}
+
+function spawnParticles(phase) {
+  const cx = canvas.width / 2;
+  const cy = canvas.height / 2;
+  const count = phase === 'hold' ? 3 : 8;
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 100;
+    particles.push(new Particle(cx + Math.cos(angle) * dist, cy + Math.sin(angle) * dist, phase));
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => !p.dead);
+  particles.forEach(p => { p.update(); p.draw(ctx); });
+
+  // Auto spawn when breathing
+  if (running && !paused) {
+    const rate = phase === 'hold' ? 0.3 : 1;
+    if (Math.random() < rate) spawnParticles(phase);
+  }
+
+  animId = requestAnimationFrame(animate);
+}
+animate();
 </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Eclipse Arena v0.28</title>
+<title>Eclipse Arena v0.27b</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -63,7 +63,7 @@ h1{font-size:clamp(22px,5vw,28px);color:#c8a050}.ss{font-size:11px;color:rgba(20
 <div id="rotateHint"><span class="icon">📱</span>请旋转手机<br>横屏游玩</div>
 
 <div class="s" id="m1"><div style="text-align:center">
-<h1>ECLIPSE ARENA v0.28</h1><div class="ss">Pick Character</div>
+<h1>ECLIPSE ARENA v0.27b</h1><div class="ss">Pick Character</div>
 <div class="cards">
 <div class="cd" onclick="startGame('warrior')"><span class="av2">⚔️</span>Swordsman</div>
 <div class="cd" onclick="startGame('gunner')"><span class="av2">🔫</span>Gunner</div>
@@ -158,7 +158,7 @@ canvas.addEventListener('touchstart',e=>{e.preventDefault();ia()});
 
 // XP & leveling
 let xp=0,xpNeed=100,plv=1;
-function xpToLevel(lv){return Math.floor(500*Math.pow(1.5,lv-1))}
+function xpToLevel(lv){return Math.floor(100*Math.pow(1.4,lv-1))}
 function playerHP(){return Math.floor(cd.hp*(1+plv*.1))}
 function startGame(key){ck=key;cd=CH[key];ia();['m1','m2','win','go','shop'].forEach(id=>document.getElementById(id).classList.add('h'));shopOpen=!1;randArena();
   pl={x:0,y:0,hp:playerHP(),mh:playerHP(),ang:Math.PI/2,alive:!0,stealth:!1,at:0,acd:0,inv:0,s1cd:0,s2cd:0,qcd:0,dt:0,dvx:0,dvy:0,sb:0,db:0,shT:0,defBuff:0};
@@ -166,15 +166,7 @@ function startGame(key){ck=key;cd=CH[key];ia();['m1','m2','win','go','shop'].for
   for(let i=0;i<5;i++)sE();run=!0}
 function levelUp(){plv++;xp-=xpNeed;xpNeed=xpToLevel(plv);pl.mh=playerHP();pl.hp=Math.min(pl.mh,pl.hp+Math.floor(playerHP()*.3));openShop()}
 function randArena(){const a=ARENAS[Math.floor(Math.random()*ARENAS.length)];arena=a.v;arenaName=a.n;arenaColor=ARENA_COLORS[Math.floor(Math.random()*ARENA_COLORS.length)]}
-let gameMode=''; // 'levels' or 'endless'
-function pick(key){ck=key;cd=CH[key];ia();document.getElementById('m1').classList.add('h');document.getElementById('m2').classList.remove('h');document.getElementById('m2t').textContent=cd.ico+' '+cd.n+' · Mode';buildModeGrid()}
-function buildModeGrid(){const g=document.getElementById('lg');g.innerHTML='';
-  g.innerHTML='<div style="display:flex;flex-direction:column;gap:12px;align-items:center;margin-top:8px">'+
-    '<button class="pbtn primary" onclick="startLevels()" style="width:200px;padding:16px">📋 Levels<br><span style="font-size:10px;opacity:.7">Classic · 64关卡逐个解锁</span></button>'+
-    '<button class="pbtn shop" onclick="startEndless()" style="width:200px;padding:16px">♾️ Endless<br><span style="font-size:10px;opacity:.7">无尽波次 · XP升级 · 技能</span></button>'+
-    '<button class="btn2" onclick="back()">← 换角色</button></div>'}
-function startLevels(){gameMode='levels';document.getElementById('m2').classList.add('h');document.getElementById('m2').classList.remove('h');buildLvlGrid();document.getElementById('m2t').textContent=cd.ico+' '+cd.n+' · Levels'}
-function startEndless(){gameMode='endless';startGame(ck)}
+function pick(key){startGame(key)} // backward compat
 function back(){document.getElementById('m2').classList.add('h');document.getElementById('m1').classList.remove('h')}
 function buildLvlGrid(){const g=document.getElementById('lg');g.innerHTML='';for(let i=1;i<=64;i++){const c=document.createElement('div');c.className='lc';c.textContent=i;let label='';if(i%10===0)label='<span class="level-tag boss-tag">BOSS</span>';else{const m=MODS[(i-1)%MODS.length];if(m)label='<span class="level-tag mod-tag">'+m.n+'</span>'}if(i<=unlocked){c.classList.add('o');if(i%10===0)c.classList.add('boss');c.innerHTML=i+label;c.onclick=function(){go(parseInt(this.textContent))}}else{c.classList.add('lk');c.textContent='🔒'}if(i<unlocked)c.classList.add('do');g.appendChild(c)}}
 function toLobby(){['win','go','shop'].forEach(id=>document.getElementById(id).classList.add('h'));document.getElementById('m2').classList.remove('h');buildLvlGrid();shopOpen=!1}
