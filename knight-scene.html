@@ -78,7 +78,7 @@ const IMG_PATHS = [
 const SCENES = [
   { // 0: Sunset
     name:'晚霞',
-    cloudColor:'#ffccaa', cloudOpacity:0.22, cloudCount:6, cloudSpeed:0.04,
+    cloudColor:'#ffccaa', cloudOpacity:0.22, cloudCount:6, cloudSpeed:0.14,
     glowColor:'#ff9944', glowOpacity:0.35, glowPulse:0.06,
     birdColor:'#332211', birdCount:2,
     particles:{color:'#ffd740',count:50,size:0.06,opacity:0.25,speed:0.3},
@@ -87,7 +87,7 @@ const SCENES = [
   },
   { // 1: Blood Sky
     name:'血红',
-    cloudColor:'#661111', cloudOpacity:0.35, cloudCount:8, cloudSpeed:0.07,
+    cloudColor:'#661111', cloudOpacity:0.35, cloudCount:8, cloudSpeed:0.24,
     glowColor:'#cc2222', glowOpacity:0.45, glowPulse:0.10,
     birdColor:'#000000', birdCount:1,
     particles:{color:'#ff4444',count:80,size:0.05,opacity:0.35,speed:0.5},
@@ -96,7 +96,7 @@ const SCENES = [
   },
   { // 2: Gloom
     name:'灰暗',
-    cloudColor:'#555555', cloudOpacity:0.40, cloudCount:10, cloudSpeed:0.05,
+    cloudColor:'#555555', cloudOpacity:0.40, cloudCount:10, cloudSpeed:0.18,
     glowColor:'#999999', glowOpacity:0.08, glowPulse:0.02,
     birdColor:'#444444', birdCount:3,
     particles:{color:'#999999',count:25,size:0.04,opacity:0.12,speed:0.15},
@@ -105,7 +105,7 @@ const SCENES = [
   },
   { // 3: After Rain + Light Beam
     name:'雨后光照',
-    cloudColor:'#888899', cloudOpacity:0.28, cloudCount:5, cloudSpeed:0.06,
+    cloudColor:'#888899', cloudOpacity:0.28, cloudCount:5, cloudSpeed:0.20,
     glowColor:'#ffddaa', glowOpacity:0.50, glowPulse:0.04,
     birdColor:'#554433', birdCount:1,
     particles:{color:'#ffd740',count:160,size:0.035,opacity:0.45,speed:0.25},
@@ -568,7 +568,7 @@ function animate() {
 
   // ── Cloud drift (LEFT = knight walks RIGHT, world flows past) ──
   cloudLayers.forEach(l => {
-    l.mesh.position.x -= s.cloudSpeed * l.speedMul * 0.05;
+    l.mesh.position.x -= s.cloudSpeed * l.speedMul * 0.12;
     if (l.mesh.position.x < -80) l.mesh.position.x = 80;
   });
 
