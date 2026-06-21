@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>MindSpace · 呼吸练习</title>
+<meta name="theme-color" content="#0f0e1a">
+<style>
+:root {
+  --bg: #0f0e1a; --card: rgba(255,255,255,0.06);
+  --text: #f0ecff; --dim: rgba(240,236,255,0.5);
+  --accent: #8b6ce7; --accent-light: #b8a4f0;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Inter","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);height:100dvh;display:flex;
+  align-items:center;justify-content:center;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;user-select:none;
+}
+.app{width:100%;max-width:430px;height:100dvh;display:flex;flex-direction:column;position:relative}
+.bg{position:fixed;inset:0;pointer-events:none}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12}
+.bg-orb.a{width:300px;height:300px;background:var(--accent);top:-10%;left:-20%}
+.bg-orb.b{width:250px;height:250px;background:#e78b6c;bottom:-5%;right:-15%}
+
+.header{padding:20px 24px;display:flex;align-items:center;gap:12px}
+.header a{color:var(--dim);text-decoration:none;font-size:14px}
+
+.main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:0 24px}
+
+/* Breath circle */
+.breath-circle{position:relative;width:240px;height:240px}
+.breath-ring{
+  width:100%;height:100%;border-radius:50%;border:3px solid rgba(139,108,231,0.3);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform 0.1s,box-shadow 0.3s;
+}
+.breath-ring.inhale{animation:breatheIn 4s ease-in-out forwards}
+.breath-ring.hold{animation:hold 4s ease-in-out forwards}
+.breath-ring.exhale{animation:breatheOut 4s ease-in-out forwards}
+@keyframes breatheIn{
+  from{transform:scale(0.7);box-shadow:0 0 30px rgba(139,108,231,0.2)}
+  to{transform:scale(1.15);box-shadow:0 0 80px rgba(139,108,231,0.5)}
+}
+@keyframes hold{
+  from{transform:scale(1.15)}
+  to{transform:scale(1.15)}
+}
+@keyframes breatheOut{
+  from{transform:scale(1.15);box-shadow:0 0 80px rgba(139,108,231,0.5)}
+  to{transform:scale(0.7);box-shadow:0 0 30px rgba(139,108,231,0.2)}
+}
+.breath-text{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:22px;font-weight:600;letter-spacing:.04em;text-align:center;
+  transition:all .3s;
+}
+.breath-sub{font-size:13px;color:var(--dim);margin-top:4px;font-weight:400}
+
+/* Timer */
+.timer-row{display:flex;gap:20px;align-items:center}
+.timer{font-size:56px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;font-family:"SF Mono","Consolas",monospace}
+.timer-colon{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* Controls */
+.controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{
+  padding:14px 28px;border-radius:30px;border:none;font-size:16px;font-weight:600;
+  cursor:pointer;letter-spacing:.02em;transition:all .2s;font-family:inherit;
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 30px rgba(139,108,231,.3)}
+.btn-primary:hover{background:#7b5cd6;transform:scale(1.03)}
+.btn-primary:active{transform:scale(.97)}
+.btn-ghost{background:var(--card);color:var(--text);border:1px solid rgba(255,255,255,.1)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+
+/* Pattern selector */
+.patterns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.pattern{
+  padding:10px 18px;border-radius:20px;border:1px solid rgba(255,255,255,.12);
+  background:transparent;color:var(--dim);font-size:13px;cursor:pointer;
+  transition:all .2s;font-family:inherit;
+}
+.pattern.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Stats */
+.stats-row{display:flex;gap:24px;justify-content:center;padding:8px 0}
+.stat{text-align:center}
+.stat-num{font-size:24px;font-weight:700}
+.stat-label{font-size:11px;color:var(--dim);margin-top:2px}
+
+/* Settings */
+.settings{padding:0 24px 24px;display:flex;flex-direction:column;gap:16px}
+.slider-group{display:flex;flex-direction:column;gap:4px}
+.slider-group label{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.slider-group input[type=range]{width:100%;accent-color:var(--accent)}
+.slider-group .vals{display:flex;justify-content:space-between;font-size:11px;color:var(--dim)}
+
+.footer{padding:20px 24px;text-align:center;font-size:11px;color:rgba(255,255,255,.2)}
+.footer a{color:rgba(255,255,255,.3)}
+</style>
+</head>
+<body>
+<div class="bg"><div class="bg-orb a"></div><div class="bg-orb b"></div></div>
+
+<div class="app">
+  <div class="header">
+    <a href="mindspace-ux">← 返回</a>
+    <span style="font-size:14px;color:var(--dim)">呼吸练习</span>
+  </div>
+
+  <div class="main" id="mainView">
+    <!-- Breath circle -->
+    <div class="breath-circle">
+      <div class="breath-ring" id="breathRing">
+        <div style="text-align:center">
+          <div class="breath-text" id="breathLabel">准备</div>
+          <div class="breath-sub" id="breathPhase">按开始</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer-row">
+      <span class="timer" id="timerMin">00</span>
+      <span class="timer timer-colon">:</span>
+      <span class="timer" id="timerSec">00</span>
+    </div>
+
+    <!-- Pattern selector -->
+    <div class="patterns" id="patterns">
+      <button class="pattern active" data-pattern="4-4-4">4-4-4 方块</button>
+      <button class="pattern" data-pattern="4-7-8">4-7-8 放松</button>
+      <button class="pattern" data-pattern="5-5-5">5-5-5 基础</button>
+      <button class="pattern" data-pattern="6-2-6">6-2-6 提神</button>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn btn-ghost" id="btnReset">↺ 重置</button>
+      <button class="btn btn-primary" id="btnStart">▶ 开始呼吸</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat"><div class="stat-num" id="statRounds">0</div><div class="stat-label">完成轮数</div></div>
+      <div class="stat"><div class="stat-num" id="statTime">0:00</div><div class="stat-label">总时长</div></div>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="settings">
+    <div class="slider-group">
+      <label>目标时长 (分钟)</label>
+      <input type="range" id="targetMin" min="1" max="20" value="5" step="1">
+      <div class="vals"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    MindSpace Breathing · <a href="https://jin-chengxu-portfolio.pages.dev">作品集</a>
+  </div>
+</div>
+
+<script>
+// Breath engine
+const patterns = {
+  '4-4-4': { name: '方块呼吸', inhale: 4, hold: 4, exhale: 4 },
+  '4-7-8': { name: '放松呼吸', inhale: 4, hold: 7, exhale: 8 },
+  '5-5-5': { name: '基础呼吸', inhale: 5, hold: 5, exhale: 5 },
+  '6-2-6': { name: '提神呼吸', inhale: 6, hold: 2, exhale: 6 },
+};
+
+let currentPattern = '4-4-4';
+let running = false, paused = false;
+let phase = 'inhale'; // inhale | hold | exhale
+let phaseSeconds = 0, phaseTotal = 4;
+let totalSeconds = 0, targetSeconds = 300;
+let rounds = 0;
+let timerId = null;
+
+const $ = (s) => document.querySelector(s);
+const breathRing = $('#breathRing');
+const breathLabel = $('#breathLabel');
+const breathPhase = $('#breathPhase');
+const timerMin = $('#timerMin');
+const timerSec = $('#timerSec');
+const btnStart = $('#btnStart');
+const btnReset = $('#btnReset');
+const statRounds = $('#statRounds');
+const statTime = $('#statTime');
+
+function updateDisplay() {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds % 60;
+  timerMin.textContent = String(m).padStart(2, '0');
+  timerSec.textContent = String(s).padStart(2, '0');
+  statTime.textContent = `${m}:${String(s).padStart(2, '0')}`;
+  statRounds.textContent = rounds;
+}
+
+function setPhase(p) {
+  phase = p;
+  breathRing.className = 'breath-ring ' + p;
+  const pat = patterns[currentPattern];
+  if (p === 'inhale') {
+    breathLabel.textContent = '吸气';
+    breathPhase.textContent = `慢慢吸入 · ${pat.inhale}秒`;
+    phaseTotal = pat.inhale;
+  } else if (p === 'hold') {
+    breathLabel.textContent = '屏息';
+    breathPhase.textContent = `保持不动 · ${pat.hold}秒`;
+    phaseTotal = pat.hold;
+  } else {
+    breathLabel.textContent = '呼气';
+    breathPhase.textContent = `缓缓呼出 · ${pat.exhale}秒`;
+    phaseTotal = pat.exhale;
+  }
+  phaseSeconds = 0;
+}
+
+function nextPhase() {
+  if (phase === 'inhale') setPhase('hold');
+  else if (phase === 'hold') setPhase('exhale');
+  else { setPhase('inhale'); rounds++; statRounds.textContent = rounds; }
+}
+
+function tick() {
+  if (!running || paused) return;
+  totalSeconds++;
+  phaseSeconds++;
+  updateDisplay();
+
+  if (totalSeconds >= targetSeconds) {
+    stop();
+    return;
+  }
+
+  if (phaseSeconds >= phaseTotal) nextPhase();
+}
+
+function start() {
+  if (running) return;
+  if (totalSeconds === 0) { setPhase('inhale'); }
+  running = true; paused = false;
+  btnStart.textContent = '⏸ 暂停';
+  timerId = setInterval(tick, 1000);
+}
+
+function stop() {
+  running = false; paused = false;
+  clearInterval(timerId);
+  btnStart.textContent = '▶ 继续';
+  breathRing.className = 'breath-ring';
+  breathLabel.textContent = '暂停';
+  breathPhase.textContent = running ? '' : '按继续';
+  if (totalSeconds >= targetSeconds) {
+    breathLabel.textContent = '完成!';
+    breathPhase.textContent = `共 ${rounds} 轮呼吸`;
+    btnStart.textContent = '▶ 重新开始';
+  }
+}
+
+function reset() {
+  stop();
+  totalSeconds = 0; rounds = 0; phaseSeconds = 0;
+  updateDisplay();
+  breathRing.className = 'breath-ring';
+  breathLabel.textContent = '准备';
+  breathPhase.textContent = '按开始';
+  btnStart.textContent = '▶ 开始呼吸';
+}
+
+btnStart.addEventListener('click', () => {
+  if (totalSeconds >= targetSeconds) { reset(); start(); }
+  else if (running) stop();
+  else start();
+});
+
+btnReset.addEventListener('click', reset);
+
+// Pattern selector
+$('#patterns').addEventListener('click', (e) => {
+  if (e.target.classList.contains('pattern')) {
+    document.querySelectorAll('.pattern').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentPattern = e.target.dataset.pattern;
+    if (!running) reset();
+  }
+});
+
+// Target duration
+$('#targetMin').addEventListener('input', (e) => {
+  targetSeconds = parseInt(e.target.value) * 60;
+  document.querySelector('#targetMin').nextElementSibling.innerHTML =
+    targetSeconds / 60 + ' 分钟';
+});
+
+updateDisplay();
+</script>
+</body>
+</html>
