@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏设计大纲 · 模板</title>
+<style>
+:root{--bg:#fafaf8;--t:#1a1a18;--t2:#6b6965;--t3:#9e9b96;--accent:#c4623a;--border:#e4e1dc;--fill:rgba(196,98,58,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Inter","PingFang SC","Microsoft YaHei",sans-serif;font-size:15px;line-height:1.8;color:var(--t);background:var(--bg);max-width:800px;margin:0 auto;padding:48px 24px}
+h1{font-family:"Noto Serif SC",serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:4px}
+.sub{text-align:center;color:var(--t2);font-size:13px;margin-bottom:40px}
+h2{font-family:"Noto Serif SC",serif;font-size:20px;font-weight:600;margin:36px 0 12px;padding:8px 0;border-bottom:2px solid var(--accent);color:var(--accent)}
+h3{font-size:14px;font-weight:600;margin:20px 0 6px;color:var(--t)}
+p{margin-bottom:12px;color:var(--t2);font-size:13px}
+.field{background:#fff;border:1px solid var(--border);border-radius:6px;padding:20px;margin:12px 0;min-height:60px}
+.field h4{font-size:13px;color:var(--t3);margin-bottom:8px;font-weight:400}
+.field textarea{width:100%;border:none;font:inherit;font-size:14px;resize:vertical;min-height:40px;outline:none;color:var(--t);background:transparent;font-family:inherit}
+.field textarea::placeholder{color:var(--t3)}
+.hint{font-size:11px;color:var(--t3);margin-top:4px}
+.example{background:var(--fill);border-radius:4px;padding:12px 16px;margin:8px 0;font-size:12px;color:var(--t2);line-height:1.8}
+.example strong{color:var(--t)}
+.page-break{page-break-before:always}
+.section-num{display:inline-block;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;text-align:center;line-height:24px;font-size:12px;font-weight:700;margin-right:8px}
+@media print{
+  body{padding:0;font-size:13px}
+  .field{min-height:40px;padding:12px}
+  h1{font-size:24px}h2{font-size:16px}
+  .field textarea{font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<h1>🎮 游戏设计大纲</h1>
+<div class="sub">填写你想做的游戏的核心要素 · 写好后直接复制粘贴给我</div>
+
+<!-- ====== SECTION 1 ====== -->
+<h2><span class="section-num">1</span> 一句话核心</h2>
+<p>如果只能跟朋友说一句话介绍这个游戏，这句话是什么？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · Vampire Survivors：走路杀怪，自动攻击，30分钟一局，死了重来。<br>
+  · Brotato：控制一颗土豆，左右射子弹，每波结束选一个道具。<br>
+  · Hades：希腊神话，地牢闯关，每次死亡都有新的对话和剧情。
+</div>
+
+<div class="field">
+  <textarea placeholder="你的游戏，一句话讲清楚..."></textarea>
+</div>
+
+<!-- ====== SECTION 2 ====== -->
+<h2><span class="section-num">2</span> 核心玩法</h2>
+<p>玩家在游戏里具体做什么？30 秒内经历的"输入→反馈→奖励"循环是什么？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 玩家用 WASD 移动 → 自动攻击最近敌人 → 击杀掉落经验 → 升级选天赋 → 继续杀更强的怪 → 最终打 Boss。<br>
+  · 玩家只能左右移动 → 子弹自动向上发射 → 每波结束在商店买道具 → 撑过 20 波通关。
+</div>
+
+<div class="field">
+  <textarea placeholder="描述核心玩法循环..."></textarea>
+</div>
+
+<!-- ====== SECTION 3 ====== -->
+<h2><span class="section-num">3</span> 视觉风格</h2>
+<p>你希望游戏看起来像什么？给出参考作品或描述画面感受。</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 暗黑地牢风格：阴暗、手绘线条、压抑但精致。<br>
+  · 赛博朋克：霓虹灯、紫色+青色、粒子特效满天。<br>
+  · 极简几何：白色背景、黑色几何形、像 ABZÛ 一样干净。<br>
+  · 像素风：16-bit、暖色、像 Stardew Valley。
+</div>
+
+<div class="field">
+  <textarea placeholder="描述你想要的画面风格..."></textarea>
+</div>
+
+<!-- ====== SECTION 4 ====== -->
+<h2><span class="section-num">4</span> 视角与操作</h2>
+<p>玩家怎么看这个游戏世界？怎么控制？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 俯视角（top-down）· WASD 移动 + 鼠标瞄准射击<br>
+  · 横版卷轴（side-scroll）· 左右移动 + 跳跃 + 攻击键<br>
+  · 固定画面 · 只有鼠标点击/拖拽
+</div>
+
+<div class="field">
+  <textarea placeholder="视角和操作方式..."></textarea>
+</div>
+
+<!-- ====== SECTION 5 ====== -->
+<h2><span class="section-num">5</span> 职业/角色</h2>
+<p>玩家可以选什么角色？每个角色的独特之处是什么？（至少 2 个，最多 6 个）</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 战士：近战，高血量，大范围挥砍，技能是冲锋<br>
+  · 法师：远程，低血量，范围魔法，技能是闪现<br>
+  · 弓箭手：远程，中等血量，单体高伤，技能是多重箭<br>
+  · 刺客：近战，极低血量，高暴击+隐身
+</div>
+
+<div class="field">
+  <textarea placeholder="角色 1：...
+角色 2：...
+角色 3：..."></textarea>
+</div>
+
+<!-- ====== SECTION 6 ====== -->
+<h2><span class="section-num">6</span> 敌人设计</h2>
+<p>敌人有多少种？长什么样？有什么特殊行为？有没有 Boss？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 近战小兵：数量多，直线冲向你<br>
+  · 远程射手：保持距离，发射子弹<br>
+  · 自爆虫：快速冲向你然后爆炸<br>
+  · 召唤师：躲在后排，不断召唤小怪<br>
+  · Boss：每 5 波一个，有特殊攻击模式
+</div>
+
+<div class="field">
+  <textarea placeholder="敌人类型和特点..."></textarea>
+</div>
+
+<!-- ====== SECTION 7 ====== -->
+<h2><span class="section-num">7</span> 成长系统</h2>
+<p>玩家怎么变强？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 升级选天赋（3 选 1 随机）<br>
+  · 金币买永久属性<br>
+  · 装备掉落 + 随机词缀<br>
+  · 技能树 + 解锁新技能<br>
+  · 每局随机道具组合
+</div>
+
+<div class="field">
+  <textarea placeholder="成长方式..."></textarea>
+</div>
+
+<!-- ====== SECTION 8 ====== -->
+<h2><span class="section-num">8</span> 地图/场景</h2>
+<p>游戏在什么地方发生？一张大地图还是多个关卡？地图有什么特点？</p>
+
+<div class="example">
+  <strong>参考：</strong><br>
+  · 一张无限大的平地，随机生成障碍物<br>
+  · 斗兽场圆形场地，四周有观众<br>
+  · 多个房间随机连接（Roguelike 地牢）<br>
+  · 废墟/森林/火山/冰原 4 种地形轮流
+</div>
+
+<div class="field">
+  <textarea placeholder="地图和场景..."></textarea>
+</div>
+
+<!-- ====== SECTION 9 ====== -->
+<h2><span class="section-num">9</span> 一局时长</h2>
+<p>从开始到结束（胜利或死亡），一局大概多久？</p>
+
+<div class="field">
+  <textarea placeholder="例如：15 分钟 / 30 分钟 / 无限波次直到死亡..."></textarea>
+</div>
+
+<!-- ====== SECTION 10 ====== -->
+<h2><span class="section-num">10</span> 参考游戏</h2>
+<p>列出 2-5 款你想借鉴的游戏，说明借鉴什么。</p>
+
+<div class="example">
+  <strong>格式：</strong><br>
+  · Vampire Survivors → 借鉴自动攻击+走位核心循环<br>
+  · Hades → 借鉴天赋 3 选 1 系统<br>
+  · Enter the Gungeon → 借鉴弹幕 boss 战
+</div>
+
+<div class="field">
+  <textarea placeholder="参考游戏 + 借鉴什么..."></textarea>
+</div>
+
+<!-- ====== SECTION 11 ====== -->
+<h2><span class="section-num">11</span> 游戏名字（暂定）</h2>
+<div class="field">
+  <textarea placeholder="提供一个或几个名字..."></textarea>
+</div>
+
+<!-- ====== INSTRUCTIONS ====== -->
+<div style="background:#fff;border:1px solid var(--accent);border-radius:8px;padding:24px;margin:36px 0;text-align:center">
+  <p style="font-size:16px;font-weight:600;color:var(--accent);margin-bottom:8px">📋 填写完成后的操作</p>
+  <p style="font-size:13px;color:var(--t2)">
+    1. 填好上面的文本框<br>
+    2. Ctrl+P 打印为 PDF 保存<br>
+    3. 或者直接复制文本框里的文字粘贴给我<br><br>
+    <strong>不需要填满每一项</strong>——把你最确定的部分写好，不确定的可以写"你来定"。
+  </p>
+</div>
+
+</body>
+</html>
