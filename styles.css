@@ -5,8 +5,8 @@
 
 /* ---------- Design Tokens ---------- */
 :root {
-  --bg: #fafaf8;
-  --bg-alt: #f3f1ee;
+  --bg: #ffffff;
+  --bg-alt: #f5f4f1;
   --text: #1a1a18;
   --text-secondary: #6e6d6a;
   --text-tertiary: #a09e9a;
@@ -114,7 +114,7 @@ h1, h2, h3, h4 {
 }
 
 .nav.scrolled {
-  background: rgba(250, 250, 248, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 12px 0;
