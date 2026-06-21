@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Eclipse Arena v0.30</title>
+<title>Eclipse Arena v0.31</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -63,10 +63,10 @@ h1{font-size:clamp(22px,5vw,28px);color:#c8a050}.ss{font-size:11px;color:rgba(20
 <div id="rotateHint"><span class="icon">📱</span>请旋转手机<br>横屏游玩</div>
 
 <div class="s" id="m1"><div style="text-align:center">
-<h1>ECLIPSE ARENA v0.30</h1><div class="ss">Pick Character</div>
+<h1>ECLIPSE ARENA v0.31</h1><div class="ss">Pick Character</div>
 <div class="cards">
-<div class="cd" onclick="startGame('warrior')"><span class="av2">⚔️</span>Swordsman</div>
-<div class="cd" onclick="startGame('gunner')"><span class="av2">🔫</span>Gunner</div>
+<div class="cd" onclick="pick('warrior')"><span class="av2">⚔️</span>Swordsman</div>
+<div class="cd" onclick="pick('gunner')"><span class="av2">🔫</span>Gunner</div>
 <div class="cd lk"><span class="av2" style="filter:brightness(0)">🔮</span>???</div>
 <div class="cd lk"><span class="av2" style="filter:brightness(0)">🗡️</span>???</div>
 </div></div></div>
@@ -118,7 +118,8 @@ function clampPoly(x,y,m=4){if(insidePoly(x,y))return[x,y];let bx=x,by=y,bd=Infi
 
 let ck,cd,run=!1,f=0,lvl=1,pl={alive:!1},en=[],pr=[],pa=[],it=[],sc=0,ki=0,len=0,lk=0,bp=[],bpmax=3,unlocked=1,sx=0,sy=0,si=0;
 let weaponLvl=0,spdLvl=0,hpLvl=0,defLvl=0,atkSpdLvl=0,lifeStealLvl=0,autoAim=isMobile,shopOpen=!1,combo=0,comboTimer=0,maxCombo=0;
-try{unlocked=JSON.parse(localStorage.getItem('ea26'))?.unlocked||1}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('ea31'));if(s){weaponLvl=s.weaponLvl||0;spdLvl=s.spdLvl||0;hpLvl=s.hpLvl||0;defLvl=s.defLvl||0;atkSpdLvl=s.atkSpdLvl||0;lifeStealLvl=s.lifeStealLvl||0;autoAim=s.autoAim||autoAim;unlocked=s.unlocked||1}}catch(e){}
+function saveProgress(){localStorage.setItem('ea31',JSON.stringify({weaponLvl,spdLvl,hpLvl,defLvl,atkSpdLvl,lifeStealLvl,autoAim,unlocked}))}
 
 function weaponTier(){return Math.min(6,weaponLvl)}
 function warriorDmg(){const t=weaponTier();return Math.floor(30*(1+t*.3)/3)}
@@ -176,7 +177,7 @@ function buildModeGrid(){const g=document.getElementById('lg');g.innerHTML='';
     '<button class="pbtn shop" onclick="startEndless()" style="width:200px;padding:16px">♾️ Endless<br><span style="font-size:10px;opacity:.7">无尽波次 · XP升级 · 技能</span></button>'+
     '<button class="btn2" onclick="back()">← 换角色</button></div>'}
 function startLevels(){gameMode='levels';document.getElementById('m2').classList.add('h');document.getElementById('m2').classList.remove('h');buildLvlGrid();document.getElementById('m2t').textContent=cd.ico+' '+cd.n+' · Levels'}
-function startEndless(){gameMode='endless';startGame(ck)}
+function startEndless(){gameMode='endless';arena=[[-450,-350],[450,-350],[450,350],[-450,350]];arenaName='Endless';arenaColor=ARENA_COLORS[Math.floor(Math.random()*ARENA_COLORS.length)];startGame(ck)}
 function back(){document.getElementById('m2').classList.add('h');document.getElementById('m1').classList.remove('h')}
 function buildLvlGrid(){const g=document.getElementById('lg');g.innerHTML='';for(let i=1;i<=64;i++){const c=document.createElement('div');c.className='lc';c.textContent=i;let label='';if(i%10===0)label='<span class="level-tag boss-tag">BOSS</span>';else{const m=MODS[(i-1)%MODS.length];if(m)label='<span class="level-tag mod-tag">'+m.n+'</span>'}if(i<=unlocked){c.classList.add('o');if(i%10===0)c.classList.add('boss');c.innerHTML=i+label;c.onclick=function(){go(parseInt(this.textContent))}}else{c.classList.add('lk');c.textContent='🔒'}if(i<unlocked)c.classList.add('do');g.appendChild(c)}}
 function toLobby(){['win','go','shop'].forEach(id=>document.getElementById(id).classList.add('h'));document.getElementById('m2').classList.remove('h');buildLvlGrid();shopOpen=!1}
@@ -192,16 +193,16 @@ function openShop(){shopOpen=!0;run=!1;hideAllPanels();document.getElementById('
 function closeShop(){document.getElementById('shop').classList.add('h');shopOpen=!1;run=!0}
 function hideAllPanels(){['win','go','shop'].forEach(id=>document.getElementById(id).classList.add('h'))}
 function buildShop(){document.getElementById('shopInfo').textContent='Score: '+sc+' | Weapon: '+WNAMES[weaponTier()];const g=document.getElementById('shopGrid');g.innerHTML='';const uc=wpnUpgradeCost(),canUp=weaponLvl<6&&sc>=uc;g.innerHTML+=`<div class="shop-item"><span class="si-icon">⚡</span><span class="si-name">Upgrade Weapon → ${WNAMES[Math.min(6,weaponLvl+1)]}</span><span class="si-cost">${uc} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${canUp?'onclick="buyUpgrade()"':'disabled'}>${canUp?'Buy':'Not enough'}</button></div>`;const sc2=Math.floor(Math.pow(2,Math.max(0,weaponLvl-1))*250),canSpd=sc>=sc2;g.innerHTML+=`<div class="shop-item"><span class="si-icon">👟</span><span class="si-name">Speed +10% (Lv${spdLvl}) → Lv${spdLvl+1}</span><span class="si-cost">${sc2} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${canSpd?'onclick="buySpeed()"':'disabled'}>${canSpd?'Buy':'Not enough'}</button></div>`;const hc=(hpLvl+1)*600,cHP=sc>=hc;g.innerHTML+=`<div class="shop-item"><span class="si-icon">❤️</span><span class="si-name">Max HP +15% (Lv${hpLvl})</span><span class="si-cost">${hc} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${cHP?'onclick="buyHP()"':'disabled'}>${cHP?'Buy':'Need '+hc}</button></div>`;const dc=(defLvl+1)*700,cDF=sc>=dc;g.innerHTML+=`<div class="shop-item"><span class="si-icon">🛡️</span><span class="si-name">Defense +4% (Lv${defLvl})</span><span class="si-cost">${dc} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${cDF?'onclick="buyDef()"':'disabled'}>${cDF?'Buy':'Need '+dc}</button></div>`;const ac=(atkSpdLvl+1)*500,cAS=sc>=ac;g.innerHTML+=`<div class="shop-item"><span class="si-icon">⚡</span><span class="si-name">Atk Speed +10% (Lv${atkSpdLvl})</span><span class="si-cost">${ac} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${cAS?'onclick="buyAtkSpd()"':'disabled'}>${cAS?'Buy':'Need '+ac}</button></div>`;const lc2=(lifeStealLvl+1)*800,cLS=sc>=lc2;g.innerHTML+=`<div class="shop-item"><span class="si-icon">🩸</span><span class="si-name">Lifesteal +4%/hit (Lv${lifeStealLvl})</span><span class="si-cost">${lc2} pts</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${cLS?'onclick="buyLifeSteal()"':'disabled'}>${cLS?'Buy':'Need '+lc2}</button></div>`;const aic2=10000,cAI=!autoAim&&sc>=aic2;g.innerHTML+=`<div class="shop-item"><span class="si-icon">🎯</span><span class="si-name">Auto Aim</span><span class="si-cost">${autoAim?'Active':aic2+' pts'}</span><button class="pbtn shop" style="margin-top:4px;font-size:11px;padding:6px 14px" ${cAI?'onclick="buyAutoAim()"':'disabled'}>${autoAim?'✓':'Buy'}</button></div>`}
-function buyAutoAim(){if(sc>=10000&&!autoAim){sc-=10000;autoAim=!0;buildShop()}}
-function buyUpgrade(){if(sc>=wpnUpgradeCost()&&weaponLvl<6){sc-=wpnUpgradeCost();weaponLvl++;buildShop()}}
-function buySpeed(){const cost=Math.floor(Math.pow(2,Math.max(0,weaponLvl-1))*250);if(sc>=cost){sc-=cost;spdLvl++;buildShop()}}
-function buyHP(){const cost=(hpLvl+1)*600;if(sc>=cost){sc-=cost;hpLvl++;pl.mh=playerHP();pl.hp=Math.min(pl.mh,pl.hp+20);buildShop()}}
-function buyDef(){const cost=(defLvl+1)*700;if(sc>=cost){sc-=cost;defLvl++;buildShop()}}
-function buyAtkSpd(){const cost=(atkSpdLvl+1)*500;if(sc>=cost){sc-=cost;atkSpdLvl++;buildShop()}}
-function buyLifeSteal(){const cost=(lifeStealLvl+1)*800;if(sc>=cost){sc-=cost;lifeStealLvl++;buildShop()}}
+function buyAutoAim(){if(sc>=10000&&!autoAim){sc-=10000;autoAim=!0;saveProgress();buildShop()}}
+function buyUpgrade(){if(sc>=wpnUpgradeCost()&&weaponLvl<6){sc-=wpnUpgradeCost();weaponLvl++;saveProgress();buildShop()}}
+function buySpeed(){const cost=Math.floor(Math.pow(2,Math.max(0,weaponLvl-1))*250);if(sc>=cost){sc-=cost;spdLvl++;saveProgress();buildShop()}}
+function buyHP(){const cost=(hpLvl+1)*600;if(sc>=cost){sc-=cost;hpLvl++;pl.mh=playerHP();pl.hp=Math.min(pl.mh,pl.hp+20);saveProgress();buildShop()}}
+function buyDef(){const cost=(defLvl+1)*700;if(sc>=cost){sc-=cost;defLvl++;saveProgress();buildShop()}}
+function buyAtkSpd(){const cost=(atkSpdLvl+1)*500;if(sc>=cost){sc-=cost;atkSpdLvl++;saveProgress();buildShop()}}
+function buyLifeSteal(){const cost=(lifeStealLvl+1)*800;if(sc>=cost){sc-=cost;lifeStealLvl++;saveProgress();buildShop()}}
 function buyShopItem(idx){const si=SHOP_ITEMS[idx];if(si.lv>=si.maxLv||(si.once&&si.lv>0))return;const cost=si.costs[si.lv];if(sc>=cost){sc-=cost;si.lv++;if(si.once&&si.onBuy)si.onBuy();buildShop()}}
 
-function sE(isBossEnemy){const ei=Math.floor(Math.random()*arena.length),j=(ei+1)%arena.length,t=Math.random();const sx=arena[ei][0]+(arena[j][0]-arena[ei][0])*t,sy=arena[ei][1]+(arena[j][1]-arena[ei][1])*t;const ang2=Math.atan2(pl.y-sy,pl.x-sx);const et=isBossEnemy?{n:'BOSS',hp:300+lvl*20,sp:1.8,sz:35,dmg:25,sc:1000,co:'#ff3333'}:ET[Math.floor(Math.random()*ET.length)];const hm=isBossEnemy?1:(levelMod&&levelMod.hpMul?levelMod.hpMul:1)*(1+lvl*.05);const sm=isBossEnemy?1:(levelMod&&levelMod.spMul?levelMod.spMul:1)*(1+lvl*.02);const dm=isBossEnemy?1:(levelMod&&levelMod.dmgMul?levelMod.dmgMul:1);en.push({x:sx+Math.cos(ang2)*140,y:sy+Math.sin(ang2)*140,hp:Math.floor(et.hp*hm),mh:Math.floor(et.hp*hm),sp:et.sp*sm,sz:et.sz,dmg:Math.floor(et.dmg*dm*(1+lvl*.03)),co:et.co,sc:Math.floor(et.sc*(1+lvl*.04)),r:et.r||!1,h:et.h||!1,toxic:et.toxic||(levelMod&&levelMod.toxicAll)||!1,shCD:0,hCD:0,stun:0,alive:!0,boss:isBossEnemy||!1})}
+function sE(isBossEnemy){let sx,sy;if(gameMode==='endless'){const corner=Math.floor(Math.random()*4);const ex=450,ey=350;sx=corner===0||corner===2?-ex:ex;sy=corner<2?-ey:ey;sx+=Math.random()*200-100;sy+=Math.random()*200-100}else{const ei=Math.floor(Math.random()*arena.length),j=(ei+1)%arena.length,t=Math.random();sx=arena[ei][0]+(arena[j][0]-arena[ei][0])*t;sy=arena[ei][1]+(arena[j][1]-arena[ei][1])*t}const ang2=Math.atan2(pl.y-sy,pl.x-sx);const et=isBossEnemy?{n:'BOSS',hp:300+lvl*20,sp:1.8,sz:35,dmg:25,sc:1000,co:'#ff3333'}:ET[Math.floor(Math.random()*ET.length)];const hm=isBossEnemy?1:(levelMod&&levelMod.hpMul?levelMod.hpMul:1)*(1+lvl*.05);const sm=isBossEnemy?1:(levelMod&&levelMod.spMul?levelMod.spMul:1)*(1+lvl*.02);const dm=isBossEnemy?1:(levelMod&&levelMod.dmgMul?levelMod.dmgMul:1);en.push({x:sx+Math.cos(ang2)*140,y:sy+Math.sin(ang2)*140,hp:Math.floor(et.hp*hm),mh:Math.floor(et.hp*hm),sp:et.sp*sm,sz:et.sz+Math.floor(lvl*.3),dmg:Math.floor(et.dmg*dm*(1+lvl*.05)),co:et.co,sc:Math.floor(et.sc*(1+lvl*.02)*.5),r:et.r||!1,h:et.h||!1,toxic:et.toxic||(levelMod&&levelMod.toxicAll)||!1,shCD:0,hCD:0,stun:0,alive:!0,boss:isBossEnemy||!1})}
 function sI(){const a=Math.random()*Math.PI*2;const si=SHOP_ITEMS[Math.floor(Math.random()*4)];const val=si.lv>0?si.vals[si.lv-1]:0;it.push({x:pl.x+Math.cos(a)*(30+Math.random()*100),y:pl.y+Math.sin(a)*(30+Math.random()*100),ico:si.ico,c:si.ico==='❤️'?'#f44':si.ico==='💨'?'#4af':si.ico==='💪'?'#fa0':'#fff',ef:si.ico==='❤️'?'heal':si.ico==='💨'?'speed':si.ico==='💪'?'dmg':'shield',val,l:500})}
 
 function sp(x,y,n,c,s=3,l=16,z=3){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,spd=Math.random()*s+s*.3;pa.push({x,y,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,l,maxL:l,c,size:Math.random()*z+z*.5})}}
