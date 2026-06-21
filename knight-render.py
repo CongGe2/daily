@@ -330,8 +330,11 @@ def create_volume(fog_color, fog_density):
     links = mat.node_tree.links
     nodes.clear()
 
-    # 体积散射
-    volume = nodes.new('ShaderNodeVolumeScatter')
+    # 体积散射 (兼容不同 Blender 版本)
+    try:
+        volume = nodes.new('ShaderNodeVolumeScatter')
+    except:
+        volume = nodes.new('ShaderNodeVolumeScatter')
     volume.location = (0, 0)
     volume.inputs['Color'].default_value = fog_color + (1.0,)
     volume.inputs['Density'].default_value = fog_density
@@ -364,7 +367,6 @@ def create_god_ray(location, energy):
     light.data.spot_size = radians(15)
     light.data.spot_blend = 0.5
     light.data.shadow_soft_size = 8
-    light.data.use_volumetric_shadows = True
     light.rotation_euler = (radians(-90), 0, 0)
     return light
 
@@ -384,30 +386,42 @@ def create_sun(color, energy, location=(30, 40, -20)):
 # ══════════════════════════════════════════════
 # 应用场景设置
 # ══════════════════════════════════════════════
+def find_node_by_type(node_tree, node_type):
+    """按类型查找节点，兼容不同 Blender 版本"""
+    for node in node_tree.nodes:
+        if node_type in node.bl_idname or node_type in node.name:
+            return node
+    return None
+
 def apply_scene(scene_data, world, sky_bg, fog_obj, sun_obj, god_ray):
     """更新场景参数到现有物体"""
     s = scene_data
     # 世界背景色
-    world.node_tree.nodes.get('Background').inputs['Color'].default_value = s['sky_color']
+    bg = find_node_by_type(world.node_tree, 'Background')
+    if bg:
+        bg.inputs['Color'].default_value = s['sky_color']
 
     # 太阳
-    sun_obj.data.color = s['sun_color'][:3]
-    sun_obj.data.energy = s['sun_energy']
+    if sun_obj and sun_obj.data:
+        sun_obj.data.color = s['sun_color'][:3]
+        sun_obj.data.energy = s['sun_energy']
 
     # 雾
-    fog_mat = fog_obj.data.materials[0]
-    vol_node = fog_mat.node_tree.nodes.get('Volume Scatter')
-    if vol_node:
-        vol_node.inputs['Color'].default_value = s['fog_color'] + (1.0,)
-        vol_node.inputs['Density'].default_value = s['fog_density']
+    if fog_obj and fog_obj.data.materials:
+        fog_mat = fog_obj.data.materials[0]
+        vol_node = find_node_by_type(fog_mat.node_tree, 'Volume')
+        if vol_node:
+            vol_node.inputs['Color'].default_value = s['fog_color'] + (1.0,)
+            vol_node.inputs['Density'].default_value = s['fog_density']
 
     # 光束
-    god_ray.data.energy = s['beam_energy']
+    if god_ray and god_ray.data:
+        god_ray.data.energy = s['beam_energy']
 
     # 地面湿润度
     ground = bpy.data.objects.get('Ground')
     if ground and ground.data.materials:
-        bsdf = ground.data.materials[0].node_tree.nodes.get('Principled BSDF')
+        bsdf = find_node_by_type(ground.data.materials[0].node_tree, 'Principled')
         if bsdf:
             bsdf.inputs['Specular IOR Level'].default_value = s['ground_wet'] * 0.5
 

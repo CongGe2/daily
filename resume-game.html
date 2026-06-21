@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金承旭 · 游戏UI/UX 简历</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  :root{--text:#f0ede8;--text2:#8a8780;--accent:#ff6a3d;--bg:#141210;--card:#1c1a17;--border:#2a2722;--sans:"Inter","PingFang SC","Microsoft YaHei",sans-serif;--serif:"Noto Serif SC","STSong",serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);font-size:10px;line-height:1.65;color:var(--text);background:var(--bg);max-width:700px;margin:0 auto;padding:8px}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--accent)}
+  h1{font-family:var(--serif);font-size:30px;font-weight:700;letter-spacing:0.04em}
+  h2{font-family:var(--serif);font-size:13px;font-weight:600;margin:20px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border);color:var(--accent);letter-spacing:0.04em}
+  .header-right{text-align:right;font-size:9.5px;color:var(--text2);line-height:1.8}
+  .header-right a{color:var(--accent);text-decoration:none}
+  .subtitle{font-size:11px;color:var(--accent);margin-top:2px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .skill-group{margin-bottom:10px}
+  .skill-label{font-size:8.5px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px}
+  .skill-text{font-size:9.5px;color:var(--text2);line-height:1.6}
+
+  .project{margin-bottom:12px;padding:10px 12px;background:var(--card);border-radius:3px;border-left:2px solid var(--accent);page-break-inside:avoid}
+  .proj-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+  .proj-title{font-weight:700;font-size:11px}
+  .proj-meta{font-size:8.5px;color:var(--text2);white-space:nowrap}
+  .proj-desc{font-size:9px;color:var(--text2);margin-bottom:4px;line-height:1.55}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+  .tag{font-size:8px;padding:1px 7px;border:1px solid var(--border);border-radius:2px;color:var(--text2)}
+  .tag.hl{color:var(--accent);border-color:var(--accent)}
+
+  .highlight{color:var(--accent);font-weight:600}
+  .note{background:var(--card);padding:8px 12px;margin-top:10px;border-radius:3px;font-size:9px;color:var(--text2);line-height:1.6}
+
+  @media print{body{padding:0}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>金承旭</h1>
+    <p class="subtitle">游戏 UI/UX 设计 · 交互原型 实习</p>
+  </div>
+  <div class="header-right">
+    177-6596-1764 · 1416907076@qq.com<br>
+    澳门科技大学 · 产品设计 大三<br>
+    <a href="https://jin-chengxu-portfolio.pages.dev">jin-chengxu-portfolio.pages.dev</a>
+  </div>
+</div>
+
+<h2>核心能力</h2>
+<div class="grid2">
+  <div class="skill-group">
+    <div class="skill-label">Game UI/UX</div>
+    <div class="skill-text">游戏HUD设计 · 菜单层级 · 战斗界面 · 背包系统 · 设置面板 · Design Token 系统</div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">交互原型</div>
+    <div class="skill-text">React 18 · TypeScript · Framer Motion · AnimatePresence 转场 · Spring 3D 卡片 · Canvas 粒子</div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">AI 设计工具链</div>
+    <div class="skill-text">Midjourney · Stable Diffusion · NanoBanana2 · AI 概念发散 · Prompt 工程 · 资产快速迭代</div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">三维与视觉</div>
+    <div class="skill-text">Rhino 7 · KeyShot · Figma · Photoshop · 3D 打印</div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">游戏素养</div>
+    <div class="skill-text">10+ 年 3A 游戏重度玩家 · 对交互反馈/动效/UI 有高度敏感 · 理解玩家心理与游戏设计语言</div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">前端能力</div>
+    <div class="skill-text">Vibe Coding 驱动开发 · HTML/CSS/JS · Vite · 独立完成可交互原型部署</div>
+  </div>
+</div>
+
+<h2>游戏方向项目</h2>
+
+<div class="project">
+  <div class="proj-header">
+    <span class="proj-title">Eclipse Arena · 星蚀竞技场 — 科幻游戏完整UI设计系统</span>
+    <span class="proj-meta">独立项目 · 2026</span>
+  </div>
+  <p class="proj-desc">
+    科幻竞技场游戏的<span class="highlight">完整UI设计语言系统</span>，含主菜单、角色选择、战斗 HUD、40格拖拽背包、设置面板、商城 6 大核心界面。基于 React 18 + TypeScript + Framer Motion 构建<span class="highlight">高保真交互动效原型</span>：AnimatePresence 页面转场、useSpring 瞬时回弹3D卡片、Canvas 实时粒子背景、HUD 状态模拟。
+  </p>
+  <div class="proj-tags">
+    <span class="tag hl">游戏UI系统</span><span class="tag">战斗HUD</span><span class="tag">背包系统</span><span class="tag">Spring动画</span><span class="tag">Canvas粒子</span><span class="tag">React</span><span class="tag">Framer Motion</span><span class="tag">TypeScript</span>
+  </div>
+</div>
+
+<div class="project">
+  <div class="proj-header">
+    <span class="proj-title">VR 磁吸悬浮体感辅助设备 — 游戏道具到实体产品设计</span>
+    <span class="proj-meta">课程项目 · 2026</span>
+  </div>
+  <p class="proj-desc">
+    从《黑豹2》《头号玩家》电影道具调研出发，四轮方案迭代落地为穿戴式VR体感设备。展示了从<span class="highlight">虚拟游戏道具到现实产品</span>的完整设计推导能力——理解游戏世界的交互逻辑并进行实体化再设计。
+  </p>
+  <div class="proj-tags">
+    <span class="tag">VR游戏</span><span class="tag">道具设计</span><span class="tag">Rhino 7</span><span class="tag">3D打印</span><span class="tag">用户研究</span><span class="tag">人机工程</span>
+  </div>
+</div>
+
+<div class="project">
+  <div class="proj-header">
+    <span class="proj-title">MindSpace 冥想专注力 App — AI 驱动 UX 设计流程</span>
+    <span class="proj-meta">独立项目 · 2026</span>
+  </div>
+  <p class="proj-desc">
+    <span class="highlight">Stable Diffusion 驱动的 UX 工作流</span>：Prompt 工程设计 → 6组视觉方向 2天内完成探索 → Figma 精修 → 4屏高保真原型。证明 AI 在 UX 流程中可以<span class="highlight">指数级加速"探索-筛选-决策"循环</span>。
+  </p>
+  <div class="proj-tags">
+    <span class="tag hl">AI驱动UX</span><span class="tag">Stable Diffusion</span><span class="tag">Prompt工程</span><span class="tag">Figma</span><span class="tag">高保真原型</span>
+  </div>
+</div>
+
+<div class="project">
+  <div class="proj-header">
+    <span class="proj-title">Terrin 陶瓷首饰品牌官网 — UI设计落地</span>
+    <span class="proj-meta">独立项目 · 2025</span>
+  </div>
+  <p class="proj-desc">
+    设计系统搭建 · 交互规范制定 · 用户旅程设计。商品图<span class="highlight">黑白默认、Hover彩色渐变过渡</span>——用交互设计增强"探索感"。Vibe Coding 完成 MVP 前端落地部署。
+  </p>
+  <div class="proj-tags">
+    <span class="tag">设计系统</span><span class="tag">交互设计</span><span class="tag">Vibe Coding</span><span class="tag">前端落地</span>
+  </div>
+</div>
+
+<h2>为什么适合游戏公司</h2>
+<div class="note">
+  <strong style="color:var(--accent)">▲</strong> <strong>十年3A玩家 = 内置的交互直觉：</strong>对菜单导航深度、HUD信息密度、战斗反馈延迟、动效缓动曲线有近乎偏执的敏感——这不是书本教的，是几千小时游戏时间磨练出来的"体感"。<br>
+  <strong style="color:var(--accent)">▲</strong> <strong>设计与代码之间无损耗：</strong>不只是画图——我用 React + Framer Motion 把交互想法直接变成可点击的原型。设计师和程序员的"翻译损耗"在我这里不存在。<br>
+  <strong style="color:var(--accent)">▲</strong> <strong>AI 原生加速设计：</strong>用 AI 做概念发散、资产快速生成、多方案并行迭代——5 年前需要一周的视觉探索，现在 2 天出 6 组方案。
+</div>
+
+<div style="text-align:center;margin-top:20px;padding-top:12px;border-top:1px solid var(--border);font-size:8px;color:var(--text2)">
+  在线作品集：jin-chengxu-portfolio.pages.dev · 澳门科技大学 · 2026年6月到岗 · 可全勤实习
+</div>
+
+</body>
+</html>

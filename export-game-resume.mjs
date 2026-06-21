@@ -1,0 +1,10 @@
+import puppeteer from 'puppeteer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const b = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+const pg = await b.newPage();
+await pg.goto('file:///' + path.join(__dirname, 'resume-game.html').replace(/\\/g, '/'), { waitUntil: 'networkidle0', timeout: 15000 });
+await pg.pdf({ path: 'C:/Users/14169/Desktop/金承旭_简历_游戏UI设计.pdf', format: 'A4', margin: { top: '12mm', bottom: '12mm', left: '10mm', right: '10mm' }, printBackground: true });
+console.log('PDF saved to desktop');
+await b.close();
