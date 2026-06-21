@@ -689,6 +689,23 @@ h1, h2, h3, h4 {
   border-color: var(--accent);
 }
 
+/* Dual CTA buttons for Eclipse Arena */
+.project-links-dual {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+.project-links-dual .project-link-hero {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+.project-links-dual .project-link-hero:last-child:hover {
+  background: #8c744e;
+  border-color: #8c744e;
+  color: #fff;
+}
+
 .project-img-placeholder.art::before {
   content: '';
   position: absolute;
