@@ -138,13 +138,17 @@ camera.position.set(0, 8, 45);
 camera.lookAt(0, HORIZON_Y - 2, -30);
 
 // ══════════════════════════════════════
-// AI Background plane (deepest layer)
+// AI Background plane — fills entire viewport, no black edges
 // ══════════════════════════════════════
-const bgGeo = new THREE.PlaneGeometry(160, 90);
+// Calculate size needed at z=-80 to fill the full frustum
+// FOV=42°, aspect=16:9, cam at z=45 looking at z=-30
+// Visible height at z=-80: 2 * tan(21°) * 125 ≈ 96 → use 110 for safety
+// Visible width: 110 * 16/9 ≈ 196 → use 210 for safety
+const bgGeo = new THREE.PlaneGeometry(220, 124);
 const bgTex = new THREE.TextureLoader();
 const bgMat = new THREE.MeshBasicMaterial({ map:null, depthTest:false, depthWrite:false });
 const bgPlane = new THREE.Mesh(bgGeo, bgMat);
-bgPlane.position.set(0, 10, -80);
+bgPlane.position.set(0, 4, -80);
 bgPlane.renderOrder = -10;
 scene.add(bgPlane);
 
@@ -248,13 +252,33 @@ function createCloudLayers(colorHex, opacity) {
 }
 
 // ══════════════════════════════════════
-// Sun/Moon glow disc (pulsing)
+// Sun/Moon glow — radial gradient texture (no square artifact)
 // ══════════════════════════════════════
-const glowGeo = new THREE.PlaneGeometry(30, 30);
+function createGlowTexture(innerColor, outerColor, size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+  const half = size / 2;
+  const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+  grad.addColorStop(0, innerColor);
+  grad.addColorStop(0.15, innerColor);
+  grad.addColorStop(0.5, outerColor);
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+let glowTex, glowTex2;
+const glowGeo = new THREE.PlaneGeometry(40, 40);
 const glowMat = new THREE.MeshBasicMaterial({
-  color: '#ff9944',
+  map: null,
   transparent: true,
-  opacity: 0.3,
+  opacity: 1.0,
   depthTest: false,
   depthWrite: false,
   blending: THREE.AdditiveBlending,
@@ -265,11 +289,11 @@ glowDisc.renderOrder = -8;
 scene.add(glowDisc);
 
 // Second larger softer glow
-const glow2Geo = new THREE.PlaneGeometry(60, 60);
+const glow2Geo = new THREE.PlaneGeometry(70, 70);
 const glow2Mat = new THREE.MeshBasicMaterial({
-  color: '#ff9944',
+  map: null,
   transparent: true,
-  opacity: 0.1,
+  opacity: 0.6,
   depthTest: false,
   depthWrite: false,
   blending: THREE.AdditiveBlending,
@@ -490,10 +514,13 @@ function applyScene(i) {
   const s = SCENES[i];
   // Clouds
   createCloudLayers(s.cloudColor, s.cloudOpacity);
-  // Glow
-  glowMat.color.set(s.glowColor);
+  // Glow — regenerate radial gradient texture per scene
+  const glowAlpha = s.glowColor.slice(1); // hex without #
+  glowTex = createGlowTexture(`#${glowAlpha}cc`, `#${glowAlpha}00`, 512);
+  glowTex2 = createGlowTexture(`#${glowAlpha}66`, `#${glowAlpha}00`, 512);
+  glowMat.map = glowTex;
   glowMat.opacity = s.glowOpacity;
-  glow2Mat.color.set(s.glowColor);
+  glow2Mat.map = glowTex2;
   glow2Mat.opacity = s.glowOpacity * 0.35;
   // Birds
   spawnBirds(s.birdCount, s.birdColor);
@@ -549,11 +576,11 @@ function animate() {
   bgPlane.position.x -= s.cloudSpeed * 0.01;
   if (bgPlane.position.x < -3) bgPlane.position.x = 3;
 
-  // ── Glow pulse ──
-  const pulse = 1 + Math.sin(time * 0.7) * s.glowPulse * 3;
+  // ── Glow pulse (texture handles radial falloff, opacity handles breathing) ──
+  const pulse = 1 + Math.sin(time * 0.7) * s.glowPulse * 2.5;
   glowMat.opacity = s.glowOpacity * pulse;
   glow2Mat.opacity = s.glowOpacity * 0.35 * pulse;
-  glowDisc.scale.setScalar(1 + Math.sin(time * 0.5) * 0.02);
+  glowDisc.scale.setScalar(1 + Math.sin(time * 0.5) * 0.03);
 
   // ── Light shimmer ──
   shimmerMat.uniforms.uTime.value = time;
