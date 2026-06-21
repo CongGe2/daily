@@ -111,14 +111,46 @@
       </div>
     </section>
 
+    <!-- Design Methodology -->
+    <section class="methodology section" id="methodology">
+      <div class="section-inner">
+        <div class="section-label reveal">My Approach</div>
+        <h2 class="section-heading large reveal">设计方法论</h2>
+        <p class="reveal" style="color:var(--text-secondary);font-size:15px;max-width:680px;margin-bottom:48px;line-height:1.8">
+          每个项目都遵循同一套核心流程——这不是教科书，是我在实践中反复验证的工作方式。
+        </p>
+        <div class="methodology-flow reveal">
+          <div class="method-step"><div class="method-icon">🔍</div><div class="method-num">01</div><h4>用户观察</h4><p>实地蹲点、行为记录、场景分析。从"游客弃椅选花坛"这样的现象中定位真实痛点。</p></div>
+          <div class="method-arrow">→</div>
+          <div class="method-step"><div class="method-icon">🎯</div><div class="method-num">02</div><h4>痛点定义</h4><p>将模糊的不满转化为清晰的设计问题——不是"椅子不舒服"，而是"贴墙座椅缺乏景观朝向"。</p></div>
+          <div class="method-arrow">→</div>
+          <div class="method-step"><div class="method-icon">💡</div><div class="method-num">03</div><h4>概念发散</h4><p>手绘草图 + AI 生图并行探索。8-12 个方向在 2 天内完成——AI 加速广度，设计师决定深度。</p></div>
+          <div class="method-arrow">→</div>
+          <div class="method-step"><div class="method-icon">🤖</div><div class="method-num">04</div><h4>AI 加速</h4><p>Stable Diffusion 效果图、Midjourney 概念发散、NanoBanana2 材质渲染——AI 是加速器不是替代品。</p></div>
+          <div class="method-arrow">→</div>
+          <div class="method-step"><div class="method-icon">✂️</div><div class="method-num">05</div><h4>方案收敛</h4><p>在约束中做出正确的取舍——全身外骨骼的浪漫 → 腰腿部磁吸方案的务实。</p></div>
+          <div class="method-arrow">→</div>
+          <div class="method-step"><div class="method-icon">🔧</div><div class="method-num">06</div><h4>原型验证</h4><p>Rhino 建模 → KeyShot 渲染 → 3D 打印 / 代码原型 / 交互 Demo。设计不被 PPT 锁死。</p></div>
+        </div>
+      </div>
+    </section>
+
     <!-- Projects -->
     <section class="projects section" id="projects">
       <div class="section-inner">
         <div class="section-label reveal">Projects</div>
         <h2 class="section-heading large reveal">项目经历</h2>
 
+        <!-- Category Filter -->
+        <div class="project-filter reveal">
+          <button class="filter-btn active" data-filter="all">全部 All</button>
+          <button class="filter-btn" data-filter="product">产品设计 Product</button>
+          <button class="filter-btn" data-filter="uiux">UI/UX</button>
+          <button class="filter-btn" data-filter="game">游戏/交互 Game</button>
+        </div>
+
         <!-- Project 00 - Rift Speaker -->
-        <article class="project-card reveal" id="project-00">
+        <article class="project-card reveal" data-category="product" id="project-00">
           <div class="project-index">NEW</div>
           <div class="project-body">
             <div class="project-image">
@@ -156,7 +188,7 @@
         </article>
 
         <!-- Project ★ - Eclipse Arena Game UI -->
-        <article class="project-card reveal" id="project-ui">
+        <article class="project-card reveal" data-category="game" id="project-ui">
           <div class="project-index">★</div>
           <div class="project-body">
             <div class="project-image">
@@ -187,6 +219,7 @@
                 <li>6大核心界面 · 15个可复用UI组件 · 完整设计Token系统 · AI生成全套美术资产</li>
                 <li>状态驱动转场 · Spring物理3D倾斜 · 40格拖拽背包 · 桌面/平板响应式</li>
               </ul>
+              <p class="project-reflection">💡 反思：动画系统应先做关键帧草稿再编码，直接用 Framer Motion 调参效率低于先设计后实现。</p>
               <div class="project-tags">
                 <span>游戏UI</span><span>设计系统</span><span>交互动画</span><span>AI生图</span><span>React</span><span>Framer Motion</span><span>TypeScript</span>
               </div>
@@ -206,7 +239,7 @@
         </article>
 
         <!-- Project 0★ - MindSpace UX -->
-        <article class="project-card reveal" id="project-mindspace">
+        <article class="project-card reveal" data-category="uiux" id="project-mindspace">
           <div class="project-index">UX</div>
           <div class="project-body">
             <div class="project-image">
@@ -231,6 +264,7 @@
                 <li>Stable Diffusion 驱动：Prompt 工程 → 批量生成 → 筛选 → Figma 精修整合</li>
                 <li>4 屏高保真原型：Onboarding · Home · Session · Profile</li>
               </ul>
+              <p class="project-reflection">💡 反思：AI 概念发散很快但筛选标准需更早明确，避免在过多方案中摇摆。</p>
               <div class="project-tags">
                 <span>UX设计</span><span>Stable Diffusion</span><span>Prompt工程</span><span>Figma</span><span>设计系统</span><span>AI工作流</span>
               </div>
@@ -248,7 +282,7 @@
         </article>
 
         <!-- Project 02 - VR Device -->
-        <article class="project-card reveal" id="project-02">
+        <article class="project-card reveal" data-category="product" id="project-02">
           <div class="project-index">02</div>
           <div class="project-body">
             <div class="project-image">
@@ -274,6 +308,7 @@
                 <img src="images/process/vr-ergonomics.png" alt="VR 人机工学" loading="lazy">
                 <img src="images/process/vr-prototype.png" alt="VR 3D打印原型" loading="lazy">
               </div>
+              <p class="project-reflection">💡 反思：应更早做 1:1 人机尺度 mockup，3D 打印缩小模型无法验证真实穿戴舒适度。</p>
               <div class="project-tags">
                 <span>用户研究</span><span>概念发散</span><span>可行性分析</span><span>Rhino 7</span><span>3D 打印</span>
               </div>
@@ -285,7 +320,7 @@
         </article>
 
         <!-- Project TEAM - SmartDorm -->
-        <article class="project-card reveal" id="project-team">
+        <article class="project-card reveal" data-category="product" id="project-team">
           <div class="project-index">协作</div>
           <div class="project-body">
             <div class="project-image">
@@ -311,6 +346,7 @@
                 <li>产品侧：Rhino 7 模块化建模 · 1:5 原型验证 · CMF 方案 × 3</li>
                 <li>数字侧：微信小程序 5 屏高保真 UI · 扫码识别物品 · 收纳方案推荐 · 空间可视化</li>
               </ul>
+              <p class="project-reflection">💡 反思：跨专业协作中，统一设计语言文档应在一开始建立而非中途对齐，减少沟通损耗。</p>
               <div class="project-tags">
                 <span>团队协作</span><span>用户研究</span><span>产品设计</span><span>小程序UI</span><span>Rhino 7</span><span>Figma</span>
               </div>
@@ -322,7 +358,7 @@
         </article>
 
         <!-- Project 01 - Terrin -->
-        <article class="project-card reveal" id="project-01">
+        <article class="project-card reveal" data-category="uiux" id="project-01">
           <div class="project-index">01</div>
           <div class="project-body">
             <div class="project-image">
@@ -345,6 +381,7 @@
                 <li>设计系统搭建 · 交互规范 · 用户旅程设计</li>
                 <li>通过 Vibe Coding 独立完成首版 MVP 前端落地</li>
               </ul>
+              <p class="project-reflection">💡 反思：品牌电商网站应考虑移动端优先，首版桌面端为主的设计导致移动适配成本高。</p>
               <div class="project-tags">
                 <span>设计系统</span><span>交互设计</span><span>用户旅程</span><span>Vibe Coding</span><span>MVP</span>
               </div>
@@ -356,7 +393,7 @@
         </article>
 
         <!-- Project 03 - Bench System -->
-        <article class="project-card reveal" id="project-03">
+        <article class="project-card reveal" data-category="product" id="project-03">
           <div class="project-index">03</div>
           <div class="project-body">
             <div class="project-image">
@@ -381,6 +418,7 @@
                 <li>行为洞察驱动：实地拍摄 60+ 张座椅使用场景，发现"背对景观"是弃用主因</li>
                 <li>系统化方案：人车分流 + 观景视野 + 社交距离三维一体</li>
               </ul>
+              <p class="project-reflection">💡 反思：行为观察很扎实但最终方案应更早回访游客验证，而非仅依赖初期观察数据。</p>
               <div class="project-tags">
                 <span>用户行为观察</span><span>场景分析</span><span>系统设计</span><span>Before/After</span><span>Rhino 7</span>
               </div>
@@ -389,7 +427,7 @@
         </article>
 
         <!-- Project 04 - Ceramic Art -->
-        <article class="project-card reveal" id="project-04">
+        <article class="project-card reveal" data-category="product" id="project-04">
           <div class="project-index">04</div>
           <div class="project-body">
             <div class="project-image">
@@ -422,7 +460,7 @@
         </article>
 
         <!-- Project 05 - RingFit Dashboard -->
-        <article class="project-card reveal" id="project-05">
+        <article class="project-card reveal" data-category="game" id="project-05">
           <div class="project-index">05</div>
           <div class="project-body">
             <div class="project-image">

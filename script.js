@@ -103,6 +103,31 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll(); // check initial state
 
+  // ---------- Project category filter ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  if (filterBtns.length && projectCards.length) {
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter');
+
+        // Update active state
+        filterBtns.forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+
+        // Filter cards
+        projectCards.forEach(function (card) {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.classList.remove('filtered-out');
+          } else {
+            card.classList.add('filtered-out');
+          }
+        });
+      });
+    });
+  }
+
   // ---------- WeChat placeholder ----------
   const wechatLink = document.getElementById('wechatLink');
   if (wechatLink) {
