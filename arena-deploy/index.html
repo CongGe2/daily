@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="zh-CN"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Eclipse Arena v0.31</title>
+<title>Eclipse Arena v0.30</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -63,10 +63,10 @@ h1{font-size:clamp(22px,5vw,28px);color:#c8a050}.ss{font-size:11px;color:rgba(20
 <div id="rotateHint"><span class="icon">📱</span>请旋转手机<br>横屏游玩</div>
 
 <div class="s" id="m1"><div style="text-align:center">
-<h1>ECLIPSE ARENA v0.31</h1><div class="ss">Pick Character</div>
+<h1>ECLIPSE ARENA v0.30</h1><div class="ss">Pick Character</div>
 <div class="cards">
-<div class="cd" onclick="pick('warrior')"><span class="av2">⚔️</span>Swordsman</div>
-<div class="cd" onclick="pick('gunner')"><span class="av2">🔫</span>Gunner</div>
+<div class="cd" onclick="startGame('warrior')"><span class="av2">⚔️</span>Swordsman</div>
+<div class="cd" onclick="startGame('gunner')"><span class="av2">🔫</span>Gunner</div>
 <div class="cd lk"><span class="av2" style="filter:brightness(0)">🔮</span>???</div>
 <div class="cd lk"><span class="av2" style="filter:brightness(0)">🗡️</span>???</div>
 </div></div></div>
@@ -118,8 +118,9 @@ function clampPoly(x,y,m=4){if(insidePoly(x,y))return[x,y];let bx=x,by=y,bd=Infi
 
 let ck,cd,run=!1,f=0,lvl=1,pl={alive:!1},en=[],pr=[],pa=[],it=[],sc=0,ki=0,len=0,lk=0,bp=[],bpmax=3,unlocked=1,sx=0,sy=0,si=0;
 let weaponLvl=0,spdLvl=0,hpLvl=0,defLvl=0,atkSpdLvl=0,lifeStealLvl=0,autoAim=isMobile,shopOpen=!1,combo=0,comboTimer=0,maxCombo=0;
-try{const s=JSON.parse(localStorage.getItem('ea31'));if(s){weaponLvl=s.weaponLvl||0;spdLvl=s.spdLvl||0;hpLvl=s.hpLvl||0;defLvl=s.defLvl||0;atkSpdLvl=s.atkSpdLvl||0;lifeStealLvl=s.lifeStealLvl||0;autoAim=s.autoAim||autoAim;unlocked=s.unlocked||1}}catch(e){}
-function saveProgress(){localStorage.setItem('ea31',JSON.stringify({weaponLvl,spdLvl,hpLvl,defLvl,atkSpdLvl,lifeStealLvl,autoAim,unlocked}))}
+try{unlocked=JSON.parse(localStorage.getItem('ea26'))?.unlocked||1}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('ea31b'));if(s){weaponLvl=s.weaponLvl||0;spdLvl=s.spdLvl||0;hpLvl=s.hpLvl||0;defLvl=s.defLvl||0;atkSpdLvl=s.atkSpdLvl||0;lifeStealLvl=s.lifeStealLvl||0;autoAim=s.autoAim||autoAim;unlocked=s.unlocked||unlocked}}catch(e){}
+function saveProgress(){localStorage.setItem('ea31b',JSON.stringify({weaponLvl,spdLvl,hpLvl,defLvl,atkSpdLvl,lifeStealLvl,autoAim,unlocked}))}
 
 function weaponTier(){return Math.min(6,weaponLvl)}
 function warriorDmg(){const t=weaponTier();return Math.floor(30*(1+t*.3)/3)}
@@ -177,7 +178,7 @@ function buildModeGrid(){const g=document.getElementById('lg');g.innerHTML='';
     '<button class="pbtn shop" onclick="startEndless()" style="width:200px;padding:16px">♾️ Endless<br><span style="font-size:10px;opacity:.7">无尽波次 · XP升级 · 技能</span></button>'+
     '<button class="btn2" onclick="back()">← 换角色</button></div>'}
 function startLevels(){gameMode='levels';document.getElementById('m2').classList.add('h');document.getElementById('m2').classList.remove('h');buildLvlGrid();document.getElementById('m2t').textContent=cd.ico+' '+cd.n+' · Levels'}
-function startEndless(){gameMode='endless';arena=[[-450,-350],[450,-350],[450,350],[-450,350]];arenaName='Endless';arenaColor=ARENA_COLORS[Math.floor(Math.random()*ARENA_COLORS.length)];startGame(ck)}
+function startEndless(){gameMode='endless';startGame(ck)}
 function back(){document.getElementById('m2').classList.add('h');document.getElementById('m1').classList.remove('h')}
 function buildLvlGrid(){const g=document.getElementById('lg');g.innerHTML='';for(let i=1;i<=64;i++){const c=document.createElement('div');c.className='lc';c.textContent=i;let label='';if(i%10===0)label='<span class="level-tag boss-tag">BOSS</span>';else{const m=MODS[(i-1)%MODS.length];if(m)label='<span class="level-tag mod-tag">'+m.n+'</span>'}if(i<=unlocked){c.classList.add('o');if(i%10===0)c.classList.add('boss');c.innerHTML=i+label;c.onclick=function(){go(parseInt(this.textContent))}}else{c.classList.add('lk');c.textContent='🔒'}if(i<unlocked)c.classList.add('do');g.appendChild(c)}}
 function toLobby(){['win','go','shop'].forEach(id=>document.getElementById(id).classList.add('h'));document.getElementById('m2').classList.remove('h');buildLvlGrid();shopOpen=!1}
@@ -202,7 +203,7 @@ function buyAtkSpd(){const cost=(atkSpdLvl+1)*500;if(sc>=cost){sc-=cost;atkSpdLv
 function buyLifeSteal(){const cost=(lifeStealLvl+1)*800;if(sc>=cost){sc-=cost;lifeStealLvl++;saveProgress();buildShop()}}
 function buyShopItem(idx){const si=SHOP_ITEMS[idx];if(si.lv>=si.maxLv||(si.once&&si.lv>0))return;const cost=si.costs[si.lv];if(sc>=cost){sc-=cost;si.lv++;if(si.once&&si.onBuy)si.onBuy();buildShop()}}
 
-function sE(isBossEnemy){let sx,sy;if(gameMode==='endless'){const corner=Math.floor(Math.random()*4);const ex=450,ey=350;sx=corner===0||corner===2?-ex:ex;sy=corner<2?-ey:ey;sx+=Math.random()*200-100;sy+=Math.random()*200-100}else{const ei=Math.floor(Math.random()*arena.length),j=(ei+1)%arena.length,t=Math.random();sx=arena[ei][0]+(arena[j][0]-arena[ei][0])*t;sy=arena[ei][1]+(arena[j][1]-arena[ei][1])*t}const ang2=Math.atan2(pl.y-sy,pl.x-sx);const et=isBossEnemy?{n:'BOSS',hp:300+lvl*20,sp:1.8,sz:35,dmg:25,sc:1000,co:'#ff3333'}:ET[Math.floor(Math.random()*ET.length)];const hm=isBossEnemy?1:(levelMod&&levelMod.hpMul?levelMod.hpMul:1)*(1+lvl*.05);const sm=isBossEnemy?1:(levelMod&&levelMod.spMul?levelMod.spMul:1)*(1+lvl*.02);const dm=isBossEnemy?1:(levelMod&&levelMod.dmgMul?levelMod.dmgMul:1);en.push({x:sx+Math.cos(ang2)*140,y:sy+Math.sin(ang2)*140,hp:Math.floor(et.hp*hm),mh:Math.floor(et.hp*hm),sp:et.sp*sm,sz:et.sz+Math.floor(lvl*.3),dmg:Math.floor(et.dmg*dm*(1+lvl*.05)),co:et.co,sc:Math.floor(et.sc*(1+lvl*.02)*.5),r:et.r||!1,h:et.h||!1,toxic:et.toxic||(levelMod&&levelMod.toxicAll)||!1,shCD:0,hCD:0,stun:0,alive:!0,boss:isBossEnemy||!1})}
+function sE(isBossEnemy){const ei=Math.floor(Math.random()*arena.length),j=(ei+1)%arena.length,t=Math.random();const sx=arena[ei][0]+(arena[j][0]-arena[ei][0])*t,sy=arena[ei][1]+(arena[j][1]-arena[ei][1])*t;const ang2=Math.atan2(pl.y-sy,pl.x-sx);const et=isBossEnemy?{n:'BOSS',hp:300+lvl*20,sp:1.8,sz:35,dmg:25,sc:1000,co:'#ff3333'}:ET[Math.floor(Math.random()*ET.length)];const hm=isBossEnemy?1:(levelMod&&levelMod.hpMul?levelMod.hpMul:1)*(1+lvl*.05);const sm=isBossEnemy?1:(levelMod&&levelMod.spMul?levelMod.spMul:1)*(1+lvl*.02);const dm=isBossEnemy?1:(levelMod&&levelMod.dmgMul?levelMod.dmgMul:1);en.push({x:sx+Math.cos(ang2)*140,y:sy+Math.sin(ang2)*140,hp:Math.floor(et.hp*hm),mh:Math.floor(et.hp*hm),sp:et.sp*sm,sz:et.sz,dmg:Math.floor(et.dmg*dm*(1+lvl*.03)),co:et.co,sc:Math.floor(et.sc*(1+lvl*.04)),r:et.r||!1,h:et.h||!1,toxic:et.toxic||(levelMod&&levelMod.toxicAll)||!1,shCD:0,hCD:0,stun:0,alive:!0,boss:isBossEnemy||!1})}
 function sI(){const a=Math.random()*Math.PI*2;const si=SHOP_ITEMS[Math.floor(Math.random()*4)];const val=si.lv>0?si.vals[si.lv-1]:0;it.push({x:pl.x+Math.cos(a)*(30+Math.random()*100),y:pl.y+Math.sin(a)*(30+Math.random()*100),ico:si.ico,c:si.ico==='❤️'?'#f44':si.ico==='💨'?'#4af':si.ico==='💪'?'#fa0':'#fff',ef:si.ico==='❤️'?'heal':si.ico==='💨'?'speed':si.ico==='💪'?'dmg':'shield',val,l:500})}
 
 function sp(x,y,n,c,s=3,l=16,z=3){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,spd=Math.random()*s+s*.3;pa.push({x,y,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,l,maxL:l,c,size:Math.random()*z+z*.5})}}
@@ -211,7 +212,7 @@ function sf2(x,y,t,c='#fff'){pa.push({x,y,vx:0,vy:-2,l:28,maxL:28,c,text:t,isTxt
 function ash(i){si=Math.max(si,i)}
 function dmgE(e2,dmg){e2.hp-=dmg;e2.stun=10;sp(e2.x,e2.y,5,e2.co,3,8,2);sf2(e2.x,e2.y-8,''+Math.round(dmg));ash(2);if(e2.hp<=0){e2.alive=!1;sp(e2.x,e2.y,e2.boss?25:15,e2.co,6,18,4);sf2(e2.x,e2.y-16,'+'+e2.sc,cd.c);combo++;comboTimer=120;if(combo>maxCombo)maxCombo=combo;const bonus=Math.floor(e2.sc*(combo-1)*.1);sc+=e2.sc+bonus;if(combo>=5)sf2(e2.x,e2.y-20,combo+'x COMBO! +'+bonus,'#ff0');ki++;lk++;xp+=e2.sc;if(xp>=xpNeed)levelUp();ash(e2.boss?8:3)}}
 function hitP(dmg){if(pl.shT>0)return;const fdmg=Math.floor(dmg*(1-playerDef())*(pl.defBuff>0?.5:1));pl.hp-=fdmg;pl.inv=25;sp(pl.x,pl.y,10,'#f44',6,14,3);sf2(pl.x,pl.y-8,'-'+Math.round(fdmg),'#f44');ash(7);if(pl.hp<=0){pl.hp=0;pl.alive=!1;run=!1;gameOver()}}
-function lvlClear(){run=!1;if(lvl>=unlocked){unlocked=lvl+1;localStorage.setItem('ea26',JSON.stringify({unlocked}))}document.getElementById('win').classList.remove('h');document.getElementById('winInfo').textContent='Level '+lvl+' · '+cd.n+' · '+sc+' pts'+(isBoss?' · BOSS DEFEATED!':'')}
+function lvlClear(){run=!1;if(lvl>=unlocked){unlocked=lvl+1;saveProgress()}document.getElementById('win').classList.remove('h');document.getElementById('winInfo').textContent='Level '+lvl+' · '+cd.n+' · '+sc+' pts'+(isBoss?' · BOSS DEFEATED!':'')}
 function gameOver(){document.getElementById('go').classList.remove('h');document.getElementById('goInfo').textContent='Level '+lvl+' · '+cd.n+' · Kills '+ki}
 function pickup(i){const o=it[i];if(bp.length<bpmax){bp.push(o)}else{use(o)}it.splice(i,1)}
 function use(o){if(o.ef==='heal')pl.hp=Math.min(pl.mh,pl.hp+(o.val||40));else if(o.ef==='speed')pl.sb=(o.val||4)*60;else if(o.ef==='dmg')pl.db=o.val?o.val*60:250;else pl.shT=(o.val||3)*60;sf2(pl.x,pl.y-8,o.ico+'!',o.c)}

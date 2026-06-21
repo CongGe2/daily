@@ -1,0 +1,11 @@
+金承旭 · 作品集介绍
+
+澳门科技大学产品设计大三学生。作品集覆盖产品设计、UI/UX、三维建模到前端开发的完整能力链。
+
+我的核心工作方式：AI 深度整合设计全流程。Midjourney/Stable Diffusion 用于概念发散，2 天探索 6 组视觉方向（传统需 2-3 周）；NanoBanana2 生成 8K 产品渲染图替代部分 KeyShot 等待；Claude Code 实现 Vibe Coding——从自然语言到 React 组件到线上部署的完整闭环。Figma 作为信息架构和交互逻辑的最终决策地。AI 提供原材料，我负责判断和整合。
+
+代表作品涵盖四大方向：产品设计（Rift 蓝牙音箱完整流程、SmartDorm 3人团队项目、VR 体感设备、景区座椅 Redesign），UI/UX（Eclipse Arena 游戏 UI 设计系统、MindSpace 冥想 App 含可交互呼吸练习小程序、Terrin 品牌官网），以及 Vibe Coding 落地（RingFit Dashboard 健身数据面板）。
+
+我的竞争力不在于会用多少 AI 工具，而在于知道 AI 在设计流程每个环节的最佳位置——让"试错"变廉价，把时间留给更重要的判断力。
+
+📧 1416907076@qq.com ｜ 📞 17765961764 ｜ 🌐 jin-chengxu-portfolio.pages.dev
