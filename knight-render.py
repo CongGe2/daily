@@ -12,10 +12,10 @@ from math import radians, sin, cos, pi
 # ══════════════════════════════════════════════
 # 用户设置 — 改这些就行
 # ══════════════════════════════════════════════
-RENDER_WIDTH  = 3840   # 4K
-RENDER_HEIGHT = 2160
-RENDER_SAMPLES = 256    # 采样数, 128=预览, 512=成品, 1024=最终
-RENDER_DEVICE = 'GPU'   # 'GPU' 或 'CPU'
+RENDER_WIDTH  = 1920   # 1080p 测试 (满意后改 3840)
+RENDER_HEIGHT = 1080
+RENDER_SAMPLES = 32     # 快速预览 (成品用 256-512)
+RENDER_DEVICE = 'CPU'   # 先用 CPU 稳过
 IMAGE_DIR = r'C:\Users\14169\portfolio\images\knight'
 
 # AI 关键帧路径 (用作背景)
@@ -89,7 +89,7 @@ def init_scene():
     bpy.context.scene.render.resolution_percentage = 100
     bpy.context.scene.render.film_transparent = False
     bpy.context.scene.cycles.samples = RENDER_SAMPLES
-    bpy.context.scene.cycles.use_denoising = True
+    bpy.context.scene.cycles.use_denoising = False   # 预览关降噪, 成品再开
     bpy.context.scene.view_settings.view_transform = 'AgX'
     # 'look' might differ per Blender version; use default if not found
     try:
@@ -128,8 +128,8 @@ def create_ground(wetness=0.0):
 
     # 细分
     mod = ground.modifiers.new('Subdivide', 'SUBSURF')
-    mod.levels = 4
-    mod.render_levels = 5
+    mod.levels = 2
+    mod.render_levels = 3
     bpy.ops.object.modifier_apply(modifier='Subdivide')
 
     # 噪波 displacement
@@ -243,7 +243,7 @@ def create_knight():
     # 披风下半部往后飘
     bpy.ops.object.mode_set(mode='EDIT')
     bpy.ops.mesh.select_all(action='SELECT')
-    bpy.ops.mesh.subdivide(number_cuts=8)
+    bpy.ops.mesh.subdivide(number_cuts=3)
     bpy.ops.object.mode_set(mode='OBJECT')
     # 波浪
     mod = cape.modifiers.new('Wave', 'SIMPLE_DEFORM')
