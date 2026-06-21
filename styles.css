@@ -689,21 +689,31 @@ h1, h2, h3, h4 {
   border-color: var(--accent);
 }
 
-/* Dual CTA buttons for Eclipse Arena */
+/* Triple CTA buttons for Eclipse Arena */
 .project-links-dual {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   margin-top: 12px;
 }
 .project-links-dual .project-link-hero {
   flex: 1;
   text-align: center;
   justify-content: center;
+  font-size: 13px;
+  padding: 10px 16px;
 }
 .project-links-dual .project-link-hero:last-child:hover {
   background: #8c744e;
   border-color: #8c744e;
   color: #fff;
+}
+@media (max-width: 480px) {
+  .project-links-dual {
+    flex-wrap: wrap;
+  }
+  .project-links-dual .project-link-hero {
+    min-width: 100%;
+  }
 }
 
 .project-img-placeholder.art::before {
