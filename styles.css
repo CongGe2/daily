@@ -441,6 +441,19 @@ h1, h2, h3, h4 {
   transform: scale(1.05);
 }
 
+/* ── Project reflection ── */
+.project-reflection {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  line-height: 1.7;
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: rgba(176, 146, 110, 0.05);
+  border-left: 2px solid var(--accent-soft);
+  border-radius: 0 2px 2px 0;
+}
+
 /* ── Project metrics ── */
 .project-metrics {
   display: flex;
