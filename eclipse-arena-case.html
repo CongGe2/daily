@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eclipse Arena · 星蚀竞技场 — 游戏UI设计系统 | 金承旭</title>
   <meta name="description" content="6大核心界面的完整游戏UI设计语言系统。NanoBanana2 AI生成8位角色原画。React + Framer Motion 高保真交互原型。">
+  <meta property="og:title" content="Eclipse Arena · 星蚀竞技场 — 游戏UI设计系统">
+  <meta property="og:description" content="6大核心界面 · 15个复用组件 · AI生成全套美术资产 · 60fps 粒子动画">
+  <meta property="og:image" content="images/eclipse-arena/menu.png">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="case.css">
   <style>
     body { background: var(--bg); }
     .case-hero {
@@ -159,6 +164,7 @@
     }
     .cta-bar a:hover { opacity: 0.85; }
   </style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -292,6 +298,30 @@
   </ul>
 </section>
 
+<!-- Results -->
+<section class="case-section">
+  <h2>📊 成果与影响</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;">
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">6</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">核心界面<br>全部可交互</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">15</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">复用组件<br>统一设计 Token</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">60fps</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">粒子 + 动画<br>零帧率下降</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">~3K</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">TypeScript<br>组件化架构</div>
+    </div>
+  </div>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">5 层动画系统（转场 → 3D 卡片 → 微交互 → 实时模拟 → 粒子背景）在桌面端均保持 <strong style="color:var(--text);">60fps 稳定运行</strong>。AI 生图工作流将传统外包角色原画周期从数周压缩至 <strong style="color:var(--text);">~2 分钟</strong>。15 个可复用组件建立了完整的设计 Token 体系，可直接迁移至任何科幻暗色调 UI 项目。</p>
+</section>
+
 <!-- CTA -->
 <section class="cta-bar">
   <a href="./eclipse-arena/">🎮 进入完整交互原型 →</a>
@@ -310,5 +340,19 @@
   <p style="font-size:10px;color:rgba(255,255,255,.2)">© 2026 金承旭 JIN CHENGXU · Eclipse Arena UI Design Case Study</p>
 </footer>
 
-</body>
+<!-- More Projects -->
+<section style="max-width:800px;margin:40px auto 80px;padding:0 24px;text-align:center">
+  <p style="font-family:var(--font-sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:20px">More Projects</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+    <a href="rift-speaker" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Rift 音箱</a>
+    <a href="eclipse-arena-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Eclipse Arena</a>
+    <a href="mindspace-ux" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">MindSpace</a>
+    <a href="vr-device-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">VR 设备</a>
+    <a href="smartdorm" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">SmartDorm</a>
+    <a href="terrin" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Terrin</a>
+    <a href="ceramic-lion" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">汉魂·狮魄</a>
+  </div>
+  <p style="margin-top:24px"><a href="index" style="font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:4px">← 返回作品集首页</a></p>
+</section>
+<!-- /More Projects -->n</body>
 </html>

@@ -14,6 +14,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="canonical" href="https://jin-chengxu-portfolio.pages.dev">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "金承旭",
+    "alternateName": "Jin Chengxu",
+    "description": "产品设计 · UI/UX · 三维建模。澳门科技大学产品设计专业，AI原生设计思维。",
+    "url": "https://jin-chengxu-portfolio.pages.dev",
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "澳门科技大学" },
+    "knowsAbout": ["产品设计","UI设计","UX设计","三维建模","Rhino","Figma","React","AI设计工具"],
+    "worksFor": { "@type": "EducationalOrganization", "name": "澳门科技大学" }
+  }
+  </script>
 </head>
 <body>
 
@@ -392,7 +406,9 @@
           <div class="project-index">01</div>
           <div class="project-body">
             <div class="project-image">
-              <img src="images/optimized/terrin-hero-thumb.jpg" alt="Terrin 陶瓷首饰品牌官网 UI · Hero Section" loading="lazy">
+              <a href="terrin">
+                <img src="images/optimized/terrin-hero-thumb.jpg" alt="Terrin 陶瓷首饰品牌官网 UI · Hero Section" loading="lazy">
+              </a>
             </div>
             <div class="project-info">
               <div class="project-meta">
@@ -421,8 +437,11 @@
               <div class="project-tags">
                 <span>设计系统</span><span>交互设计</span><span>用户旅程</span><span>Vibe Coding</span><span>MVP</span>
               </div>
-              <a href="https://rhxl7wxuq3ece.kimi.page" target="_blank" rel="noopener" class="project-link">
-                查看作品 ↗
+              <a href="terrin" class="project-link">
+                查看完整设计案例 →
+              </a>
+              <a href="https://rhxl7wxuq3ece.kimi.page" target="_blank" rel="noopener" class="project-link" style="margin-left:12px">
+                🌐 线上网站 ↗
               </a>
             </div>
           </div>
@@ -433,9 +452,11 @@
           <div class="project-index">03</div>
           <div class="project-body">
             <div class="project-image">
-              <div class="project-img-placeholder bench">
-                <span class="placeholder-label">景区公共座椅系统</span>
-              </div>
+              <a href="bench-system">
+                <div class="project-img-placeholder bench">
+                  <span class="placeholder-label">景区公共座椅系统</span>
+                </div>
+              </a>
             </div>
             <div class="project-info">
               <div class="project-meta">
@@ -458,6 +479,9 @@
               <div class="project-tags">
                 <span>用户行为观察</span><span>场景分析</span><span>系统设计</span><span>Before/After</span><span>Rhino 7</span>
               </div>
+              <a href="bench-system" class="project-link">
+                查看完整设计推导 →
+              </a>
             </div>
           </div>
         </article>
@@ -467,9 +491,11 @@
           <div class="project-index">04</div>
           <div class="project-body">
             <div class="project-image">
-              <div class="project-img-placeholder art">
-                <span class="placeholder-label">《汉魂·狮魄》陶瓷艺术装置</span>
-              </div>
+              <a href="ceramic-lion">
+                <div class="project-img-placeholder art">
+                  <span class="placeholder-label">《汉魂·狮魄》陶瓷艺术装置</span>
+                </div>
+              </a>
             </div>
             <div class="project-info">
               <div class="project-meta">
@@ -478,7 +504,7 @@
               </div>
               <h3 class="project-title">
                 《汉魂·狮魄》陶瓷艺术装置
-                <span class="project-subtitle">个人作品</span>
+                <span class="project-subtitle">个人作品 · 国际展览</span>
                 <span class="project-subtitle-en">Han Dynasty Inspiration · Contemporary Ceramic · International Exhibition</span>
               </h3>
               <p class="project-desc">
@@ -488,9 +514,19 @@
                 <li>文化溯源 → 意象提炼 → 当代转化 → 陶瓷成型，完整创作闭环</li>
                 <li>国际展览呈现：澳大利亚 Anlan Museum</li>
               </ul>
+              <div class="project-metrics">
+                <div class="project-metric"><span class="project-metric-num">30+</span><span class="project-metric-label">汉代样本研究</span></div>
+                <div class="project-metric"><span class="project-metric-num">5</span><span class="project-metric-label">釉色实验</span></div>
+                <div class="project-metric"><span class="project-metric-num">1</span><span class="project-metric-label">国际展览</span></div>
+                <div class="project-metric"><span class="project-metric-num">个人</span><span class="project-metric-label">独立创作</span></div>
+              </div>
+              <p class="project-reflection">💡 反思：应增加快速原型验证环节（3D 打印或石膏翻模），在泥料投入前发现比例问题，减少烧制损耗。</p>
               <div class="project-tags">
                 <span>文化研究</span><span>概念转化</span><span>陶瓷工艺</span><span>国际展览</span>
               </div>
+              <a href="ceramic-lion" class="project-link">
+                查看完整创作过程 →
+              </a>
             </div>
           </div>
         </article>
@@ -522,11 +558,21 @@
                 <li>Claude Code 全流程 Vibecoding · Vite + React · 响应式布局（桌面/平板/手机）</li>
                 <li>GitHub Actions 自动部署 · 大陆可访问 Vercel 域名</li>
               </ul>
+              <div class="project-metrics">
+                <div class="project-metric"><span class="project-metric-num">12 周</span><span class="project-metric-label">趋势预测</span></div>
+                <div class="project-metric"><span class="project-metric-num">6 屏</span><span class="project-metric-label">仪表盘</span></div>
+                <div class="project-metric"><span class="project-metric-num">100%</span><span class="project-metric-label">AI 协作</span></div>
+                <div class="project-metric"><span class="project-metric-num">~1K</span><span class="project-metric-label">行代码</span></div>
+              </div>
+              <p class="project-reflection">💡 反思：数据可视化应先画草图再写 SVG，直接码代码导致多次返工调整布局。Vibe Coding 效率高但需要更清晰的 upfront spec。</p>
               <div class="project-tags">
                 <span>Vibe Coding</span><span>React</span><span>数据可视化</span><span>SVG</span><span>暗色主题</span><span>GitHub Actions</span>
               </div>
-              <a href="https://ringfit-dashboard.pages.dev" target="_blank" rel="noopener" class="project-link">
-                查看线上 Demo ↗
+              <a href="ringfit" class="project-link">
+                查看完整开发过程 →
+              </a>
+              <a href="https://ringfit-dashboard.pages.dev" target="_blank" rel="noopener" class="project-link" style="margin-left:12px">
+                🌐 线上 Demo ↗
               </a>
             </div>
           </div>

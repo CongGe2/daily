@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>骑士 · 四幕 4K 实时渲染</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#000; overflow:hidden; font-family:'Inter',sans-serif; }
+  canvas { display:block; }
+  #ui {
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+    display:flex; gap:10px; z-index:10; align-items:center; flex-wrap:wrap; justify-content:center;
+  }
+  #ui button {
+    padding:10px 18px; border:1px solid rgba(255,255,255,0.15);
+    background:rgba(0,0,0,0.65); color:#ddd; border-radius:3px;
+    font-size:12px; cursor:pointer; backdrop-filter:blur(12px);
+    transition:all .2s; letter-spacing:.05em; font-family:inherit;
+  }
+  #ui button:hover { border-color:rgba(255,255,255,0.4); color:#fff; }
+  #ui button.active { border-color:#ffd740; color:#ffd740; background:rgba(255,215,64,0.12); }
+  #ui .sep { width:1px; height:20px; background:rgba(255,255,255,0.1); margin:0 6px; }
+  #loading {
+    position:fixed; inset:0; display:flex; flex-direction:column; gap:12px;
+    align-items:center; justify-content:center; background:#000; z-index:100;
+    color:rgba(255,255,255,0.5); font-size:13px; letter-spacing:.06em;
+  }
+  #loading .bar { width:200px; height:2px; background:rgba(255,255,255,0.1); border-radius:1px; overflow:hidden; }
+  #loading .bar div { height:100%; background:#ffd740; transition:width .3s; border-radius:1px; }
+  #toast {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    color:#ffd740; font-size:15px; letter-spacing:.08em;
+    pointer-events:none; opacity:0; transition:opacity .3s; z-index:20;
+  }
+</style>
+</head>
+<body>
+
+<div id="loading">
+  <span id="load-text">加载 AI 场景图...</span>
+  <div class="bar"><div id="load-bar" style="width:0%"></div></div>
+</div>
+<div id="toast">📸 4K 已保存</div>
+
+<div id="ui">
+  <button data-scene="0" class="active">🌅 晚霞</button>
+  <button data-scene="1">🩸 血红</button>
+  <button data-scene="2">☁️ 灰暗</button>
+  <button data-scene="3">✨ 雨后光照</button>
+  <span class="sep"></span>
+  <button id="btn-play">▶ 自动播放</button>
+  <button id="btn-shot">📸 4K截图</button>
+  <button id="btn-rec">⏺ 录4K</button>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+// ══════════════════════════════════════
+// 4K Config
+// ══════════════════════════════════════
+const W = 3840, H = 2160;
+const HORIZON_Y = 0; // horizon line in world space (where sky meets ground)
+
+const IMG_PATHS = [
+  'images/knight/knight-v2-01-sunset.png',
+  'images/knight/knight-v3-02-bloodsky.png',
+  'images/knight/knight-v3-03-gloom.png',
+  'images/knight/knight-v4-04-after-rain.png',
+];
+
+// Scene-specific cloud/atmosphere configs
+const SCENES = [
+  { // 0: Sunset
+    name:'晚霞',
+    cloudColor:'#ffccaa', cloudOpacity:0.22, cloudCount:6, cloudSpeed:0.14,
+    glowColor:'#ff9944', glowOpacity:0.35, glowPulse:0.06,
+    birdColor:'#332211', birdCount:2,
+    particles:{color:'#ffd740',count:50,size:0.06,opacity:0.25,speed:0.3},
+    fogColor:'#d4a06a', fogDensity:0.00006,
+    groundDarken:0.35, wetGround:0, beamOpacity:0,
+  },
+  { // 1: Blood Sky
+    name:'血红',
+    cloudColor:'#661111', cloudOpacity:0.35, cloudCount:8, cloudSpeed:0.24,
+    glowColor:'#cc2222', glowOpacity:0.45, glowPulse:0.10,
+    birdColor:'#000000', birdCount:1,
+    particles:{color:'#ff4444',count:80,size:0.05,opacity:0.35,speed:0.5},
+    fogColor:'#3a0a0a', fogDensity:0.00012,
+    groundDarken:0.55, wetGround:0, beamOpacity:0,
+  },
+  { // 2: Gloom
+    name:'灰暗',
+    cloudColor:'#555555', cloudOpacity:0.40, cloudCount:10, cloudSpeed:0.18,
+    glowColor:'#999999', glowOpacity:0.08, glowPulse:0.02,
+    birdColor:'#444444', birdCount:3,
+    particles:{color:'#999999',count:25,size:0.04,opacity:0.12,speed:0.15},
+    fogColor:'#2a2a2a', fogDensity:0.00020,
+    groundDarken:0.65, wetGround:0, beamOpacity:0,
+  },
+  { // 3: After Rain + Light Beam
+    name:'雨后光照',
+    cloudColor:'#888899', cloudOpacity:0.28, cloudCount:5, cloudSpeed:0.20,
+    glowColor:'#ffddaa', glowOpacity:0.50, glowPulse:0.04,
+    birdColor:'#554433', birdCount:1,
+    particles:{color:'#ffd740',count:160,size:0.035,opacity:0.45,speed:0.25},
+    fogColor:'#3a3a40', fogDensity:0.00010,
+    groundDarken:0.40, wetGround:0.55, beamOpacity:0.18,
+  },
+];
+
+// ══════════════════════════════════════
+// Renderer + Camera
+// ══════════════════════════════════════
+const renderer = new THREE.WebGLRenderer({ antialias:true, preserveDrawingBuffer:true, alpha:false });
+renderer.setSize(W, H, false);
+renderer.setPixelRatio(1);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+document.body.appendChild(renderer.domElement);
+
+function fitPreview() {
+  const s = Math.min(window.innerWidth/W, window.innerHeight/H);
+  renderer.domElement.style.width = (W*s)+'px';
+  renderer.domElement.style.height = (H*s)+'px';
+}
+fitPreview();
+window.addEventListener('resize', fitPreview);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 800);
+camera.position.set(0, 8, 45);
+camera.lookAt(0, HORIZON_Y - 2, -30);
+
+// ══════════════════════════════════════
+// AI Background plane — fills entire viewport, no black edges
+// ══════════════════════════════════════
+// Calculate size needed at z=-80 to fill the full frustum
+// FOV=42°, aspect=16:9, cam at z=45 looking at z=-30
+// Visible height at z=-80: 2 * tan(21°) * 125 ≈ 96 → use 110 for safety
+// Visible width: 110 * 16/9 ≈ 196 → use 210 for safety
+const bgGeo = new THREE.PlaneGeometry(220, 124);
+const bgTex = new THREE.TextureLoader();
+const bgMat = new THREE.MeshBasicMaterial({ map:null, depthTest:false, depthWrite:false });
+const bgPlane = new THREE.Mesh(bgGeo, bgMat);
+bgPlane.position.set(0, 4, -80);
+bgPlane.renderOrder = -10;
+scene.add(bgPlane);
+
+// ══════════════════════════════════════
+// Procedural cloud texture generator
+// ══════════════════════════════════════
+function createCloudTexture(colorHex, width, height) {
+  const c = document.createElement('canvas');
+  c.width = width; c.height = height;
+  const ctx = c.getContext('2d');
+
+  // Base: transparent
+  ctx.clearRect(0, 0, width, height);
+
+  // Generate several soft cloud blobs
+  const color = new THREE.Color(colorHex);
+  const r = Math.round(color.r * 255);
+  const g = Math.round(color.g * 255);
+  const b = Math.round(color.b * 255);
+
+  const blobCount = 12 + Math.floor(Math.random() * 8);
+  for (let i = 0; i < blobCount; i++) {
+    const bx = Math.random() * width;
+    const by = Math.random() * height;
+    const bw = 60 + Math.random() * width * 0.5;
+    const bh = 15 + Math.random() * height * 0.35;
+    const alpha = 0.15 + Math.random() * 0.45;
+
+    ctx.save();
+    // Soft radial gradient for each blob
+    const grad = ctx.createRadialGradient(bx, by, 0, bx, by, bw);
+    grad.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
+    grad.addColorStop(0.4, `rgba(${r},${g},${b},${alpha * 0.6})`);
+    grad.addColorStop(0.7, `rgba(${r},${g},${b},${alpha * 0.15})`);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(bx - bw, by - bh/2, bw * 2, bh);
+    ctx.restore();
+  }
+
+  // Elongated wisps
+  for (let i = 0; i < 8; i++) {
+    const wx = Math.random() * width;
+    const wy = Math.random() * height;
+    const ww = 100 + Math.random() * width * 0.8;
+    const wh = 8 + Math.random() * 20;
+    ctx.save();
+    const grad = ctx.createLinearGradient(wx - ww/2, wy, wx + ww/2, wy);
+    const a = 0.08 + Math.random() * 0.2;
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(0.3, `rgba(${r},${g},${b},${a})`);
+    grad.addColorStop(0.5, `rgba(${r},${g},${b},${a * 1.3})`);
+    grad.addColorStop(0.7, `rgba(${r},${g},${b},${a})`);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(wx - ww/2, wy - wh/2, ww, wh);
+    ctx.restore();
+  }
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.wrapT = THREE.ClampToEdgeWrapping;
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+// ══════════════════════════════════════
+// Cloud layers (3 parallax depths)
+// ══════════════════════════════════════
+const cloudLayers = [];
+function createCloudLayers(colorHex, opacity) {
+  // Remove old
+  cloudLayers.forEach(l => { scene.remove(l.mesh); l.mesh.geometry.dispose(); l.mesh.material.dispose(); });
+  cloudLayers.length = 0;
+
+  const configs = [
+    { z: -65, scale: 1.0, speedMul: 0.3, opacityMul: 0.6, yOff: 18 },  // Far, slow
+    { z: -55, scale: 1.3, speedMul: 0.7, opacityMul: 0.8, yOff: 14 },  // Mid
+    { z: -45, scale: 1.6, speedMul: 1.2, opacityMul: 1.0, yOff: 10 },  // Near, fast
+  ];
+
+  configs.forEach(cfg => {
+    const tex = createCloudTexture(colorHex, 1024, 400);
+    const mat = new THREE.MeshBasicMaterial({
+      map: tex,
+      transparent: true,
+      opacity: opacity * cfg.opacityMul,
+      depthTest: false,
+      depthWrite: false,
+      blending: THREE.NormalBlending,
+    });
+    const geo = new THREE.PlaneGeometry(120 * cfg.scale, 40 * cfg.scale);
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(0, cfg.yOff, cfg.z);
+    mesh.renderOrder = -5;
+    scene.add(mesh);
+    cloudLayers.push({ mesh, speedMul: cfg.speedMul, baseX: 0 });
+  });
+}
+
+// ══════════════════════════════════════
+// Sun/Moon glow — radial gradient texture (no square artifact)
+// ══════════════════════════════════════
+function createGlowTexture(innerColor, outerColor, size) {
+  const c = document.createElement('canvas');
+  c.width = size; c.height = size;
+  const ctx = c.getContext('2d');
+  const half = size / 2;
+  const grad = ctx.createRadialGradient(half, half, 0, half, half, half);
+  grad.addColorStop(0, innerColor);
+  grad.addColorStop(0.15, innerColor);
+  grad.addColorStop(0.5, outerColor);
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(c);
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+let glowTex, glowTex2;
+const glowGeo = new THREE.PlaneGeometry(40, 40);
+const glowMat = new THREE.MeshBasicMaterial({
+  map: null,
+  transparent: true,
+  opacity: 1.0,
+  depthTest: false,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+});
+const glowDisc = new THREE.Mesh(glowGeo, glowMat);
+glowDisc.position.set(30, 15, -50);
+glowDisc.renderOrder = -8;
+scene.add(glowDisc);
+
+// Second larger softer glow
+const glow2Geo = new THREE.PlaneGeometry(70, 70);
+const glow2Mat = new THREE.MeshBasicMaterial({
+  map: null,
+  transparent: true,
+  opacity: 0.6,
+  depthTest: false,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+});
+const glowDisc2 = new THREE.Mesh(glow2Geo, glow2Mat);
+glowDisc2.position.copy(glowDisc.position);
+glowDisc2.renderOrder = -9;
+scene.add(glowDisc2);
+
+// ══════════════════════════════════════
+// Light shimmer overlay (full screen)
+// ══════════════════════════════════════
+const shimmerGeo = new THREE.PlaneGeometry(160, 90);
+const shimmerMat = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uColor: { value: new THREE.Color('#ffffff') },
+    uIntensity: { value: 0.06 },
+  },
+  vertexShader: /* glsl */ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: /* glsl */ `
+    varying vec2 vUv;
+    uniform float uTime;
+    uniform vec3 uColor;
+    uniform float uIntensity;
+    // Simple noise for light flicker
+    float hash(vec2 p) {
+      return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+    }
+    float noise(vec2 p) {
+      vec2 i = floor(p);
+      vec2 f = fract(p);
+      f = f * f * (3.0 - 2.0 * f);
+      return mix(
+        mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),
+        mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),
+        f.y
+      );
+    }
+    void main() {
+      float n = noise(vUv * 8.0 + uTime * 0.02);
+      float shimmer = n * uIntensity;
+      // Brighter at top (sky area), darker at bottom (ground)
+      float gradient = smoothstep(0.3, 0.6, vUv.y);
+      shimmer *= gradient;
+      gl_FragColor = vec4(uColor, shimmer);
+    }
+  `,
+  transparent: true,
+  depthTest: false,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+});
+const shimmerPlane = new THREE.Mesh(shimmerGeo, shimmerMat);
+shimmerPlane.position.set(0, 10, -75);
+shimmerPlane.renderOrder = -4;
+scene.add(shimmerPlane);
+
+// ══════════════════════════════════════
+// Birds (transparent billboard planes, not sprites)
+// ══════════════════════════════════════
+function createBirdMesh(colorHex) {
+  const c = document.createElement('canvas');
+  c.width = 128; c.height = 64;
+  const ctx = c.getContext('2d');
+  // Fully transparent background
+  ctx.clearRect(0, 0, 128, 64);
+  // Draw bird silhouette with proper alpha
+  ctx.fillStyle = colorHex;
+  ctx.globalAlpha = 0.85;
+  // Left wing
+  ctx.beginPath();
+  ctx.moveTo(10, 32);
+  ctx.quadraticCurveTo(40, 12, 64, 28);
+  ctx.quadraticCurveTo(40, 22, 10, 32);
+  ctx.fill();
+  // Right wing
+  ctx.beginPath();
+  ctx.moveTo(64, 28);
+  ctx.quadraticCurveTo(88, 12, 118, 32);
+  ctx.quadraticCurveTo(88, 24, 64, 28);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  const tex = new THREE.CanvasTexture(c);
+  tex.minFilter = THREE.LinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.premultiplyAlpha = true;
+  tex.colorSpace = THREE.SRGBColorSpace;
+
+  const mat = new THREE.MeshBasicMaterial({
+    map: tex,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
+  const geo = new THREE.PlaneGeometry(5, 2.5);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.renderOrder = -3;
+  // Billboard: face camera
+  mesh.lookAt(camera.position);
+  return mesh;
+}
+
+const birds = [];
+function spawnBirds(count, colorHex) {
+  birds.forEach(b => { scene.remove(b); if(b.geometry)b.geometry.dispose(); if(b.material)b.material.dispose(); });
+  birds.length = 0;
+  for (let i=0; i<count; i++) {
+    const bird = createBirdMesh(colorHex);
+    bird.position.set(
+      (Math.random() - 0.5) * 100,
+      12 + Math.random() * 25,
+      -55 - Math.random() * 30
+    );
+    bird.userData = {
+      speed: 0.02 + Math.random() * 0.06,
+      amplitude: 2 + Math.random() * 4,
+      phase: Math.random() * Math.PI * 2,
+      baseY: bird.position.y,
+      respawnX: 60 + Math.random() * 20,
+      startX: -60 - Math.random() * 20,
+    };
+    scene.add(bird);
+    birds.push(bird);
+  }
+}
+
+// ══════════════════════════════════════
+// Ground + Knight + Beam (same as v2)
+// ══════════════════════════════════════
+const groundGeo = new THREE.PlaneGeometry(200, 120, 100, 60);
+const gp = groundGeo.attributes.position;
+for (let i=0; i<gp.count; i++) {
+  const x=gp.getX(i), y=gp.getY(i);
+  gp.setZ(i, Math.sin(x*0.03)*0.4 + Math.sin(y*0.04)*0.3 + Math.cos(x*0.06+y*0.05)*0.2);
+}
+groundGeo.computeVertexNormals();
+const groundMat = new THREE.MeshStandardMaterial({ color:'#1a1a10', roughness:0.95, metalness:0, flatShading:true });
+const ground = new THREE.Mesh(groundGeo, groundMat);
+ground.rotation.x = -Math.PI/2;
+ground.position.set(0, -17, -30);
+scene.add(ground);
+
+const wetGeo = new THREE.PlaneGeometry(200, 120);
+const wetMat = new THREE.MeshBasicMaterial({ color:'#000', transparent:true, opacity:0, depthTest:true, depthWrite:false });
+const wetPlane = new THREE.Mesh(wetGeo, wetMat);
+wetPlane.rotation.x = -Math.PI/2;
+wetPlane.position.set(0, -16.9, -30);
+scene.add(wetPlane);
+
+const knightGroup = new THREE.Group();
+const bodyGeo = new THREE.CylinderGeometry(0.25, 0.35, 2.2, 8);
+const bodyMat = new THREE.MeshStandardMaterial({ color:'#111', roughness:0.7, metalness:0.3 });
+knightGroup.add(new THREE.Mesh(bodyGeo, bodyMat)).position.y = 1.1;
+knightGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 6), bodyMat)).position.y = 2.4;
+const capeGeo = new THREE.PlaneGeometry(0.6, 4.5, 4, 12);
+const capeMat = new THREE.MeshStandardMaterial({ color:'#1a1a1a', roughness:1, side:THREE.DoubleSide });
+const cape = new THREE.Mesh(capeGeo, capeMat);
+cape.position.set(0, 0.2, 0.4); cape.rotation.x = 0.15;
+knightGroup.add(cape);
+const bladeMat2 = new THREE.MeshStandardMaterial({ color:'#2a2a2a', roughness:0.4, metalness:0.7 });
+const blade = new THREE.Mesh(new THREE.BoxGeometry(0.08, 4, 0.06), bladeMat2);
+blade.position.set(0.5, 0.3, -0.1);
+knightGroup.add(blade);
+const guard = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.12), bladeMat2);
+guard.position.set(0.5, 2.2, -0.1);
+knightGroup.add(guard);
+knightGroup.scale.set(0.1, 0.1, 0.1);
+knightGroup.position.set(-W*0.035, -14.5, -35);
+scene.add(knightGroup);
+
+const beamGeo = new THREE.CylinderGeometry(0.3, 8, 180, 16, 1, true);
+const beamMat = new THREE.MeshBasicMaterial({ color:'#ffddaa', transparent:true, opacity:0, depthWrite:false, side:THREE.DoubleSide });
+const beam = new THREE.Mesh(beamGeo, beamMat);
+beam.position.copy(knightGroup.position);
+beam.position.y += 90;
+scene.add(beam);
+
+const ambient = new THREE.AmbientLight('#554433', 0.5);
+scene.add(ambient);
+const sun = new THREE.DirectionalLight('#ffccaa', 2.0);
+sun.position.set(80, 60, -40);
+scene.add(sun);
+
+let pts = null;
+function makeParticles(cfg) {
+  if (pts) { scene.remove(pts); pts.geometry.dispose(); pts.material.dispose(); }
+  const g = new THREE.BufferGeometry();
+  const arr = new Float32Array(cfg.count*3);
+  for (let i=0; i<cfg.count; i++) {
+    arr[i*3] = (Math.random()-0.5)*140;
+    arr[i*3+1] = Math.random()*60 - 10;
+    arr[i*3+2] = Math.random()*200 - 130;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(arr,3));
+  const m = new THREE.PointsMaterial({ color:cfg.color, size:cfg.size, transparent:true, opacity:cfg.opacity, depthWrite:false, blending:THREE.AdditiveBlending });
+  pts = new THREE.Points(g, m);
+  scene.add(pts);
+  return cfg;
+}
+let partCfg = SCENES[0].particles;
+scene.fog = new THREE.FogExp2('#d4a06a', 0.00006);
+
+// ══════════════════════════════════════
+// State
+// ══════════════════════════════════════
+let cur = 0, playing = false, timer = null, time = 0, rec = null, recChunks = [];
+
+function applyScene(i) {
+  const s = SCENES[i];
+  // Clouds
+  createCloudLayers(s.cloudColor, s.cloudOpacity);
+  // Glow — regenerate radial gradient texture per scene
+  const glowAlpha = s.glowColor.slice(1); // hex without #
+  glowTex = createGlowTexture(`#${glowAlpha}cc`, `#${glowAlpha}00`, 512);
+  glowTex2 = createGlowTexture(`#${glowAlpha}66`, `#${glowAlpha}00`, 512);
+  glowMat.map = glowTex;
+  glowMat.opacity = s.glowOpacity;
+  glow2Mat.map = glowTex2;
+  glow2Mat.opacity = s.glowOpacity * 0.35;
+  // Birds
+  spawnBirds(s.birdCount, s.birdColor);
+  // Shimmer
+  shimmerMat.uniforms.uColor.value.set(s.glowColor);
+  shimmerMat.uniforms.uIntensity.value = s.glowPulse;
+  // Particles
+  partCfg = s.particles;
+  makeParticles(s.particles);
+  // Fog
+  scene.fog = new THREE.FogExp2(s.fogColor, s.fogDensity);
+  // Ground
+  groundMat.color.set(new THREE.Color('#1a1a10').multiplyScalar(1 - s.groundDarken));
+  wetMat.opacity = s.wetGround;
+  beamMat.opacity = s.beamOpacity;
+  // BG
+  bgMat.map = SCENES[i].texture;
+  bgMat.needsUpdate = true;
+  // UI
+  document.querySelectorAll('#ui button[data-scene]').forEach(b => b.classList.toggle('active', +b.dataset.scene===i));
+  cur = i;
+}
+
+// ══════════════════════════════════════
+// Image Loading
+// ══════════════════════════════════════
+function loadImage(path) {
+  return new Promise((resolve, reject) => {
+    bgTex.load(path,
+      tex => { tex.colorSpace=THREE.SRGBColorSpace; tex.minFilter=THREE.LinearFilter; tex.magFilter=THREE.LinearFilter; resolve(tex); },
+      undefined,
+      () => reject(new Error(path))
+    );
+  });
+}
+
+// ══════════════════════════════════════
+// Animation Loop
+// ══════════════════════════════════════
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.016;
+
+  const s = SCENES[cur];
+
+  // ── Cloud drift (LEFT = knight walks RIGHT, world flows past) ──
+  cloudLayers.forEach(l => {
+    l.mesh.position.x -= s.cloudSpeed * l.speedMul * 0.12;
+    if (l.mesh.position.x < -80) l.mesh.position.x = 80;
+  });
+
+  // ── BG subtle drift left (sky moves with clouds) ──
+  bgPlane.position.x -= s.cloudSpeed * 0.01;
+  if (bgPlane.position.x < -3) bgPlane.position.x = 3;
+
+  // ── Glow pulse (texture handles radial falloff, opacity handles breathing) ──
+  const pulse = 1 + Math.sin(time * 0.7) * s.glowPulse * 2.5;
+  glowMat.opacity = s.glowOpacity * pulse;
+  glow2Mat.opacity = s.glowOpacity * 0.35 * pulse;
+  glowDisc.scale.setScalar(1 + Math.sin(time * 0.5) * 0.03);
+
+  // ── Light shimmer ──
+  shimmerMat.uniforms.uTime.value = time;
+
+  // ── Birds (fly LEFT, consistent with sky drift) ──
+  birds.forEach(b => {
+    b.position.x -= b.userData.speed;
+    b.position.y = b.userData.baseY + Math.sin(time * 1.3 + b.userData.phase) * b.userData.amplitude;
+    // Billboard: always face camera
+    b.lookAt(camera.position.x, b.position.y, camera.position.z);
+    // Respawn when off left edge
+    if (b.position.x < b.userData.startX) {
+      b.position.x = b.userData.respawnX;
+      b.position.y = b.userData.baseY + Math.random() * 8;
+    }
+  });
+
+  // ── Knight ──
+  knightGroup.position.y = -14.5 + Math.sin(time*1.3)*0.2;
+  knightGroup.position.z = -35 + Math.sin(time*0.6)*0.3;
+  cape.rotation.z = Math.sin(time*1.5)*0.1;
+  cape.rotation.x = 0.15 + Math.sin(time*1.1)*0.08;
+  blade.rotation.z = -0.15 + Math.sin(time*0.8)*0.04;
+
+  // ── Beam ──
+  beam.position.x = knightGroup.position.x;
+  beam.position.z = knightGroup.position.z;
+  beam.position.y = knightGroup.position.y + 100;
+
+  // ── Particles ──
+  if (pts) {
+    const arr = pts.geometry.attributes.position;
+    for (let i=0; i<arr.count; i++) {
+      arr.array[i*3+1] += (partCfg.speed + Math.random()*0.02) * 0.06;
+      arr.array[i*3] += (Math.random()-0.5)*0.04;
+      if (arr.array[i*3+1] > 50) arr.array[i*3+1] = -15;
+    }
+    arr.needsUpdate = true;
+  }
+
+  renderer.render(scene, camera);
+}
+
+// ══════════════════════════════════════
+// Export
+// ══════════════════════════════════════
+function capture() {
+  renderer.render(scene, camera);
+  const a = document.createElement('a');
+  a.download = `knight-${SCENES[cur].name}-4k.png`;
+  a.href = renderer.domElement.toDataURL('image/png');
+  a.click();
+  showToast('📸 4K PNG 已保存');
+}
+async function toggleRec() {
+  const btn = document.getElementById('btn-rec');
+  if (rec) { rec.stop(); rec=null; btn.textContent='⏺ 录4K'; return; }
+  const stream = renderer.domElement.captureStream(24);
+  rec = new MediaRecorder(stream, { mimeType:MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm', videoBitsPerSecond:50000000 });
+  rec.ondataavailable = e => { if(e.data.size>0) recChunks.push(e.data); };
+  rec.onstop = () => {
+    const blob = new Blob(recChunks, {type:'video/webm'});
+    const a = document.createElement('a');
+    a.download = `knight-${SCENES[cur].name}-4k.webm`;
+    a.href = URL.createObjectURL(blob);
+    a.click();
+    recChunks=[];
+    showToast('🎬 4K 视频已保存');
+  };
+  rec.start();
+  btn.textContent='⏹ 停止';
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.opacity = '1';
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.style.opacity='0', 1800);
+}
+function togglePlay() {
+  playing=!playing;
+  document.getElementById('btn-play').textContent = playing ? '⏸ 停止' : '▶ 自动播放';
+  if (playing) { let step=0; applyScene(0); timer=setInterval(()=>{ step=(step+1)%4; applyScene(step); }, 5000); }
+  else { clearInterval(timer); }
+}
+
+// ══════════════════════════════════════
+// Init
+// ══════════════════════════════════════
+const loadBar = document.getElementById('load-bar');
+const loadText = document.getElementById('load-text');
+async function init() {
+  for (let i=0; i<4; i++) {
+    loadText.textContent = `加载 ${SCENES[i].name} 场景图...`;
+    try { SCENES[i].texture = await loadImage(IMG_PATHS[i]); }
+    catch(e) { SCENES[i].texture = SCENES[0]?.texture || null; }
+    loadBar.style.width = ((i+1)/4*100)+'%';
+  }
+  document.getElementById('loading').style.display = 'none';
+  applyScene(0);
+  animate();
+}
+init();
+
+// Events
+document.querySelectorAll('#ui button[data-scene]').forEach(b => {
+  b.addEventListener('click', () => { if(playing)togglePlay(); applyScene(+b.dataset.scene); });
+});
+document.getElementById('btn-play').addEventListener('click', togglePlay);
+document.getElementById('btn-shot').addEventListener('click', capture);
+document.getElementById('btn-rec').addEventListener('click', toggleRec);
+window.addEventListener('keydown', e => {
+  if (e.key>='1'&&e.key<='4') { if(playing)togglePlay(); applyScene(+e.key-1); }
+  if (e.key===' ') { e.preventDefault(); togglePlay(); }
+  if (e.key==='s'||e.key==='S') capture();
+  if (e.key==='r'||e.key==='R') toggleRec();
+});
+</script>
+</body>
+</html>

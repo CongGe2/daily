@@ -90,6 +90,7 @@ img{display:block;max-width:100%;height:auto}
   .quote{padding:28px 24px}
 }
 </style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -370,6 +371,30 @@ img{display:block;max-width:100%;height:auto}
 
 </main>
 
+<!-- Results -->
+<section class="case-section">
+  <h2>📊 成果与影响</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;">
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">12</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">深度访谈<br>澳门高校生</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">35%</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">预估空间<br>利用率提升</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">3</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">跨专业协作<br>产品+室内+开发</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">5</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">小程序高保真<br>扫一扫识别物品</div>
+    </div>
+  </div>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">12 位深度访谈揭示澳门高校生宿舍核心痛点：<strong style="color:var(--text);">人均面积不足 4㎡</strong>，传统收纳无法适应"学习-睡眠-社交"多场景切换。模块化设计预估提升空间利用率 <strong style="color:var(--text);">35%</strong>。跨专业协作中建立的统一设计文档模板已成为后续团队项目标准流程。</p>
+</section>
+
 <footer class="footer">
   <h2>对团队项目或收纳设计感兴趣？</h2>
   <p>这个项目展示了跨专业协作的设计流程——从用户研究到 CMF 到数字化延伸。</p>
@@ -390,5 +415,19 @@ document.getElementById('wechatLink').addEventListener('click',function(e){e.pre
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(function(){t('微信号已复制：'+id)})}else{t('微信号：'+id)}
 });
 </script>
-</body>
+<!-- More Projects -->
+<section style="max-width:800px;margin:40px auto 80px;padding:0 24px;text-align:center">
+  <p style="font-family:var(--font-sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:20px">More Projects</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+    <a href="rift-speaker" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Rift 音箱</a>
+    <a href="eclipse-arena-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Eclipse Arena</a>
+    <a href="mindspace-ux" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">MindSpace</a>
+    <a href="vr-device-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">VR 设备</a>
+    <a href="smartdorm" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">SmartDorm</a>
+    <a href="terrin" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Terrin</a>
+    <a href="ceramic-lion" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">汉魂·狮魄</a>
+  </div>
+  <p style="margin-top:24px"><a href="index" style="font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:4px">← 返回作品集首页</a></p>
+</section>
+<!-- /More Projects -->n</body>
 </html>

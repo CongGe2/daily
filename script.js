@@ -166,4 +166,26 @@
     }
   }
 
+  // ── Scroll reveal ──
+  const revealEls = document.querySelectorAll('.reveal-section, .reveal');
+  if (revealEls.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  }
+
+  // ── Nav scroll shadow ──
+  const caseNav = document.querySelector('.case-nav');
+  if (caseNav) {
+    window.addEventListener('scroll', () => {
+      caseNav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+  }
+
 })();

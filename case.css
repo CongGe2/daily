@@ -1,0 +1,139 @@
+/* ========================================
+   Case Study Shared Styles · 金承旭
+   ======================================== */
+
+/* ── Nav (shared across all case pages) ── */
+.case-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 14px 0; background: rgba(250,250,248,.88);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 var(--border-light);
+  transition: box-shadow 0.3s;
+}
+.case-nav.scrolled { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.case-nav-inner {
+  max-width: var(--max-width, 1160px); margin: 0 auto;
+  padding: 0 24px; display: flex; justify-content: space-between; align-items: center;
+}
+.case-nav-back {
+  font-size: 13px; color: var(--text-secondary);
+  transition: color 0.2s, transform 0.2s; display: inline-flex; align-items: center; gap: 6px;
+}
+.case-nav-back:hover { color: var(--text); transform: translateX(-3px); }
+.case-nav-title { font-size: 12px; color: var(--text-tertiary); font-family: var(--font-serif); }
+
+/* ── Hero ── */
+.case-hero {
+  min-height: 50vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 140px 24px 80px;
+}
+.case-hero h1 {
+  font-family: var(--font-serif); font-size: clamp(32px,5vw,52px);
+  font-weight: 700; margin-bottom: 8px; letter-spacing: 0.02em;
+}
+.case-hero .subtitle {
+  font-size: 15px; letter-spacing: 0.15em; margin-bottom: 24px; opacity: 0.5;
+}
+.case-hero .desc {
+  font-size: 15px; max-width: 560px; margin: 0 auto; line-height: 1.8; opacity: 0.55;
+}
+.case-hero-tags {
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px;
+}
+.case-hero-tags span {
+  padding: 6px 16px; border: 1px solid currentColor; border-radius: 2px;
+  font-size: 11px; opacity: 0.45; letter-spacing: 0.05em; transition: all 0.2s;
+}
+.case-hero-tags span:hover { opacity: 0.75; }
+
+/* ── Content sections ── */
+.case-section {
+  max-width: 760px; margin: 0 auto; padding: 80px clamp(24px,5vw,64px);
+}
+.case-section h2 {
+  font-family: var(--font-serif); font-size: 26px; font-weight: 600;
+  margin-bottom: 20px; letter-spacing: -0.01em;
+}
+.case-section h3 { font-size: 17px; font-weight: 600; margin: 36px 0 12px; }
+.case-section p { font-size: 15px; line-height: 2; color: var(--text-secondary); margin-bottom: 16px; }
+.case-section ul { margin: 16px 0 24px 20px; }
+.case-section li { font-size: 14px; line-height: 2.2; color: var(--text-secondary); }
+
+/* ── Highlight box ── */
+.case-highlight {
+  background: var(--bg-alt); border: 1px solid var(--border-light);
+  padding: 28px 32px; margin: 28px 0; border-radius: 2px;
+  transition: border-color 0.3s;
+}
+.case-highlight:hover { border-color: var(--border); }
+.case-highlight h3 { margin-top: 0; }
+
+/* ── Stat grid ── */
+.case-stats {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 28px 0;
+}
+.case-stat {
+  text-align: center; padding: 24px 14px; background: var(--bg-alt);
+  border-radius: 2px; transition: transform 0.2s, box-shadow 0.2s;
+}
+.case-stat:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.case-stat-num { font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+.case-stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+/* ── Reflection ── */
+.case-reflection {
+  font-size: 13px; color: var(--text-tertiary); font-style: italic;
+  line-height: 1.8; padding: 18px 20px;
+  background: rgba(176,146,110,.04); border-left: 2px solid var(--accent-soft);
+  border-radius: 0 2px 2px 0; margin: 28px 0;
+}
+
+/* ── More Projects (cross-links) ── */
+.more-projects {
+  max-width: 800px; margin: 40px auto 80px; padding: 0 24px; text-align: center;
+}
+.more-projects-label {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-tertiary); margin-bottom: 20px;
+}
+.more-projects-links {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+}
+.more-projects-links a {
+  padding: 8px 18px; border: 1px solid var(--border); border-radius: 2px;
+  font-size: 13px; color: var(--text-secondary); text-decoration: none;
+  transition: all 0.25s;
+}
+.more-projects-links a:hover {
+  border-color: var(--accent-soft); color: var(--accent);
+  background: var(--accent-dim); transform: translateY(-1px);
+}
+.more-projects-back {
+  margin-top: 24px; font-size: 13px; color: var(--accent);
+  text-decoration: underline; text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
+.more-projects-back:hover { opacity: 0.7; }
+
+/* ── Scroll reveal ── */
+.reveal-section {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22,0.61,0.36,1),
+              transform 0.8s cubic-bezier(0.22,0.61,0.36,1);
+}
+.reveal-section.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .case-stats { grid-template-columns: repeat(2,1fr); }
+  .case-section { padding: 48px 20px; }
+  .case-section h2 { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .case-hero { padding: 110px 20px 60px; min-height: 40vh; }
+  .case-stats { grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .case-stat { padding: 16px 10px; }
+  .case-stat-num { font-size: 22px; }
+  .more-projects-links { gap: 6px; }
+  .more-projects-links a { padding: 6px 12px; font-size: 12px; }
+}

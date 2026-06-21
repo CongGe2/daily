@@ -1517,4 +1517,49 @@ h1, h2, h3, h4 {
 @media (max-width: 1024px) { .methodology-flow { grid-template-columns: repeat(3, 1fr); } .method-arrow:nth-child(6), .method-arrow:nth-child(12) { display: none; } }
 @media (max-width: 768px) { .methodology-flow { grid-template-columns: 1fr 1fr; } .method-arrow { display: none; } }
 @media (max-width: 480px) { .methodology-flow { grid-template-columns: 1fr; } }
-/* v11 */
+
+/* ── Mobile Responsiveness ── */
+@media (max-width: 768px) {
+  .nav-links { gap: 16px; font-size: 12px; }
+  .hero { padding: 100px 20px 60px; }
+  .hero h1 { font-size: 32px; }
+  .hero-subtitle { font-size: 14px; }
+  .hero-cta { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .hero-cta a { margin-left: 0 !important; }
+  .section-heading.large { font-size: 26px; }
+  .section { padding: 60px 0; }
+  .about-me-grid { grid-template-columns: 1fr; text-align: center; }
+  .about-me-stats { justify-content: center; }
+  .about-grid { grid-template-columns: 1fr; }
+  .project-card { padding: 24px; }
+  .project-body { flex-direction: column; }
+  .project-image { flex: 0 0 auto; width: 100%; }
+  .project-filter { flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .filter-btn { font-size: 12px; padding: 6px 14px; }
+  .eclipse-arena-cover-logo { font-size: 14px; }
+  .project-metrics { gap: 10px; }
+  .project-metric { min-width: 56px; padding: 6px 8px; }
+  .project-metric-num { font-size: 16px; }
+  .footer { padding: 60px 24px; }
+}
+
+@media (max-width: 480px) {
+  .nav-inner { padding: 0 16px; }
+  .hero h1 { font-size: 28px; }
+  .hero-desc { font-size: 14px; }
+  .section-heading { font-size: 22px; }
+  .project-card { padding: 16px; }
+  .project-title { font-size: 18px; }
+  .project-desc { font-size: 13px; }
+  .project-process { grid-template-columns: 1fr; }
+  .project-filter { gap: 6px; }
+  .filter-btn { font-size: 11px; padding: 5px 10px; }
+  .about-me-stats { flex-wrap: wrap; gap: 12px; }
+  .stat-item { min-width: 40%; }
+  .case-section { padding: 40px 16px; }
+  .case-section h2 { font-size: 22px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .ea-showcase { gap: 24px; }
+}
+
+/* v12 */

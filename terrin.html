@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terrin 陶瓷首饰品牌官网 — UI设计案例 | 金承旭</title>
+  <meta name="description" content="联合创立独立陶瓷首饰品牌，主导官网UI设计与前端MVP落地。黑白植物影像×灰度到彩色渐变交互×完整设计系统。Vibe Coding 独立完成前端。">
+  <meta property="og:title" content="Terrin 陶瓷首饰 · 品牌UI设计">
+  <meta property="og:description" content="联合创立品牌，从0到1的官网设计与前端落地。">
+  <meta property="og:image" content="images/optimized/terrin-hero-thumb.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="case.css">
+  <style>
+    body { background: var(--bg); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 14px 0; background: rgba(250,250,248,.9); backdrop-filter: blur(16px); box-shadow: 0 1px 0 var(--border-light); }
+    .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-back { font-size: 13px; color: var(--text-secondary); transition: color .2s; }
+    .nav-back:hover { color: var(--text); }
+
+    .case-hero {
+      min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center;
+      background: linear-gradient(180deg, #1a1a16 0%, #292820 40%, #2e2d24 70%, var(--bg) 100%);
+      color: #e8e6dc; padding: 140px 24px 80px;
+    }
+    .case-hero h1 { font-family: var(--font-serif); font-size: clamp(36px,6vw,56px); font-weight: 700; margin-bottom: 8px; color: #f0ede0; }
+    .case-hero .subtitle { font-size: 16px; color: rgba(240,237,224,.5); letter-spacing: .2em; margin-bottom: 24px; }
+    .case-hero .desc { font-size: 15px; color: rgba(232,230,220,.55); max-width: 560px; margin: 0 auto; line-height: 1.8; }
+    .case-hero .tags { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .case-hero .tags span { padding: 6px 16px; border: 1px solid rgba(240,237,224,.15); border-radius: 2px; font-size: 11px; color: rgba(240,237,224,.5); letter-spacing: .05em; }
+
+    .case-section { max-width: 760px; margin: 0 auto; padding: 80px clamp(24px,5vw,64px); }
+    .case-section h2 { font-family: var(--font-serif); font-size: 26px; font-weight: 600; margin-bottom: 20px; }
+    .case-section h3 { font-size: 17px; font-weight: 600; margin: 36px 0 12px; }
+    .case-section p { font-size: 15px; line-height: 2; color: var(--text-secondary); margin-bottom: 16px; }
+    .case-section ul { margin: 16px 0 24px 20px; }
+    .case-section li { font-size: 14px; line-height: 2.2; color: var(--text-secondary); }
+
+    .highlight { background: var(--bg-alt); border: 1px solid var(--border-light); padding: 28px 32px; margin: 28px 0; border-radius: 2px; }
+    .highlight h3 { margin-top: 0; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 28px 0; }
+    .stat { text-align: center; padding: 20px 12px; background: var(--bg-alt); border-radius: 2px; }
+    .stat-num { font-size: 26px; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+    .process-steps { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+    .process-step { flex: 1; min-width: 120px; text-align: center; padding: 20px 12px; background: var(--bg-alt); border-radius: 2px; }
+    .process-step .icon { font-size: 24px; margin-bottom: 8px; }
+    .process-step h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .process-step p { font-size: 11px; color: var(--text-tertiary); line-height: 1.5; }
+
+    .reflection { font-size: 13px; color: var(--text-tertiary); font-style: italic; line-height: 1.8; padding: 18px 20px; background: rgba(176,146,110,.04); border-left: 2px solid var(--accent-soft); border-radius: 0 2px 2px 0; margin: 28px 0; }
+
+    @media (max-width: 600px) {
+      .stat-grid { grid-template-columns: repeat(2,1fr); }
+      .process-steps { flex-direction: column; }
+    }
+  </style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a href="index" class="nav-back">← 返回作品集</a>
+    <span style="font-size:12px;color:var(--text-tertiary)">Terrin</span>
+  </div>
+</div>
+
+<!-- Hero -->
+<section class="case-hero">
+  <div>
+    <h1>Terrin</h1>
+    <p class="subtitle">陶 瓷 首 饰 品 牌 官 网</p>
+    <p class="desc">与同学联合创立的独立品牌。我主导全部 UI 设计与前端 MVP 落地——从品牌视觉语言到像素级交互实现。</p>
+    <div class="tags">
+      <span>品牌设计</span><span>UI设计</span><span>设计系统</span><span>前端开发</span><span>Vibe Coding</span>
+    </div>
+  </div>
+</section>
+
+<!-- Overview -->
+<section class="case-section">
+  <h2>项目背景</h2>
+  <p>
+    Terrin 是一个以"陶瓷与自然"为核心的独立首饰品牌。在几乎没有启动资金的情况下，我和一位同学联合创立了这个品牌——她负责陶瓷制作与产品摄影，我负责品牌官网的 UI 设计与前端开发。
+  </p>
+  <p>
+    项目的核心挑战是：<strong>如何在低成本前提下，用设计和代码营造出品牌质感？</strong> 答案是一套精心设计的灰度交互系统。
+  </p>
+
+  <h3>设计目标</h3>
+  <ul>
+    <li>建立统一的品牌视觉语言——logo、配色、字体、图像风格</li>
+    <li>设计独特的浏览交互——黑白到彩色的渐变过渡，制造"发现感"</li>
+    <li>独立完成前端 MVP——从设计稿到可部署的网站，一人完成</li>
+    <li>用 Vibe Coding 方式在极短时间内（~1周）将设计变为可访问的真实产品</li>
+  </ul>
+</section>
+
+<!-- Design System -->
+<section class="case-section">
+  <h2>设计系统</h2>
+
+  <h3>视觉语言</h3>
+  <p>
+    品牌主色调取陶瓷本身的"素胚暖灰"——不是纯白，而是微微泛黄的象牙白。字体选用有手工感的衬线体，配合大面积的留白和细腻的间距，营造手工品牌应有的安静气质。
+  </p>
+  <ul>
+    <li><strong>色彩</strong> — 象牙白 #faf8f2 · 素胚灰 #e8e4dc · 泥土棕 #8b7355 · 墨黑 #1a1a16</li>
+    <li><strong>字体</strong> — Noto Serif SC（标题）+ Inter（正文），手工感与可读性平衡</li>
+    <li><strong>间距</strong> — 8px 基准网格，大面积留白强化"呼吸感"</li>
+    <li><strong>图像</strong> — 黑白植物摄影为主视觉，商品图默认灰度处理</li>
+  </ul>
+
+  <h3>核心交互：灰度 → 彩色</h3>
+  <p>
+    商品展示区所有图片默认以 <code>filter: grayscale(100%)</code> 渲染为黑白。用户 hover 时，图片通过 CSS transition 在 0.4s 内平滑过渡至原始彩色——这种"用手拂去灰尘"的交互隐喻，恰好呼应了陶瓷从泥土到成品的转化过程。
+  </p>
+  <p>
+    这个交互设计不是炫技——它解决了两个实际问题：① 保持页面整体统一的色调氛围 ② 让用户在浏览时产生"探索感"，每次 hover 都是一次小惊喜。
+  </p>
+</section>
+
+<!-- Process -->
+<section class="case-section">
+  <h2>设计到落地流程</h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="icon">🎯</div>
+      <h4>品牌定位</h4>
+      <p>与合伙人定义品牌调性、目标用户、差异化策略</p>
+    </div>
+    <div class="process-step">
+      <div class="icon">🎨</div>
+      <h4>设计系统</h4>
+      <p>色彩 Token · 字体层级 · 组件库 · 交互规范</p>
+    </div>
+    <div class="process-step">
+      <div class="icon">💻</div>
+      <h4>Vibe Coding</h4>
+      <p>独立完成 HTML/CSS/JS，AI 辅助加速开发</p>
+    </div>
+    <div class="process-step">
+      <div class="icon">🚀</div>
+      <h4>部署上线</h4>
+      <p>真实 URL 上线，可被用户访问</p>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🛠️ 技术实现</h3>
+    <p style="margin-bottom:0;">HTML · CSS · JavaScript · 响应式适配 · CSS filter 动画 · 静态部署</p>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="case-section">
+  <h2>📊 成果与影响</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="stat-num">24</div><div class="stat-label">商品展示页</div></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">人独立开发前端</div></div>
+    <div class="stat"><div class="stat-num">~1 周</div><div class="stat-label">从设计到上线</div></div>
+    <div class="stat"><div class="stat-num">~800</div><div class="stat-label">行手写代码</div></div>
+  </div>
+  <p>
+    通过 Vibe Coding + AI 辅助，<strong>从设计定稿到可访问的线上官网仅用约 1 周</strong>。灰度到彩色的交互设计成为品牌独特的记忆点——多位访客反馈"第一次见到这种效果，很有手工品牌的温度感"。项目证明了设计师掌握前端能力可以在 <strong>零开发预算</strong> 的情况下独立将品牌落地。
+  </p>
+
+  <h3>反思</h3>
+  <div class="reflection">
+    💡 品牌电商网站应考虑移动端优先，首版桌面端为主的设计导致后续移动适配成本偏高。如果重来，会先设计移动端布局再扩展到桌面。另外，应当建立更系统化的组件文档——Vibe Coding 快速但缺少可持续维护的设计-代码映射。
+  </div>
+</section>
+
+<div style="text-align:center;padding:40px 24px 80px">
+  <a href="index" style="display:inline-block;padding:12px 28px;background:var(--text);color:#fff;border-radius:2px;font-size:15px;text-decoration:none;">← 返回作品集</a>
+</div>
+
+<!-- More Projects -->
+<section style="max-width:800px;margin:40px auto 80px;padding:0 24px;text-align:center">
+  <p style="font-family:var(--font-sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:20px">More Projects</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+    <a href="rift-speaker" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Rift 音箱</a>
+    <a href="eclipse-arena-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Eclipse Arena</a>
+    <a href="mindspace-ux" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">MindSpace</a>
+    <a href="vr-device-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">VR 设备</a>
+    <a href="smartdorm" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">SmartDorm</a>
+    <a href="terrin" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Terrin</a>
+    <a href="ceramic-lion" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">汉魂·狮魄</a>
+  </div>
+  <p style="margin-top:24px"><a href="index" style="font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:4px">← 返回作品集首页</a></p>
+</section>
+<!-- /More Projects -->n</body>
+</html>

@@ -99,6 +99,7 @@ img{display:block;max-width:100%;height:auto}
   .quote{padding:28px 24px}
 }
 </style>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -276,6 +277,30 @@ img{display:block;max-width:100%;height:auto}
 
 </main>
 
+<!-- Results -->
+<section class="case-section">
+  <h2>📊 成果与影响</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0;">
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">6</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">AI 概念组<br>2 天完成探索</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">40+</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">Prompt 迭代<br>精选 12 组</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">80+</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">AI 生成素材<br>累计 320MB</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">4</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">高保真屏<br>Figma 精修</div>
+    </div>
+  </div>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">传统 UX 流程中"视觉方向探索"通常需要 1-2 周 moodboard 收集；SD 工作流将这一阶段压缩至 <strong style="color:var(--text);">2 天 6 组 80+ 张概念图</strong>。设计师精力从"找参考"转移到"做判断"，<strong style="color:var(--text);">效率提升约 5×</strong>。同时明确界定了 AI 在 UX 流程中的最佳使用点与边界。</p>
+</section>
+
 <footer class="footer">
   <h2>对 AI + UX 设计感兴趣？</h2>
   <p>如果你觉得这种 AI 驱动的设计流程有前景，我们可以聊聊更多可能。</p>
@@ -296,5 +321,19 @@ document.getElementById('wechatLink').addEventListener('click',function(e){e.pre
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(id).then(function(){t('微信号已复制：'+id)})}else{t('微信号：'+id)}
 });
 </script>
-</body>
+<!-- More Projects -->
+<section style="max-width:800px;margin:40px auto 80px;padding:0 24px;text-align:center">
+  <p style="font-family:var(--font-sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:20px">More Projects</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">
+    <a href="rift-speaker" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Rift 音箱</a>
+    <a href="eclipse-arena-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Eclipse Arena</a>
+    <a href="mindspace-ux" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">MindSpace</a>
+    <a href="vr-device-case" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">VR 设备</a>
+    <a href="smartdorm" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">SmartDorm</a>
+    <a href="terrin" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">Terrin</a>
+    <a href="ceramic-lion" style="padding:8px 18px;border:1px solid var(--border);border-radius:2px;font-size:13px;color:var(--text-secondary);transition:all .2s">汉魂·狮魄</a>
+  </div>
+  <p style="margin-top:24px"><a href="index" style="font-size:13px;color:var(--accent);text-decoration:underline;text-underline-offset:4px">← 返回作品集首页</a></p>
+</section>
+<!-- /More Projects -->n</body>
 </html>
