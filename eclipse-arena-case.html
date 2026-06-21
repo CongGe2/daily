@@ -89,32 +89,30 @@
       line-height: 2;
       color: var(--text-secondary);
     }
-    .screen-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
+    .ea-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
       margin: 32px 0;
     }
-    .screen-card {
-      background: var(--card);
+    .ea-screen {
+      margin: 0;
+    }
+    .ea-screen img {
+      width: 100%;
       border: 1px solid var(--border);
       border-radius: 2px;
-      padding: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .ea-screen figcaption {
+      font-size: 13px;
+      color: var(--text-secondary);
       text-align: center;
-    }
-    .screen-card .icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-    .screen-card h4 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .screen-card p {
-      font-size: 12px;
-      color: var(--text-tertiary);
+      margin-top: 10px;
       line-height: 1.6;
+    }
+    .ea-screen figcaption strong {
+      color: var(--text);
     }
     .highlight-box {
       background: var(--bg-alt);
@@ -207,37 +205,31 @@
 <!-- Screens -->
 <section class="case-section">
   <h2>6大核心界面</h2>
-  <div class="screen-grid">
-    <div class="screen-card">
-      <div class="icon">🏠</div>
-      <h4>主菜单</h4>
-      <p>Canvas粒子背景 · Logo色散动画 · 悬停光晕菜单</p>
-    </div>
-    <div class="screen-card">
-      <div class="icon">⚔️</div>
-      <h4>角色选择</h4>
-      <p>8位AI生成英雄 · Spring 3D卡片 · 属性动画条</p>
-    </div>
-    <div class="screen-card">
-      <div class="icon">🎯</div>
-      <h4>战斗HUD</h4>
-      <p>实时血蓝条 · 技能冷却 · 小地图 · 击杀信息流</p>
-    </div>
-    <div class="screen-card">
-      <div class="icon">🎒</div>
-      <h4>背包系统</h4>
-      <p>40格拖拽网格 · 装备侧栏 · 稀有度光效</p>
-    </div>
-    <div class="screen-card">
-      <div class="icon">🏪</div>
-      <h4>商城</h4>
-      <p>物品卡片 · Spring 3D倾斜 · 购买通知Toast</p>
-    </div>
-    <div class="screen-card">
-      <div class="icon">⚙️</div>
-      <h4>设置面板</h4>
-      <p>4标签页 · 游戏风格滑块/开关 · 键位绑定表</p>
-    </div>
+  <div class="ea-showcase">
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/menu.png" alt="Eclipse Arena 主菜单界面 — Canvas粒子背景 + Logo色散动画" loading="lazy">
+      <figcaption><strong>主菜单</strong> · Canvas粒子背景 · Logo色散动画 · 悬停光晕菜单</figcaption>
+    </figure>
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/characters.png" alt="Eclipse Arena 角色选择界面 — 8位AI生成英雄 Spring 3D卡片" loading="lazy">
+      <figcaption><strong>角色选择</strong> · 8位AI生成英雄 · Spring 3D卡片 · 属性动画条</figcaption>
+    </figure>
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/hud.png" alt="Eclipse Arena 战斗HUD界面 — 实时血蓝条 技能冷却 击杀信息流" loading="lazy">
+      <figcaption><strong>战斗HUD</strong> · 实时血蓝条 · 技能冷却 · 小地图 · 击杀信息流</figcaption>
+    </figure>
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/inventory.png" alt="Eclipse Arena 背包系统界面 — 40格拖拽网格 装备侧栏" loading="lazy">
+      <figcaption><strong>背包系统</strong> · 40格拖拽网格 · 装备侧栏 · 稀有度光效</figcaption>
+    </figure>
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/shop.png" alt="Eclipse Arena 商城界面 — 物品卡片 Spring 3D倾斜 购买通知" loading="lazy">
+      <figcaption><strong>商城</strong> · 物品卡片 · Spring 3D倾斜 · 购买通知Toast</figcaption>
+    </figure>
+    <figure class="ea-screen">
+      <img src="images/eclipse-arena/settings.png" alt="Eclipse Arena 设置面板界面 — 4标签页 游戏风格滑块" loading="lazy">
+      <figcaption><strong>设置面板</strong> · 4标签页 · 游戏风格滑块/开关 · 键位绑定表</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -304,6 +296,19 @@
 <section class="cta-bar">
   <a href="./eclipse-arena/">🎮 进入完整交互原型 →</a>
 </section>
+
+<!-- Footer -->
+<footer style="background:#0a0e1a;padding:48px 24px 32px;text-align:center;color:#8890a8">
+  <p style="font-size:15px;color:#c0c8d8;margin-bottom:24px">对游戏UI设计感兴趣？查看更多作品</p>
+  <div style="display:flex;gap:20px;justify-content:center;margin-bottom:32px">
+    <a href="mailto:1416907076@qq.com" style="color:#00e5ff;font-size:13px;text-decoration:none">📧 发送邮件</a>
+    <span style="color:rgba(255,255,255,.12)">/</span>
+    <a href="index" style="color:#00e5ff;font-size:13px;text-decoration:none">← 返回作品集</a>
+    <span style="color:rgba(255,255,255,.12)">/</span>
+    <a href="https://github.com/congge2" target="_blank" style="color:#00e5ff;font-size:13px;text-decoration:none">🔗 GitHub</a>
+  </div>
+  <p style="font-size:10px;color:rgba(255,255,255,.2)">© 2026 金承旭 JIN CHENGXU · Eclipse Arena UI Design Case Study</p>
+</footer>
 
 </body>
 </html>

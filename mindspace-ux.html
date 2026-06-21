@@ -54,6 +54,9 @@ img{display:block;max-width:100%;height:auto}
 /* Image display */
 .img-full{width:100%;border-radius:2px;border:1px solid var(--border-light);margin:8px 0}
 .img-caption{font-size:11px;color:var(--text-tertiary);text-align:center;margin:12px 0 32px}
+.screen-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.screen-grid-4 img{width:100%;border-radius:2px;border:1px solid var(--border-light)}
+.screen-grid-4 .screen-label{display:block;text-align:center;font-size:10px;color:var(--text-tertiary);margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
 
 /* Grids */
 .col2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -225,8 +228,13 @@ img{display:block;max-width:100%;height:auto}
     <h2 class="sec-title">最终方案 · 4 屏展示</h2>
     <p class="sec-desc">从 AI 生成的数百张素材中精选整合，落地为 4 个核心界面的高保真原型。</p>
 
-    <img src="images/ux/screens.jpg" alt="MindSpace 四屏展示" class="img-full">
-    <p class="img-caption">从左至右：Onboarding（AI渐变背景）· Home（呼吸计时器+分类卡片）· Session（音频播放+AI插图）· Profile（成就与数据）</p>
+    <div class="screen-grid-4">
+      <div><img src="images/ux/mindspace-onboarding.png" alt="MindSpace Onboarding" loading="lazy"><span class="screen-label">Onboarding</span></div>
+      <div><img src="images/ux/mindspace-home.png" alt="MindSpace Home" loading="lazy"><span class="screen-label">Home</span></div>
+      <div><img src="images/ux/mindspace-session.png" alt="MindSpace Session" loading="lazy"><span class="screen-label">Session</span></div>
+      <div><img src="images/ux/mindspace-profile.png" alt="MindSpace Profile" loading="lazy"><span class="screen-label">Profile</span></div>
+    </div>
+    <p class="img-caption">AI 生成的高保真 UI 界面 · 从左至右：Onboarding · Home · Session · Profile</p>
 
     <div class="col2" style="margin-top:32px">
       <div class="card"><h4>Onboarding</h4><p>AI 生成的星云渐变作为全屏背景，传达"进入内心空间"的仪式感。3 屏滑动引导。</p></div>
