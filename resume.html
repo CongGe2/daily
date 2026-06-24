@@ -3,313 +3,418 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>金承旭 · 简历</title>
+  <title>金承旭 · 产品设计师 · 简历</title>
   <meta name="description" content="金承旭 · 产品设计师简历。澳门科技大学产品设计专业，AI原生设计思维，产品设计×UI/UX×三维建模。">
   <meta property="og:title" content="金承旭 · 简历">
   <meta property="og:description" content="产品设计师简历 — 澳门科技大学 · 产品设计×UI/UX×三维建模">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafaf8;
+      --bg: #fdfdfc;
       --text: #1a1a18;
-      --text-secondary: #6e6d6a;
-      --text-tertiary: #a09e9a;
-      --accent: #b0926e;
-      --border: #e4e1dc;
+      --text-secondary: #5c5b57;
+      --text-tertiary: #94928e;
+      --accent: #9b7d5e;
+      --accent-strong: #7d6248;
+      --accent-light: rgba(155,125,94,0.08);
+      --accent-mid: rgba(155,125,94,0.2);
+      --border: #e8e5e0;
+      --border-light: #f0eeea;
       --font-serif: "Noto Serif SC", "STSong", "SimSun", serif;
       --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: var(--font-sans);
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 10.5px;
+      line-height: 1.75;
       color: var(--text);
+      background: #f5f3f0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 0;
       background: white;
-      max-width: 800px;
       margin: 0 auto;
-      padding: 48px 40px;
+      display: grid;
+      grid-template-columns: 62mm 1fr;
     }
+
     @media print {
-      body { padding: 0; font-size: 11px; }
-      .no-print { display: none; }
+      body { background: white; }
+      .page { box-shadow: none; }
+      @page { size: A4; margin: 0; }
+      .no-print { display: none !important; }
     }
-    .header {
+    @media screen {
+      .page { box-shadow: 0 2px 40px rgba(0,0,0,0.08); margin: 16px auto; }
+    }
+
+    /* ── Left Sidebar ── */
+    .sidebar {
+      background: linear-gradient(180deg, #1f1d1a 0%, #2a2722 100%);
+      color: rgba(255,255,255,0.85);
+      padding: 22mm 6mm 16mm 8mm;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .sidebar .name {
+      font-family: var(--font-serif);
+      font-size: 23px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.06em;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .sidebar .title {
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .sidebar .section-title {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 9px;
+      line-height: 1.6;
+      margin-bottom: 4px;
+      color: rgba(255,255,255,0.6);
+    }
+    .sidebar .info-row .label {
+      color: rgba(255,255,255,0.35);
+      min-width: 36px;
+      font-size: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    /* Skill bars */
+    .skill-group { margin-bottom: 10px; }
+    .skill-group .group-name {
+      font-size: 8px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    .skill-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+    .skill-row .skill-name {
+      font-size: 9px;
+      color: rgba(255,255,255,0.7);
+      min-width: 65px;
+    }
+    .skill-row .skill-bar {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .skill-row .skill-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .lang-item {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 40px;
-      padding-bottom: 28px;
-      border-bottom: 1.5px solid var(--text);
+      font-size: 9px;
+      margin-bottom: 3px;
     }
-    .header h1 {
+    .lang-item .lang-level { color: rgba(255,255,255,0.4); }
+
+    /* ── Right Main Content ── */
+    .main {
+      padding: 22mm 10mm 16mm 10mm;
+    }
+    .main .section-title {
       font-family: var(--font-serif);
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-    .header .subtitle {
       font-size: 14px;
-      color: var(--text-secondary);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid var(--accent-mid);
+      letter-spacing: 0.03em;
+    }
+
+    .edu-block {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .edu-block .edu-year {
+      font-size: 9px;
+      color: var(--accent);
+      font-weight: 600;
+      min-width: 70px;
       letter-spacing: 0.04em;
     }
-    .header .contact-info {
-      text-align: right;
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 2;
-    }
-    .header .contact-info a {
-      color: var(--text);
-      text-decoration: none;
-    }
-    h2 {
-      font-family: var(--font-serif);
-      font-size: 16px;
+    .edu-block .edu-info h4 {
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.06em;
-      margin-bottom: 16px;
-      margin-top: 36px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
+      margin-bottom: 2px;
     }
-    .edu-item, .exp-item, .project-item {
-      margin-bottom: 20px;
+    .edu-block .edu-info p {
+      font-size: 9px;
+      color: var(--text-secondary);
+      line-height: 1.5;
     }
-    .item-header {
+
+    .project-item {
+      margin-bottom: 14px;
+      padding-left: 10px;
+      border-left: 2px solid var(--accent-mid);
+    }
+    .project-item .proj-header {
       display: flex;
-      justify-content: space-between;
       align-items: baseline;
+      gap: 10px;
       margin-bottom: 4px;
     }
-    .item-title {
+    .project-item .proj-name {
+      font-size: 11px;
       font-weight: 600;
-      font-size: 14px;
+      color: var(--text);
     }
-    .item-sub {
-      color: var(--text-secondary);
-      font-size: 12px;
-    }
-    .item-date {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      white-space: nowrap;
-    }
-    .item-desc {
-      color: var(--text-secondary);
-      font-size: 12px;
-      line-height: 1.8;
-    }
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .tag-list span {
-      font-size: 10px;
-      background: #f3f1ee;
-      padding: 2px 10px;
-      border-radius: 2px;
-      color: var(--text-secondary);
-    }
-    .tag-list .highlight-tag {
-      background: rgba(176, 146, 110, 0.15);
+    .project-item .proj-role {
+      font-size: 8px;
       color: var(--accent);
+      letter-spacing: 0.06em;
+    }
+    .project-item .proj-desc {
+      font-size: 9px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 3px;
+    }
+    .project-item .proj-result {
+      font-size: 9px;
+      color: var(--accent-strong);
       font-weight: 500;
     }
-    .skills-summary {
+
+    .ai-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--accent-mid);
+      border-radius: 3px;
+      font-size: 7px;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-right: 4px;
+    }
+
+    .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px 40px;
+      gap: 14px;
     }
-    .skills-summary li {
-      font-size: 12px;
-      color: var(--text-secondary);
-      list-style: square;
-      margin-left: 16px;
-    }
-    .back-link {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 12px;
-      color: var(--text-tertiary);
-      text-decoration: none;
-      padding: 6px 12px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: white;
-    }
-    .back-link:hover { color: var(--text); border-color: var(--text); }
-    .print-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      font-size: 12px;
-      padding: 8px 20px;
-      background: var(--text);
-      color: white;
-      border: none;
-      border-radius: 2px;
-      cursor: pointer;
-    }
-    .print-btn:hover { opacity: 0.8; }
-    .portfolio-link {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 4px;
+
+    @media print {
+      .sidebar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
 <body>
 
-<a href="index" class="back-link no-print">← 返回作品集</a>
-<button class="print-btn no-print" onclick="window.print()">🖨️ 打印 PDF</button>
+<div class="page">
 
-<div class="header">
-  <div>
-    <h1>金承旭</h1>
-    <p class="subtitle">JIN CHENGXU · 产品设计 · UI/UX · 三维建模</p>
-    <p class="portfolio-link">作品集：portfolio-ten-omega-47.vercel.app</p>
-  </div>
-  <div class="contact-info">
-    📧 1416907076@qq.com<br>
-    💬 WeChat: JCX-1416907076<br>
-    🔗 github.com/congge2<br>
-    📍 澳门 · 大湾区
-  </div>
+  <!-- ═══ LEFT SIDEBAR ═══ -->
+  <aside class="sidebar">
+    <div>
+      <div class="name">金承旭</div>
+      <div class="title">Product Designer</div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)">
+        <div style="font-size:7px;letter-spacing:0.12em;color:rgba(255,255,255,0.3);margin-bottom:3px">求职方向</div>
+        <div style="font-size:9px;color:rgba(255,255,255,0.55);line-height:1.5">产品设计 · UI/UX 设计<br>AI 驱动设计 · 实习</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Contact</div>
+      <div class="info-row"><span class="label">电话</span>+86 177-6596-1764</div>
+      <div class="info-row"><span class="label">邮箱</span>1416907076@qq.com</div>
+      <div class="info-row"><span class="label">作品集</span>jhin.ink</div>
+      <div class="info-row"><span class="label">GitHub</span>github.com/CongGe2</div>
+    </div>
+
+    <div>
+      <div class="section-title">Skills</div>
+      <div class="skill-group">
+        <div class="group-name">设计工具</div>
+        <div class="skill-row"><span class="skill-name">Figma</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Rhino 7</span><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">KeyShot</span><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="group-name">AI 工具链</div>
+        <div class="skill-row"><span class="skill-name">AI 生图管线</span><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Vibe Coding</span><div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">Prompt 工程</span><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="group-name">前端能力</div>
+        <div class="skill-row"><span class="skill-name">React/TS</span><div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div></div>
+        <div class="skill-row"><span class="skill-name">HTML/CSS</span><div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Languages</div>
+      <div class="lang-item"><span>中文</span><span class="lang-level">母语</span></div>
+      <div class="lang-item"><span>English</span><span class="lang-level">IELTS 6.0 / 工作流利</span></div>
+    </div>
+  </aside>
+
+  <!-- ═══ RIGHT MAIN ═══ -->
+  <main class="main">
+
+    <!-- Education -->
+    <div style="margin-bottom:18px">
+      <div class="section-title">教育背景</div>
+      <div class="edu-block">
+        <div class="edu-year">2023 — 2027</div>
+        <div class="edu-info">
+          <h4>澳门科技大学 · 产品设计 · 本科</h4>
+          <p>专业课程：设计概论 · 人机工程学 · 设计材料与工艺 · 设计心理学 · 三维建模与渲染</p>
+          <p style="margin-top:2px">荣誉：2026 澳门科技大学优秀学生奖</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Methodology -->
+    <div style="margin-bottom:18px">
+      <div class="section-title">AI 设计方法论</div>
+      <p style="font-size:9px;color:var(--text-secondary);line-height:1.65;margin-bottom:8px">
+        建立了标准化 <strong>AI 驱动的设计资产生成管线</strong>，覆盖概念探索→批量生成→智能筛选→精修集成的完整闭环。
+      </p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:100px">
+          <div style="font-size:16px;font-weight:700;color:var(--accent);">5×</div>
+          <div style="font-size:8px;color:var(--text-tertiary);">设计效率提升<br>概念探索 2 周→2 天</div>
+        </div>
+        <div style="flex:1;min-width:100px">
+          <div style="font-size:16px;font-weight:700;color:var(--accent);">80+</div>
+          <div style="font-size:8px;color:var(--text-tertiary);">AI 生成素材/项目<br>Prompt 迭代精选</div>
+        </div>
+        <div style="flex:1;min-width:100px">
+          <div style="font-size:16px;font-weight:700;color:var(--accent);">6</div>
+          <div style="font-size:8px;color:var(--text-tertiary);">AI 辅助项目<br>概念→原型→部署</div>
+        </div>
+        <div style="flex:1;min-width:100px">
+          <div style="font-size:16px;font-weight:700;color:var(--accent);">~2min</div>
+          <div style="font-size:8px;color:var(--text-tertiary);">角色原画生成<br>传统外包需数周</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects -->
+    <div style="margin-bottom:18px">
+      <div class="section-title">项目经历</div>
+
+      <!-- Rift -->
+      <div class="project-item">
+        <div class="proj-header">
+          <span class="proj-name">Rift 便携蓝牙音箱</span>
+          <span class="ai-badge">AI</span>
+          <span class="proj-role">独立产品设计</span>
+        </div>
+        <p class="proj-desc">
+          <strong>背景：</strong>蓝牙音箱市场同质化严重，缺乏差异化设计语言。<br>
+          <strong>职责：</strong>主导全流程产品设计——用户研究（15人访谈）→ 12轮概念发散（AI辅助）→ CMF材质体系定义（8组样本）→ Rhino 7 建模 → KeyShot 渲染。<br>
+          <strong>方法：</strong>建立"斜切分割"核心设计语言，Kvadrat 声学织物 × 阳极氧化铝双材质对峙，自然划分声学功能区。<br>
+          <strong>效果：</strong>用户偏好测试 <strong>73% 首选</strong>，远超圆柱体方案。AI 概念发散将初期探索从 2 周压缩至 <strong>2 天</strong>。
+        </p>
+        <p class="proj-result">→ 12周概念至CMF · 15人用户验证 · 73%偏好胜出</p>
+      </div>
+
+      <!-- Eclipse Arena -->
+      <div class="project-item">
+        <div class="proj-header">
+          <span class="proj-name">Eclipse Arena · 游戏 UI 系统</span>
+          <span class="ai-badge">AI</span>
+          <span class="proj-role">独立 UI 设计 + 前端</span>
+        </div>
+        <p class="proj-desc">
+          <strong>背景：</strong>展示游戏 UI 全链路设计能力——需要从视觉到代码的完整落地。<br>
+          <strong>职责：</strong>设计 6 大核心界面 × 15 个可复用组件 × 完整 Design Token 体系；建立 NanoBanana2 AI 角色原画管线（Prompt → 批量生成 → 风格统一筛选 → 前端集成）；React + Framer Motion 5 层动画系统落地。<br>
+          <strong>效果：</strong>8 位英雄角色原画 <strong>~2 分钟/张</strong>（传统外包需数周）。桌面端 <strong>60fps</strong> 零帧率下降。建立了可在任何科幻暗色调 UI 项目中复用的 Token 体系。
+        </p>
+        <p class="proj-result">→ 6界面 · 15组件 · 60fps · AI角色管线 ~2min/张</p>
+      </div>
+
+      <!-- SmartDorm -->
+      <div class="project-item">
+        <div class="proj-header">
+          <span class="proj-name">SmartDorm · 宿舍收纳系统</span>
+          <span class="proj-role">产品设计 · 团队项目</span>
+        </div>
+        <p class="proj-desc">
+          <strong>背景：</strong>澳门高校宿舍人均面积不足 4㎡，传统收纳无法适应多场景切换需求。<br>
+          <strong>职责：</strong>主持 12 位深度访谈 + 用户旅程地图；主导产品外观与 CMF 设计（3 套方案）；负责小程序全部 UI 界面（5 屏高保真）。<br>
+          <strong>方法：</strong>访谈挖掘出核心矛盾——"学生并非收纳空间不够，而是收纳系统不支持学习/睡眠/社交的场景切换"。基于此提出模块化可变布局方案。<br>
+          <strong>效果：</strong>模块化设计预估 <strong>空间利用率提升 35%</strong>。跨专业协作中建立的统一设计文档模板成为后续团队项目标准。
+        </p>
+        <p class="proj-result">→ 12人深度访谈 · 35%空间效率提升 · 3专业协作</p>
+      </div>
+
+      <!-- Terrin -->
+      <div class="project-item">
+        <div class="proj-header">
+          <span class="proj-name">Terrin · 陶瓷首饰品牌</span>
+          <span class="proj-role">品牌联合创立 · UI + 前端</span>
+        </div>
+        <p class="proj-desc">
+          <strong>背景：</strong>从 0 到 1 创立独立陶瓷首饰品牌，需在零开发预算下完成品牌官网。<br>
+          <strong>职责：</strong>品牌视觉语言定义（色彩/字体/图像风格）；设计标志性"灰度→彩色" hover 交互；独立完成前端 MVP（Vibe Coding + AI 辅助）。<br>
+          <strong>方法：</strong>黑白植物影像 × CSS filter 灰度过渡——"用手拂去灰尘"的交互隐喻契合陶瓷从泥土到成品的转化。<br>
+          <strong>预期商业逻辑：</strong>目标 18-28 岁女性首饰消费者；预估首月自然流量 500-800 PV；种子用户转化率 3-5%；通过小红书 + 微信社群冷启动。
+        </p>
+        <p class="proj-result">→ 24商品页 · 1人全栈落地 · 1周上线</p>
+      </div>
+    </div>
+
+    <!-- Practice -->
+    <div>
+      <div class="section-title">实践经历</div>
+      <div class="edu-block">
+        <div class="edu-year">2025.06 — 至今</div>
+        <div class="edu-info">
+          <h4>独立项目实践 · AI 驱动设计开发</h4>
+          <p>运用 Claude Code、Midjourney、SD、NanoBanana2 等 AI 工具链，独立完成 6 个线上可交互项目的完整开发与部署。覆盖游戏 UI 系统（React）、品牌官网（HTML/CSS）、健康数据面板（Vite + CI/CD）。建立了标准化 Vibe Coding 工作流：需求分析 → AI 协作编码 → 版本控制 → 线上部署。</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
 </div>
-
-<h2>教育背景</h2>
-<div class="edu-item">
-  <div class="item-header">
-    <span class="item-title">澳门科技大学 · 产品设计 本科</span>
-    <span class="item-date">2023.09 — 2027.06</span>
-  </div>
-  <p class="item-desc">核心课程：设计概论、人机工程学、设计材料与工艺、设计心理学、三维建模与渲染</p>
-  <p class="item-desc">荣誉：2026 澳门科技大学优秀学生奖</p>
-</div>
-
-<h2>技能</h2>
-<div class="skills-summary">
-  <li>Figma — UI 设计系统搭建、高保真原型</li>
-  <li>Rhino 7 — 复杂曲面建模、结构设计</li>
-  <li>KeyShot — 产品级渲染、CMF 材质编辑</li>
-  <li>3D Printing — FDM 快速原型验证</li>
-  <li>React / TypeScript — 交互原型前端落地</li>
-  <li>Framer Motion — 高保真动画实现</li>
-  <li>Midjourney / Stable Diffusion — AI 概念发散</li>
-  <li>NanoBanana2 — AI 角色原画生成</li>
-  <li>Claude Code — AI 辅助全流程 Vibe Coding</li>
-  <li>GitHub Actions / Vercel — CI/CD 自动部署</li>
-</div>
-
-<h2>项目经历</h2>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">Rift 便携蓝牙音箱 — 独立产品设计</span>
-    <span class="item-date">2026</span>
-  </div>
-  <p class="item-desc">以"斜切分割"为核心设计语言，Kvadrat 声学织物 × 阳极氧化铝材质对峙。完整流程：用户研究 → 市场分析 → 概念发散 → CMF 定义 → 结构设计。Rhino 7 建模 + KeyShot 渲染 + 爆炸视图分解。</p>
-  <div class="tag-list"><span>产品设计</span><span>CMF</span><span>用户研究</span><span>Rhino 7</span><span>KeyShot</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">SmartDorm 智能宿舍收纳系统 — 跨专业团队项目</span>
-    <span class="item-date">2025.09 — 2025.12</span>
-  </div>
-  <p class="item-desc">3人跨专业团队（产品设计 + 室内设计 + 软件工程）。我主持 12 位学生深度访谈、输出用户旅程地图、负责产品外观及 CMF 设计、全部微信小程序 UI（5 屏高保真）。Rhino 7 模块化建模 + 1:5 原型验证。</p>
-  <div class="tag-list"><span class="highlight-tag">团队协作</span><span>用户研究</span><span>产品设计</span><span>小程序UI</span><span>Figma</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">Eclipse Arena · 星蚀竞技场 — 游戏UI设计系统</span>
-    <span class="item-date">2026</span>
-  </div>
-  <p class="item-desc">6大核心界面的完整游戏UI设计语言系统。NanoBanana2 AI 生成8位角色原画+场景背景。React 18 + Framer Motion 实现高保真交互原型：Spring 3D卡片、Canvas粒子、实时HUD模拟。线上可交互。</p>
-  <div class="tag-list"><span>游戏UI</span><span>设计系统</span><span>React</span><span>Framer Motion</span><span>AI生图</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">MindSpace 冥想与专注力 App — UX 设计</span>
-    <span class="item-date">2026</span>
-  </div>
-  <p class="item-desc">Stable Diffusion 驱动的 UX 设计流程：AI 视觉方向探索 6 组概念 2 天完成 → Prompt 工程设计资产 → Figma 高保真原型。4 屏核心界面：Onboarding / Home / Session / Profile。</p>
-  <div class="tag-list"><span>UX设计</span><span>Stable Diffusion</span><span>Prompt工程</span><span>Figma</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">磁吸悬浮 VR 体感辅助设备 — 课程项目</span>
-    <span class="item-date">2026.01 — 2026.05</span>
-  </div>
-  <p class="item-desc">从电影道具调研出发，发现 VR "地面限制"痛点。AI 生图完成外骨骼概念发散，收敛至磁吸+绳索方案。Rhino 复杂曲面建模 + 3D 打印验证人机尺度。</p>
-  <div class="tag-list"><span>用户研究</span><span>概念发散</span><span>Rhino 7</span><span>3D打印</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">Terrin 陶瓷首饰品牌官网 — 联合创立 · UI 设计</span>
-    <span class="item-date">2025</span>
-  </div>
-  <p class="item-desc">与同学联合创立的独立陶瓷首饰品牌。我主导品牌官网全部 UI 设计与前端 MVP 落地：黑白植物影像 Hero Section，商品图 Hover 彩色渐变过渡。设计系统搭建 + Vibe Coding MVP。</p>
-  <div class="tag-list"><span class="highlight-tag">联合创立</span><span>UI设计</span><span>设计系统</span><span>Vibe Coding</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">RingFit Dashboard — 健身数据追踪面板</span>
-    <span class="item-date">2026</span>
-  </div>
-  <p class="item-desc">个人健康数据驱动的交互式仪表盘：SVG 实时 BMI 仪表、燃脂排行、周计划、体重历史追踪与趋势预测。Claude Code 全流程 Vibe Coding，Vite + React，GitHub Actions 自动部署，线上可交互。</p>
-  <div class="tag-list"><span>Vibe Coding</span><span>React</span><span>数据可视化</span><span>CI/CD</span></div>
-</div>
-
-<div class="project-item">
-  <div class="item-header">
-    <span class="item-title">《汉魂·狮魄》陶瓷艺术装置 — 个人创作</span>
-    <span class="item-date">2025</span>
-  </div>
-  <p class="item-desc">汉代虎形艺术 → 当代陶瓷狮塑转化。入选澳大利亚 Anlan Museum 公开展览。</p>
-  <div class="tag-list"><span>文化研究</span><span>陶瓷工艺</span><span>国际展览</span></div>
-</div>
-
-<h2>实践经历</h2>
-<div class="exp-item">
-  <div class="item-header">
-    <span class="item-title">独立项目实践 · AI 驱动设计开发</span>
-    <span class="item-date">2025.06 — 至今</span>
-  </div>
-  <p class="item-desc">运用 Claude Code、Midjourney、Stable Diffusion 等 AI 工具链，独立完成 4 个线上可交互项目（游戏 UI 系统、品牌官网、数据面板、UX 原型）。掌握 Vibe Coding 完整工作流：需求分析 → AI 协作编码 → 版本控制 → 线上部署。</p>
-</div>
-
-<div class="exp-item">
-  <div class="item-header">
-    <span class="item-title">澳门科技大学 2025 双年展 · 策展助理</span>
-    <span class="item-date">2025</span>
-  </div>
-  <p class="item-desc">协助导师策划执行双年展全流程。以报纸为原材料手工打造沉船装置作为展厅视觉中心，统筹场地布置与空间叙事。</p>
-</div>
-
-<div class="exp-item">
-  <div class="item-header">
-    <span class="item-title">校内舞台工作组 · 跨部门协调</span>
-    <span class="item-date">2024 — 2025</span>
-  </div>
-  <p class="item-desc">跨部门资源协调与现场执行，培养突发状况快速响应能力与团队协作意识。</p>
-</div>
-
-<h2>语言能力</h2>
-<p class="item-desc" style="margin-bottom:0;">中文（母语）· 英文（学术读写，可阅读英文设计文档与论文）· 粤语（日常交流）</p>
 
 </body>
 </html>

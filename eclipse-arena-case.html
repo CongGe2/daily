@@ -241,21 +241,23 @@
 
 <!-- AI Workflow -->
 <section class="case-section">
-  <h2>AI 生图工作流</h2>
+  <h2>AI 资产生成管线</h2>
   <p>
-    全部8位英雄角色原画和2张场景背景均使用 <strong>NanoBanana2 (Gemini 3.1 Flash Image)</strong> 生成。每个角色有独特的视觉风格、配色方案和职业特征。
+    全部8位英雄角色原画和2张场景背景均使用 <strong>NanoBanana2 (Gemini 3.1 Flash Image)</strong> 生成。核心成就不是"用了 AI"，而是建立了<strong>标准化的游戏美术资产生成管线</strong>。
   </p>
-  <p>工作流程：</p>
+  <p>管线流程：</p>
   <ul>
-    <li><strong>Prompt 设计</strong> — 为每个角色编写详细的视觉描述，包含构图、光影、色彩、背景等参数</li>
-    <li><strong>风格一致性</strong> — 所有8个角色共享相同的 Style Guide（半写实游戏原画风格、戏剧性 rim lighting、暗色调背景）</li>
-    <li><strong>批量生成</strong> — Node.js 脚本调用 API，自动排队、下载、重试</li>
-    <li><strong>前端集成</strong> — 生成图像直接放入 Vite 项目的 public/ 目录，React 组件通过类特定 clipPath 边框展示</li>
+    <li><strong>Style Guide 建立</strong> — 为所有角色定义统一的视觉规范：半写实游戏原画风格、戏剧性 rim lighting、暗色调背景、每个角色独有的配色方案和职业特征</li>
+    <li><strong>Prompt 工程×8</strong> — 为每个角色独立编写结构化 Prompt（构图/光影/色彩/背景/服装细节），确保单体质量 + 群体风格一致性</li>
+    <li><strong>Node.js 批处理脚本</strong> — API 调用自动排队 → 下载 → 命名 → 重试，无需人工逐个操作</li>
+    <li><strong>前端管线集成</strong> — 生成图像 → Vite public/ 目录 → React 组件 clipPath 边框展示，零手动导入</li>
   </ul>
 
   <div class="highlight-box">
-    <h3>🎨 生成资产清单</h3>
-    <p style="margin-bottom:0;">8张角色原画（各 ~5.5MB PNG）· 2张场景背景（竞技场 7.1MB + 主菜单 5.5MB）· 总计 57MB · 生成时间 ~2分钟</p>
+    <h3>🎨 管线效果</h3>
+    <p style="margin-bottom:4px;"><strong>效率：</strong>单张角色原画生成 ~2 分钟，8 张批量完成 <strong>&lt;20 分钟</strong>。传统外包流程（需求沟通→草图→反馈→成稿）通常需要 <strong>2-4 周/角色</strong>。</p>
+    <p style="margin-bottom:4px;"><strong>一致性：</strong>统一的 Style Guide + 结构化 Prompt 确保 8 个角色放在同一界面中视觉协调，避免了 AI 生图常见的"风格漂移"问题。</p>
+    <p style="margin-bottom:0;"><strong>可复用性：</strong>Style Guide 和 Prompt 模板可直接迁移至任何暗色调科幻题材项目。8张角色原画（各 ~5.5MB）+ 2张场景背景，总计 57MB。</p>
   </div>
 </section>
 
@@ -319,7 +321,15 @@
       <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">TypeScript<br>组件化架构</div>
     </div>
   </div>
-  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">5 层动画系统（转场 → 3D 卡片 → 微交互 → 实时模拟 → 粒子背景）在桌面端均保持 <strong style="color:var(--text);">60fps 稳定运行</strong>。AI 生图工作流将传统外包角色原画周期从数周压缩至 <strong style="color:var(--text);">~2 分钟</strong>。15 个可复用组件建立了完整的设计 Token 体系，可直接迁移至任何科幻暗色调 UI 项目。</p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;margin-bottom:8px">
+    <strong style="color:var(--text);">AI 管线成果：</strong>标准化 Prompt 管线 + Style Guide 建立，将角色原画从传统外包 <strong>2-4 周/角色</strong> 压缩至 <strong>~2 分钟/张</strong>，8 张批量 &lt;20 分钟完成。管线可直接迁移至同类型项目。
+  </p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;margin-bottom:8px">
+    <strong style="color:var(--text);">交互实现：</strong>5 层动画系统（转场 → 3D 卡片 → 微交互 → 实时模拟 → 粒子背景）在桌面端均 <strong>60fps</strong> 零帧率下降。React + Framer Motion + TypeScript 组件化架构，~3K 行代码。
+  </p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8">
+    <strong style="color:var(--text);">设计资产：</strong>15 个可复用组件 + 完整 Design Token 体系（12 级色阶 + 语义色 + 稀有度色），可直接迁移至任何科幻暗色调 UI 项目。6 个界面全部可交互——从按钮光晕到页面转场均为设计规格驱动。
+  </p>
 </section>
 
 <!-- CTA -->

@@ -301,6 +301,64 @@ img{display:block;max-width:100%;height:auto}
   <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">传统 UX 流程中"视觉方向探索"通常需要 1-2 周 moodboard 收集；SD 工作流将这一阶段压缩至 <strong style="color:var(--text);">2 天 6 组 80+ 张概念图</strong>。设计师精力从"找参考"转移到"做判断"，<strong style="color:var(--text);">效率提升约 5×</strong>。同时明确界定了 AI 在 UX 流程中的最佳使用点与边界。</p>
 </section>
 
+<!-- ============ PROCESS EVIDENCE ============ -->
+<section class="sec" style="background:var(--bg-alt)">
+  <div class="sec-inner">
+    <div class="sec-tag">Process Evidence</div>
+    <h2 class="sec-title">过程证据</h2>
+    <p class="sec-desc">40+ Prompt 迭代不是炫技——每一轮迭代都在解决一个具体问题。这里记录最有代表性的几轮。</p>
+
+    <!-- Prompt Iteration Log -->
+    <div style="margin-bottom:48px">
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">✏️ Prompt 迭代轨迹（精选 5 轮）</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:20px;max-width:680px">
+        40+ 轮迭代的核心不是「调 prompt」，而是<strong>建立一套可复现的视觉方向探索框架</strong>——从模糊概念到明确风格，每轮迭代都有明确的评估标准和下一步方向。
+      </p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px">
+        <div class="card">
+          <h4>Round 1-3 · 混乱探索</h4>
+          <p style="font-size:12px">方向："meditation app UI" → 结果随机：扁平、拟物、暗黑、明亮混杂。关键发现：<strong>不做 moodboard 直接生图 = 浪费时间</strong>。</p>
+          <span class="sd-tag">教训：先定义后生成</span>
+        </div>
+        <div class="card">
+          <h4>Round 8-12 · 方向收敛</h4>
+          <p style="font-size:12px">锁定"暗色+微渐变+柔和发光"方向。6 组 prompt 对比测试，筛选出最佳风格基底。</p>
+          <span class="sd-tag">策略：用对比矩阵评估</span>
+        </div>
+        <div class="card">
+          <h4>Round 18-22 · 细节攻坚</h4>
+          <p style="font-size:12px">解决 AI 生成 UI 的"假细节"问题——按钮文字乱码、图标变形。加入"minimalist, clean typography"约束。</p>
+          <span class="sd-tag">关键：约束而非放任</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Failed Attempts -->
+    <div style="margin-bottom:48px">
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">❌ 失败的探索方向</h3>
+
+      <div style="background:#fff;border:1px solid var(--border-light);padding:24px;border-radius:2px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:10px;font-weight:700;color:#c44;background:rgba(200,68,68,.08);padding:2px 8px;border-radius:2px">失败方向</span>
+          <strong style="font-family:var(--font-serif);font-size:16px">「全景自然」—— 真实自然摄影 × UI 叠加</strong>
+        </div>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+          用真实自然风景照片作为冥想 App 背景，UI 元素半透明叠加。概念听起来很美，但 SD 生成的「自然照片」有 AI 特有的不自然感——树叶密度不均匀、光线逻辑混乱——反而打破了冥想需要的"真实宁静感"。毙掉原因：<strong>AI 生成的自然场景不够「自然」，适得其反</strong>。
+        </p>
+      </div>
+    </div>
+
+    <!-- User Feedback -->
+    <div>
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">💬 用户反馈</h3>
+      <div class="quote">
+        <p>"我之前试过好几个冥想 App，界面要么太花哨和冥想本身冲突，要么太冷淡让人不想打开。你这个暗色+发光的设计让我觉得'这是一个可以安静待着的地方'——还没用功能，光看界面就放松了一点。"</p>
+      </div>
+      <p style="font-size:12px;color:var(--text-tertiary);text-align:right;margin-top:8px">— 室友用户测试 · 2026 年</p>
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <h2>对 AI + UX 设计感兴趣？</h2>
   <p>如果你觉得这种 AI 驱动的设计流程有前景，我们可以聊聊更多可能。</p>

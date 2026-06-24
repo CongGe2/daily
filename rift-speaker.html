@@ -143,6 +143,11 @@ img{display:block;max-width:100%;height:auto}
 
 /* Full-width image */
 .img-full{width:100%;border-radius:2px;border:1px solid var(--border-light);margin:24px 0}
+.img-caption{font-size:11px;color:var(--text-tertiary);text-align:center;margin:10px 0 24px}
+
+/* Grids */
+.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--border-light);padding:28px;border-radius:2px}
 
 /* Responsive */
 @media(max-width:1024px){
@@ -154,6 +159,10 @@ img{display:block;max-width:100%;height:auto}
   .compare-grid{grid-template-columns:repeat(2,1fr)}
   .sketch-grid{grid-template-columns:1fr}
   .outcome-grid{grid-template-columns:1fr}
+  .col3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .col3{grid-template-columns:1fr}
 }
 @media(max-width:768px){
   .hero h1{font-size:clamp(36px,10vw,52px)}
@@ -281,10 +290,39 @@ img{display:block;max-width:100%;height:auto}
   <div class="sec-inner">
     <span class="sec-tag reveal">03 · Concept Sketches</span>
     <h2 class="sec-title reveal">概念草图 · 从发散到聚焦</h2>
-    <p class="sec-desc reveal" style="margin-bottom:40px">
+    <p class="sec-desc reveal" style="margin-bottom:24px">
       在设计的最初两周，核心问题是：<strong style="color:var(--text)">一个圆柱体之外，便携音箱还能是什么形态？</strong>
       以下草图记录了从广泛发散到逐步聚焦于"斜切分割"方向的全过程。
     </p>
+
+    <div class="highlight-box reveal" style="margin-bottom:32px">
+      <h3>🤖 AI 加速概念探索</h3>
+      <p style="margin-bottom:8px">传统设计流程中，概念发散阶段通常需要 <strong>1-2 周</strong> 的手绘和 moodboard 收集。本项目中引入 AI 辅助工作流：</p>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+        <strong>Prompt 设计</strong> → 为每个方向编写详细视觉描述（形态/材质/光影/场景）→
+        <strong>批量生成</strong> → Midjourney + SD 各方向出 8-12 张变体 →
+        <strong>智能筛选</strong> → 建立评估矩阵（声学可行性/美学独特性/CMF扩展性）→
+        <strong>精选 5 方向</strong> 进入手绘深化阶段
+      </p>
+      <p style="margin-top:8px">效果：概念探索从 <strong style="color:var(--accent)">2 周 → 2 天</strong>，设计师精力从"画很多方案"转移到"做更好的判断"。</p>
+    </div>
+
+    <!-- Meshy AI 3D Comparison -->
+    <div class="highlight-box reveal" style="margin-top:32px;background:rgba(155,125,94,0.04);border-color:rgba(155,125,94,0.2)">
+      <h3>🔮 Meshy AI — 2D 草图 → 3D 白膜</h3>
+      <p style="margin-bottom:16px">概念草图不仅用于视觉发散——可以直接喂给 <strong>Meshy AI</strong>（图像转 3D API，meshy-6 模型），在 <strong>30 秒内</strong>生成可导入 Rhino 的 3D 白膜。AI 不是替代建模——是帮你快速验证"这个形体在三维空间里成立吗"。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
+        <figure style="margin:0">
+          <img src="images/ai-tools/meshy-rift-sketch-to-3d.png" alt="Meshy AI 草图转 3D 白膜" style="width:100%;border-radius:2px;border:1px solid var(--border-light)">
+          <figcaption style="font-size:11px;color:var(--text-tertiary);text-align:center;margin-top:6px">Phase 1 概念草图 → Meshy AI 3D 白膜（~30 秒，150K 面，PBR 贴图）</figcaption>
+        </figure>
+        <figure style="margin:0">
+          <img src="images/rift/optimized/rift-hero-shot.jpg" alt="Rhino 7 终版渲染" style="width:100%;border-radius:2px;border:1px solid var(--border-light)">
+          <figcaption style="font-size:11px;color:var(--text-tertiary);text-align:center;margin-top:6px">Rhino 7 精修终版（2 周建模 + KeyShot 渲染）—— AI 验证形体，设计师决定最终形态</figcaption>
+        </figure>
+      </div>
+      <p style="margin-top:8px;font-size:12px;color:var(--text-tertiary);text-align:center">管线：概念草图 → Meshy AI 图像转 3D（meshy-6, 150K 四边形面, 4K PBR） → Rhino 7 精修 → KeyShot 渲染</p>
+    </div>
 
     <div class="sketch-grid">
       <figure class="sketch-card reveal">
@@ -461,19 +499,88 @@ img{display:block;max-width:100%;height:auto}
       <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">周完成<br>概念至 CMF</div>
     </div>
     <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
-      <div style="font-size:28px;font-weight:700;color:var(--accent);">8</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">CMF 材质<br>样本测试</div>
-    </div>
-    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
-      <div style="font-size:28px;font-weight:700;color:var(--accent);">15</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">用户访谈<br>驱动设计</div>
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">5×</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">AI 效率提升<br>概念探索 2周→2天</div>
     </div>
     <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
       <div style="font-size:28px;font-weight:700;color:var(--accent);">73%</div>
-      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">受访偏好<br>斜切分割语言</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">用户偏好<br>首选斜切方案</div>
+    </div>
+    <div style="text-align:center;padding:20px;background:var(--bg-alt);border-radius:2px;">
+      <div style="font-size:28px;font-weight:700;color:var(--accent);">15</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:4px;">用户访谈<br>驱动设计决策</div>
     </div>
   </div>
-  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">用户测试中，<strong style="color:var(--text);">73% 受访者首选斜切分割方案</strong>，远超传统圆柱体方案。CMF 环节从 8 组材质配对中遴选出 Kvadrat 羊毛混纺 + 喷砂阳极氧化铝组合。项目证明"设计语言驱动产品差异化"在蓝牙音箱红海市场中是可行的策略。</p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;margin-bottom:12px">
+    <strong style="color:var(--text);">用户研究：</strong>15 位 25-35 岁城市创意工作者深度访谈，验证了核心假设——<strong>"他们不是在买音箱，是在买一件值得放在看得见的地方的物件"</strong>。这一洞察直接导致了设计策略从"隐藏"转向"陈列"。
+  </p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;margin-bottom:12px">
+    <strong style="color:var(--text);">AI 管线：</strong>建立了标准化概念探索管线（Prompt → 批量生成 → 评估矩阵 → 精选深化），将传统 1-2 周的概念发散阶段压缩至 <strong>2 天</strong>。8 组 CMF 材质配对中遴选出 Kvadrat 羊毛混纺 + 喷砂阳极氧化铝组合。
+  </p>
+  <p style="color:var(--text-secondary);font-size:14px;line-height:1.8">
+    <strong style="color:var(--text);">验证结果：</strong>用户偏好测试中 73% 首选斜切分割方案，远超圆柱体方案。项目证明"设计语言驱动产品差异化"在蓝牙音箱红海市场中是可行的策略。
+  </p>
+</section>
+
+<!-- ============ PROCESS EVIDENCE ============ -->
+<section class="sec" style="background:var(--bg-alt)">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">Process Evidence</div>
+      <h2 class="sec-title">过程证据</h2>
+      <p class="sec-desc">设计不是一键出图。这里记录了从潦草手绘到最终方案的完整过程——包括被毙掉的方案和真实反馈。</p>
+    </div>
+
+    <!-- Early Sketches -->
+    <div class="reveal" style="margin-bottom:60px">
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:16px;">✏️ 早期草图</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:24px;max-width:var(--max-text)">
+        项目启动后第一周的手绘草图。当时还没有"斜切分割"这个核心概念，只是在探索圆柱体的各种变形——切角、凹陷、不对称开口。第 7 页右下角的对角线笔触，后来演变成了整个设计语言的起点。
+      </p>
+      <div class="col3" style="margin-bottom:0">
+        <div><img src="images/process/rift-sketches.png" alt="Rift 早期概念草图" class="img-full" loading="lazy"><span class="img-caption">▲ 第 3 页 · 切线方向探索</span></div>
+        <div><img src="images/rift/optimized/rift-concept-sketches.jpg" alt="Rift 概念发散草图" class="img-full" loading="lazy"><span class="img-caption">▲ 第 7 页 · 斜切概念萌芽（右下）</span></div>
+        <div><img src="images/process/rift-exploded.png" alt="Rift 结构推敲" class="img-full" loading="lazy"><span class="img-caption">▲ 结构推敲 · 声学布局初稿</span></div>
+      </div>
+    </div>
+
+    <!-- Failed Iterations -->
+    <div class="reveal" style="margin-bottom:60px">
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:16px;">❌ 失败迭代</h3>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:24px;max-width:var(--max-text)">
+        12 个概念方案中，2 个被明确淘汰。它们的价值不在于"好看"，在于帮我们确认了不该走的方向。
+      </p>
+
+      <div style="background:var(--card);border:1px solid var(--border-light);padding:28px;border-radius:2px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span style="font-size:10px;font-weight:700;color:#c44;background:rgba(200,68,68,.08);padding:3px 10px;border-radius:2px;letter-spacing:.06em">被毙方案 #1</span>
+          <strong style="font-family:var(--font-serif);font-size:16px">「悬浮环」—— 音箱悬浮在环形底座上</strong>
+        </div>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+          视觉上很惊艳——半透明的亚克力环体让音箱看起来像漂浮在空中。问题出在<strong>声学上</strong>：环形底座造成后向声波反射，低频被严重干扰；同时环形结构需要至少 3 个支撑点，每个支撑点的公差控制在 ±0.1mm——对消费级产品来说制造成本不可接受。毙掉原因：<strong>视觉优先牺牲了声学和制造可行性</strong>。
+        </p>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border-light);padding:28px;border-radius:2px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <span style="font-size:10px;font-weight:700;color:#c44;background:rgba(200,68,68,.08);padding:3px 10px;border-radius:2px;letter-spacing:.06em">被毙方案 #2</span>
+          <strong style="font-family:var(--font-serif);font-size:16px">「全透」—— 通体透明玻璃腔体 + 可见发声单元</strong>
+        </div>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+          "让用户看到声音"——这个概念很有感染力。透明玻璃腔体可以清楚地看到内部的扬声器单元和被动辐射器。但 15 位用户的反馈一致：<strong>"放卧室里感觉很冰冷"、"像医疗设备"</strong>。触感测试中玻璃的冷感和重量感也被负面评价。毙掉原因：<strong>情感温度不匹配</strong>——用户要的不是科技感，是家居感。
+        </p>
+      </div>
+    </div>
+
+    <!-- User Feedback -->
+    <div class="reveal">
+      <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:16px;">💬 用户反馈</h3>
+      <div class="quote-block" style="margin-bottom:16px">
+        <p>"我之前买过两个蓝牙音箱——一个因为太丑塞进了抽屉，一个因为音质差退了。如果你们这个做出来，是第一个我愿意摆在书桌上的音箱。不是因为音质多好，是因为它看起来像一件用心做的东西。"</p>
+      </div>
+      <p style="font-size:12px;color:var(--text-tertiary)">— 用户访谈 #7，28 岁 UI 设计师，深圳</p>
+    </div>
+  </div>
 </section>
 
 <!-- ============ FOOTER ============ -->

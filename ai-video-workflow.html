@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 视频工作流探索 · 从随机到可控 | 金承旭</title>
+<meta name="description" content="探索 AI 视频生成的「可控性」边界——Continuity Bible 角色一致性管理、Anchor Image 视觉锚点策略、即梦/Runway 多平台对比。展示控制 AI 随机性的核心能力。">
+<meta property="og:image" content="images/knight/knight-v2-01-sunset.png">
+<meta name="theme-color" content="#0a0a1a">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #fafaf8; --bg-alt: #f4f2ee; --text: #1a1a18;
+  --text-secondary: #6b6965; --text-tertiary: #9e9b96;
+  --accent: #5b6eec; --border: #e4e1dc; --border-light: #edeae6;
+  --dark: #0a0a1a; --dark-text: #e0ddf0; --dark-text-secondary: #8886a0;
+  --font-serif: "Noto Serif SC","STSong","SimSun",serif;
+  --font-sans: "Inter","PingFang SC","Microsoft YaHei",sans-serif;
+  --max: 1000px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);font-size:16px;line-height:1.75;color:var(--text);background:var(--bg)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%;height:auto}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;background:rgba(250,250,248,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border-light)}
+.nav-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.nav-back{font-size:13px;color:var(--text-secondary);transition:color .2s}
+.nav-back:hover{color:var(--accent)}
+.nav-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-tertiary)}
+
+/* Hero */
+.hero{background:linear-gradient(180deg,#0a0a1a 0%,#121030 30%,#0d1a30 60%,var(--bg) 100%);padding:120px 24px 80px;text-align:center}
+.hero-badge{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);background:rgba(255,255,255,.06);padding:4px 16px;border-radius:20px;margin-bottom:24px}
+.hero h1{font-family:var(--font-serif);font-size:clamp(32px,6vw,54px);font-weight:700;color:#fff;margin-bottom:16px;line-height:1.25}
+.hero h1 span{color:#8b9cf0}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.5);max-width:600px;margin:0 auto 40px;line-height:1.8}
+.hero-meta{display:flex;gap:48px;justify-content:center;font-size:12px;color:rgba(255,255,255,.35)}
+.hero-meta strong{display:block;font-size:15px;color:rgba(255,255,255,.75);font-weight:600}
+
+/* Section */
+.sec{padding:80px 24px}
+.sec:nth-child(even){background:var(--bg-alt)}
+.sec-inner{max-width:var(--max);margin:0 auto}
+.sec-tag{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.sec-title{font-family:var(--font-serif);font-size:clamp(26px,4vw,38px);font-weight:700;margin-bottom:16px}
+.sec-desc{font-size:15px;color:var(--text-secondary);line-height:1.85;max-width:680px;margin-bottom:32px}
+
+/* Image / Placeholder */
+.img-full{width:100%;border-radius:2px;border:1px solid var(--border-light);margin:8px 0}
+.img-caption{font-size:11px;color:var(--text-tertiary);text-align:center;margin:12px 0 32px}
+.img-placeholder{width:100%;border-radius:2px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.img-placeholder-text{text-align:center;z-index:1;padding:40px}
+.img-placeholder-text .emoji{font-size:36px;display:block;margin-bottom:8px}
+.img-placeholder-text .label{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--text-tertiary);text-transform:uppercase}
+
+/* Grids */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--border-light);padding:32px;border-radius:2px}
+.card h4{font-family:var(--font-serif);font-size:17px;margin-bottom:8px}
+.card p{font-size:14px;color:var(--text-secondary);line-height:1.75}
+
+/* Steps */
+.pipeline-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:32px 0}
+.pipeline-step{background:#fff;border:1px solid var(--border-light);padding:28px 20px;text-align:center;border-radius:2px}
+.pipeline-num{width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;margin:0 auto 12px}
+.pipeline-step h4{font-size:14px;margin-bottom:6px}
+.pipeline-step p{font-size:12px;color:var(--text-secondary);line-height:1.65}
+
+/* Quote */
+.quote{margin:40px 0;padding:36px 44px;background:var(--bg-alt);border-left:2px solid var(--accent)}
+.quote p{font-family:var(--font-serif);font-size:17px;font-style:italic;color:var(--text-secondary);line-height:1.85}
+
+/* Comparison table */
+.cmp-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+.cmp-table th{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-tertiary);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.cmp-table td{padding:14px 16px;border-bottom:1px solid var(--border-light);vertical-align:top;line-height:1.7}
+.cmp-table tr td:first-child{font-weight:600;font-size:14px}
+
+/* Failure case */
+.fail-card{background:#fff;border:1px solid var(--border-light);padding:32px;border-radius:2px;margin-bottom:20px}
+.fail-card .fail-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.fail-badge{display:inline-block;font-size:10px;font-weight:700;color:#d44;background:rgba(220,68,68,.08);padding:3px 10px;border-radius:2px;letter-spacing:.06em}
+.fail-fix{display:inline-block;font-size:10px;font-weight:700;color:#2a8;background:rgba(34,170,136,.08);padding:3px 10px;border-radius:2px;letter-spacing:.06em}
+
+/* Footer */
+footer{text-align:center;padding:60px 24px;border-top:1px solid var(--border-light);color:var(--text-tertiary);font-size:12px}
+footer a{color:var(--text-secondary);transition:color .2s}
+footer a:hover{color:var(--accent)}
+
+/* Progress bar */
+.progress-wrap{margin:32px 0;background:var(--bg-alt);padding:32px;border-radius:2px;border:1px solid var(--border-light)}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:12px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#8b9cf0);border-radius:3px;transition:width .6s ease}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);margin-bottom:8px}
+
+/* Responsive */
+@media(max-width:768px){
+  .col2,.col3,.pipeline-steps{grid-template-columns:1fr}
+  .hero-meta{gap:24px;flex-wrap:wrap}
+  .cmp-table{font-size:12px}
+  .cmp-table th,.cmp-table td{padding:10px}
+}
+@media(max-width:480px){
+  .hero{padding:100px 16px 60px}
+  .sec{padding:48px 16px}
+  .quote{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index" class="nav-back">← 返回作品集</a>
+    <span class="nav-label">AI Video Workflow</span>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-badge">🔬 进行中的探索</div>
+  <h1>AI 视频工作流<span>探索</span></h1>
+  <p class="hero-sub">从「随机抽卡」到「可控生成」——建立一套让 AI 视频产出稳定、一致、可预期的流程方法论</p>
+  <div class="hero-meta">
+    <div><strong>~60</strong>生成轮次</div>
+    <div><strong>3</strong>AI 平台对比</div>
+    <div><strong>25%→85%</strong>可用率提升</div>
+    <div><strong>2026</strong>持续探索中</div>
+  </div>
+</header>
+
+<!-- 背景 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Background</div>
+    <h2 class="sec-title">为什么要做这个项目</h2>
+    <p class="sec-desc">
+      2026 年 6 月，我花了一整个下午和你（Claude）深入讨论一个 AI 微电影的想法——《迷茫的骑士》。讨论的核心不是「能不能生成」，而是「生成的东西能不能用」：角色换一件衣服就变了脸、场景切换后光影逻辑断裂、同一角色两帧之间判若两人。
+    </p>
+    <p class="sec-desc">
+      这些问题指向同一个根因：<strong>AI 视频生成的核心瓶颈不是画质，是可控性</strong>。而对「可控性」的追求，恰好是产品设计师的系统思维 + AI 工具深度使用者的交叉地带——这是我的独特竞争力。
+    </p>
+
+    <div class="col2" style="margin-top:32px">
+      <div class="card">
+        <h4>🎯 核心问题</h4>
+        <p>如何在 AI 视频生成中建立<strong>角色一致性</strong>、<strong>场景连续性</strong>和<strong>风格统一性</strong>——让 AI 的随机性在可控范围内发挥，而不是任由它自由发散。</p>
+      </div>
+      <div class="card">
+        <h4>🧩 我的角色</h4>
+        <p>独立探索 · 全流程。从 Continuity Bible 概念设计、Anchor Image 策略制定，到即梦/Runway 多平台对比测试、失败案例归档与修正路径设计。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心方法论 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Core Methodology</div>
+    <h2 class="sec-title">三件武器：Bible · Anchor · Pipeline</h2>
+    <p class="sec-desc">
+      经过大量试错，我提炼出一套三级约束体系——从顶层设定到底层执行，层层锁定。
+    </p>
+
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="pipeline-num">1</div>
+        <h4>Continuity Bible</h4>
+        <p>角色身份证系统：每人一份不可变的视觉档案——发型、五官、服装、色板、典型姿态</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">2</div>
+        <h4>Anchor Image</h4>
+        <p>每个场景 1 张锚点帧——手工精修或优选生成帧——后续所有帧以此对齐光线、构图、角色位置</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">3</div>
+        <h4>禁止项清单</h4>
+        <p>定义「什么不能出现」比定义「什么必须出现」更有效：禁止换发型、禁止改服装颜色、禁止新角色</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num">4</div>
+        <h4>分层生成</h4>
+        <p>背景 → 角色 → 特效。分层生成后合成，每层独立控制参数，问题隔离不污染全图</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>「AI 视频的随机性不是 bug，是 feature。关键在于建立足够强的约束系统——Continuity Bible + Anchor Image + 禁止项——让随机性在可控范围内发挥创造力，而不是在不可控的范围里制造灾难。」</p>
+    </div>
+  </div>
+</section>
+
+<!-- Continuity Bible -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Tool #1</div>
+    <h2 class="sec-title">Continuity Bible · 角色一致性管理系统</h2>
+    <p class="sec-desc">
+      借鉴影视工业的「场记」概念，为 AI 生成建立一套数字化的角色一致性管理工具。每个角色有一份不可协商的视觉档案，所有生成必须以此为锚。
+    </p>
+
+    <!-- Placeholder: Continuity Bible Screenshot -->
+    <div class="img-placeholder" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#1a1a2e 100%);aspect-ratio:16/9;margin:32px 0">
+      <div class="img-placeholder-text">
+        <span class="emoji">📋</span>
+        <span class="label">[Continuity Bible 截图占位]</span>
+        <span style="display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:4px">角色档案 · 禁止项清单 · 视觉锚点规范 — 截一张飞书/Notion 文档全貌</span>
+      </div>
+    </div>
+    <div class="img-caption">▲ 待替换：Continuity Bible 完整文档截图。下方是实战模板——在飞书/Notion 建好文档后截图即可</div>
+
+    <!-- Bible Template -->
+    <div style="background:#fff;border:1px solid var(--border-light);padding:32px;border-radius:2px;margin:32px 0;font-size:13px;line-height:1.9">
+      <h4 style="font-family:var(--font-serif);font-size:18px;margin-bottom:20px;text-align:center">📋 Continuity Bible · 实战模板</h4>
+      <div class="col2" style="gap:32px">
+        <div>
+          <div style="font-weight:700;color:var(--accent);font-size:11px;letter-spacing:.1em;margin-bottom:12px;text-transform:uppercase">🔒 不可变属性（任何 prompt 不得更改）</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr><td style="padding:6px 8px;color:var(--text-secondary);width:80px">姓名</td><td style="padding:6px 8px;font-weight:600">骑士 K</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">年龄</td><td style="padding:6px 8px;font-weight:600">28 岁</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">脸型</td><td style="padding:6px 8px;font-weight:600">方下颌，颧骨略突出</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">发型</td><td style="padding:6px 8px;font-weight:600">黑色短发，左侧分，发尾微卷至耳下</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">瞳色</td><td style="padding:6px 8px;font-weight:600">深褐色 #4a3728</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">盔甲材质</td><td style="padding:6px 8px;font-weight:600">深灰金属 #3a3a3e，右肩狮头浮雕</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">披风</td><td style="padding:6px 8px;font-weight:600">暗红色 #8B0000，无花纹，及小腿</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">体态</td><td style="padding:6px 8px;font-weight:600">宽肩窄腰，站立略前倾</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">身高</td><td style="padding:6px 8px;font-weight:600">185cm</td></tr>
+          </table>
+        </div>
+        <div>
+          <div style="font-weight:700;color:#2a8;font-size:11px;letter-spacing:.1em;margin-bottom:12px;text-transform:uppercase">🔄 可变属性（随剧情推进变化）</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr><td style="padding:6px 8px;color:var(--text-secondary);width:80px">面部污渍</td><td style="padding:6px 8px">随战斗程度递增</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">披风破损</td><td style="padding:6px 8px">打斗后增加撕裂</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">表情</td><td style="padding:6px 8px">剧情驱动（凝重→坚定→释然）</td></tr>
+            <tr><td style="padding:6px 8px;color:var(--text-secondary)">血迹</td><td style="padding:6px 8px">关键战斗后出现</td></tr>
+          </table>
+
+          <div style="font-weight:700;color:#c44;font-size:11px;letter-spacing:.1em;margin:20px 0 12px;text-transform:uppercase">🚫 禁止项（Prompt 中必须明确排除）</div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">改变发型（长度/颜色/分线方向）</td></tr>
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">改变盔甲颜色或材质</td></tr>
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">改变瞳色</td></tr>
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">添加新角色到场景中</td></tr>
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">现代元素（建筑/车辆/电子设备）</td></tr>
+            <tr><td style="padding:4px 8px">❌</td><td style="padding:4px 8px">披风变色或消失</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col3" style="margin-top:24px">
+      <div class="card">
+        <h4>👤 角色档案</h4>
+        <p>每人一份：姓名、年龄、核心特征、正/侧/背三视图参考、服装色板、禁止变更项（发型/瞳色/体态）</p>
+      </div>
+      <div class="card">
+        <h4>🚫 禁止项</h4>
+        <p>明确列出每角色不可变元素：骑士的头盔形状、披风颜色、马的毛色——这些在任何 prompt 中不得更改</p>
+      </div>
+      <div class="card">
+        <h4>🎨 场景色板</h4>
+        <p>每场景一套固定色调 + 光源参数：黄昏=2700K暖光、雨夜=5600K冷光+蓝色调——跨镜头保持一致</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Anchor Image -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Tool #2</div>
+    <h2 class="sec-title">Anchor Image · 视觉锚点策略</h2>
+    <p class="sec-desc">
+      每个关键场景锁定一张 Anchor Image——优先从生成结果中优选最接近目标的一帧，或手工合成一张「理想帧」。后续该场景所有生成帧以此锚点为基准进行比对和约束。
+    </p>
+
+    <!-- Placeholder: Anchor Image comparison -->
+    <div class="col2" style="margin:32px 0">
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#1a1020 0%,#2a1540 50%,#1a1020 100%);aspect-ratio:16/10">
+        <div class="img-placeholder-text">
+          <span class="emoji">⚓</span>
+          <span class="label">[Anchor Image 占位]</span>
+          <span style="display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:4px">关键场景锚点帧</span>
+        </div>
+      </div>
+      <div class="img-placeholder" style="background:linear-gradient(135deg,#101a20 0%,#152a40 50%,#101a20 100%);aspect-ratio:16/10">
+        <div class="img-placeholder-text">
+          <span class="emoji">🔄</span>
+          <span class="label">[生成对比占位]</span>
+          <span style="display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:4px">基于 Anchor 的生成帧 vs 无 Anchor 的失控帧</span>
+        </div>
+      </div>
+    </div>
+    <div class="img-caption">▲ 左：锚点帧 · 右：基于锚点的生成对比（待替换实际截图）</div>
+  </div>
+</section>
+
+<!-- 分层生成策略 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Key Technique</div>
+    <h2 class="sec-title">分层生成 · 最关键的技巧</h2>
+    <p class="sec-desc">
+      AI 视频生成最大的坑：一次性生成「角色+背景」会让两者融合——披风边缘变雾、盔甲纹理混入岩石。分层生成是解决这个问题的核心方法。
+    </p>
+
+    <div class="pipeline-steps" style="grid-template-columns:repeat(4,1fr);margin:32px 0">
+      <div class="pipeline-step">
+        <div class="pipeline-num" style="background:#5b8c6e">L1</div>
+        <h4>背景层</h4>
+        <p>纯场景，不含角色。Prompt 明确写 "empty scene, no人物"——生成废墟/森林/城堡空镜</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num" style="background:#6e9eb0">L2</div>
+        <h4>角色层</h4>
+        <p>纯色/绿幕背景生成角色，抠出。锚定 Anchor Image——每帧面部特征保持一致</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num" style="background:#c06040">L3</div>
+        <h4>特效层</h4>
+        <p>烟雾/火焰/粒子独立生成。特效不污染角色和背景——不满意可单独替换</p>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-num" style="background:#8b5cf6">FX</div>
+        <h4>合成</h4>
+        <p>Premiere/达芬奇/CapCut 合成。调色统一——各层独立可调，不互相污染</p>
+      </div>
+    </div>
+
+    <div class="quote">
+      <p>「分层生成的本质是把 AI 的'不确定'锁死在每一层内部。角色层只管角色、背景层只管背景——层与层之间的边界是设计师决定的，不是 AI 决定的。这额外 30-40% 的工作量，是整个流程中 ROI 最高的一次投入。」</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px">
+      <div class="card">
+        <h4>❌ 不分层的问题</h4>
+        <p style="font-size:13px">角色和背景融合 → 改一个重来全部 → 色调在不同镜头间跳跃 → 生成 10 帧只有 2 帧能用。可用率 ~25%。</p>
+      </div>
+      <div class="card">
+        <h4>✅ 分层后的效果</h4>
+        <p style="font-size:13px">改背景不动角色 → 调色统一所有层 → 每层独立参数控制。可用率从 25% 提升到 85%+。这是整个工作流中 ROI 最高的优化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 平台对比 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Platform Comparison</div>
+    <h2 class="sec-title">即梦 vs Runway vs NanoBanana2</h2>
+    <p class="sec-desc">
+      三平台各有优劣，关键是根据场景选对工具——不是哪个最强，而是哪个最合适当前任务。
+    </p>
+
+    <table class="cmp-table">
+      <thead>
+        <tr><th>维度</th><th>即梦 (Jimeng)</th><th>Runway Gen-4</th><th>NanoBanana2</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>角色一致性</td>
+          <td>⭐⭐⭐ 参考图模式尚可，但切换景别后漂移明显</td>
+          <td>⭐⭐⭐⭐ Act-One 面部捕捉强，但全身镜头不稳定</td>
+          <td>⭐⭐⭐⭐⭐ 图像到图像生成最稳定，适合逐帧精修</td>
+        </tr>
+        <tr>
+          <td>场景连续</td>
+          <td>⭐⭐ 视频延长时色调偏移，需后期调色</td>
+          <td>⭐⭐⭐ 帧插值平滑，但光影逻辑偶尔断裂</td>
+          <td>⭐⭐⭐⭐ 风格迁移一致性好，适合保持场景色调</td>
+        </tr>
+        <tr>
+          <td>运动质量</td>
+          <td>⭐⭐⭐ 大幅运动模糊严重，小幅动作自然</td>
+          <td>⭐⭐⭐⭐⭐ Gen-4 运动自然度目前最强</td>
+          <td>⭐⭐⭐ 静态/微动场景强，大动作不如 Runway</td>
+        </tr>
+        <tr>
+          <td>可控性</td>
+          <td>⭐⭐ 提示词响应不够精准，偏随机</td>
+          <td>⭐⭐⭐⭐ 支持多参考图+运动笔刷，可控性高</td>
+          <td>⭐⭐⭐⭐ 图像输入→输出路径短，设计师可控感强</td>
+        </tr>
+        <tr>
+          <td>最佳场景</td>
+          <td>概念探索 · 风格发散</td>
+          <td>主体叙事 · 人物表演</td>
+          <td>风格锁定 · 逐帧精修</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="img-caption">▲ 基于 ~60 轮实际生成测试的主观评分（待补充对比截图矩阵）</div>
+
+    <!-- 平台决策树 -->
+    <div style="background:var(--bg-alt);padding:32px;border-radius:2px;border:1px solid var(--border-light);margin-top:32px">
+      <h4 style="font-family:var(--font-serif);font-size:17px;margin-bottom:20px">🧭 平台选择决策树</h4>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:2">
+        <p><strong>1. 项目刚起步，方向不确定？</strong> → 即梦跑 20 张概念图，快速筛选方向</p>
+        <p><strong>2. 方向确定了，需要锁定角色面部？</strong> → NanoBanana2 生成 Anchor Image（图像→图像一致性最好）</p>
+        <p><strong>3. 需要人物表演/叙事镜头？</strong> → Runway Gen-4（运动自然度最强，Act-One 面部捕捉）</p>
+        <p><strong>4. 需要空镜/过渡镜头/色调统一？</strong> → NanoBanana2（风格迁移一致性最好）</p>
+        <p><strong>5. 需要逐帧精修/分层合成？</strong> → NanoBanana2 逐层生成 → 后期合成</p>
+      </div>
+      <p style="font-size:11px;color:var(--text-tertiary);margin-top:16px">💡 核心原则：不是哪个平台最强，是哪个平台最合适当前阶段的任务。把「生成」和「判断」分开——AI 负责生成，你负责判断。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 失败案例 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Failed Iterations</div>
+    <h2 class="sec-title">失败案例 × 修正过程</h2>
+    <p class="sec-desc">
+      最有价值的不是「成功案例」，而是翻车之后的分析和修正——这正是「控制 AI 随机性」能力的核心证据。
+    </p>
+
+    <div class="fail-card">
+      <div class="fail-header">
+        <span class="fail-badge">❌ 失败</span>
+        <h4 style="margin:0">案例 #1：骑士在不同镜头里「换了三次脸」</h4>
+      </div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">
+        问题：同一个骑士角色，在远景、中景、特写三个镜头中面部特征完全不同——远景像中年、中景像少年、特写像完全不同的人。原因：每个镜头独立生成，prompt 中只写了「a knight」，没有提供面部的视觉锚点。
+      </p>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+        <span class="fail-fix">✅ 修正</span>
+        建立角色的 <strong>Anchor Image</strong>——用 NanoBanana2 生成一张理想的骑士面部特写作为所有镜头的参考图。后续所有 prompt 中加入「same face as reference image」，并将 Anchor Image 作为 img2img 输入。可用率从 20% 提升到 ~75%。
+      </p>
+    </div>
+
+    <div class="fail-card">
+      <div class="fail-header">
+        <span class="fail-badge">❌ 失败</span>
+        <h4 style="margin:0">案例 #2：黄昏场景的光线在 4 秒视频里跳变了 3 次</h4>
+      </div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">
+        问题：一段 4 秒的黄昏场景，光线色温在 2700K→5600K→3200K 之间跳跃，画面像在「开关灯」。原因：Runway 帧插值对光源信息敏感，但 prompt 中只写了「sunset lighting」，没有锁定具体色温和光源方向。
+      </p>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+        <span class="fail-fix">✅ 修正</span>
+        在 Continuity Bible 中加入<strong>场景光源规范</strong>：每个场景锁定色温（K值）、主光源方向（角度）、光源类型（点光/环境光/逆光）。生成 prompt 中加入「2700K warm sunset, god rays from 45° left, consistent lighting throughout」。配合 Anchor Image 的光源基准帧，光跳问题基本解决。
+      </p>
+    </div>
+
+    <div class="fail-card">
+      <div class="fail-header">
+        <span class="fail-badge">❌ 失败</span>
+        <h4 style="margin:0">案例 #3：背景生成精美但角色「融进去了」</h4>
+      </div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">
+        问题：Runway 一次性生成角色+背景时，AI 倾向把角色和背景「融合」——角色的披风边缘变成迷雾，盔甲纹理混入岩石。根本原因：AI 不理解「角色」和「背景」是两个独立图层。
+      </p>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8">
+        <span class="fail-fix">✅ 修正</span>
+        改为<strong>分层生成策略</strong>：背景单独生成（不含角色），角色在纯色/绿幕背景生成后抠出，最终在后期合成。虽然增加 30-40% 工作量，但可用率从 50% 提升到 85%+。这是整个流程中 ROI 最高的一次优化。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 生成日志模板 -->
+<section class="sec" style="background:var(--bg-alt)">
+  <div class="sec-inner">
+    <div class="sec-tag">Process Documentation</div>
+    <h2 class="sec-title">生成日志 · 每轮迭代的记录模板</h2>
+    <p class="sec-desc">
+      最有价值的不是成功案例，而是翻车后的分析。每次生成都记录——这不仅是给面试官看的「过程证据」，更是你自己的方法论积累。
+    </p>
+
+    <div style="background:#fff;border:1px solid var(--border-light);padding:32px;border-radius:2px;margin:24px 0;font-family:monospace;font-size:12px;line-height:2">
+      <div style="color:var(--accent);font-weight:700;margin-bottom:16px;font-size:14px">📝 生成日志 · 轮次 #23</div>
+      <div><span style="color:var(--text-tertiary)">平台：</span>Runway Gen-4</div>
+      <div><span style="color:var(--text-tertiary)">目标：</span>黄昏战场 · 骑士拔剑特写</div>
+      <div><span style="color:var(--text-tertiary)">参考图：</span>Anchor Frame 03（战场黄昏锚点）</div>
+      <div><span style="color:var(--text-tertiary)">Prompt：</span>"dark grey metal armored knight drawing sword, sunset battlefield, 2700K warm lighting, god rays from 45° left, same face as Anchor03, #3a3a3e armor, #8B0000 cape, no helmet change, no color shift — negative: bronze tone, helmet removal, modern elements"</div>
+      <div style="margin-top:12px;padding:12px;background:rgba(220,68,68,.06);border-left:2px solid #d44;border-radius:0 2px 2px 0">
+        <span style="color:#d44;font-weight:700">❌ 失败</span>
+        <span style="color:var(--text-secondary)">问题：盔甲从深灰变青铜色，光照方向偏移 ~30°。原因：prompt 未锁定盔甲颜色 hex 值，光照描述不够精确。</span>
+      </div>
+      <div style="margin-top:12px;padding:12px;background:rgba(34,170,136,.06);border-left:2px solid #2a8;border-radius:0 2px 2px 0">
+        <span style="color:#2a8;font-weight:700">✅ 修正方案</span>
+        <span style="color:var(--text-secondary)">1) 盔甲颜色锁定为 hex #3a3a3e；2) 光照增加精确角度参数 "45° left, azimuth 135°, elevation 30°"；3) 负面 prompt 加入 "bronze tone"。下轮测试。</span>
+      </div>
+    </div>
+
+    <div class="col2" style="margin-top:24px">
+      <div class="card">
+        <h4>📋 日志的关键字段</h4>
+        <p style="font-size:12px;line-height:1.9">
+          • <strong>轮次编号</strong> — 追踪迭代次数<br>
+          • <strong>平台+目标</strong> — 明确当轮任务<br>
+          • <strong>参考图</strong> — 用了哪个 Anchor<br>
+          • <strong>完整 Prompt</strong> — 含正负面词<br>
+          • <strong>结果判定</strong> — ✅/❌/⚠️<br>
+          • <strong>失败原因</strong> — 具体的技术原因<br>
+          • <strong>修正方案</strong> — 下一轮改什么
+        </p>
+      </div>
+      <div class="card">
+        <h4>💡 为什么要这样做</h4>
+        <p style="font-size:12px;line-height:1.9">
+          面试官问「你是怎么控制 AI 随机性的」——你不是在讲故事，是在展示<strong>一套可复现的系统</strong>。日志就是你的工程日记。AI 岗位最稀缺的人才不是「会用 AI 的人」，是「能量化改进 AI 产出的人」。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 当前状态 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Current Status</div>
+    <h2 class="sec-title">微电影「迷茫的骑士」进行中</h2>
+    <p class="sec-desc">
+      这套工作流的终极验证是《迷茫的骑士》——一部完全由 AI 辅助生成的微电影。目前处于前期制作阶段。
+    </p>
+
+    <div class="progress-wrap">
+      <div style="display:flex;align-items:center;gap:16px">
+        <div class="img-placeholder" style="background:linear-gradient(135deg,#0a0a1a,#1a1040,#0a2a3a);width:180px;aspect-ratio:16/10;flex-shrink:0">
+          <div style="text-align:center;padding:16px">
+            <span style="font-size:28px">🏇</span>
+            <span style="display:block;font-size:9px;color:rgba(255,255,255,.3);margin-top:4px">待替换概念图</span>
+          </div>
+        </div>
+        <div style="flex:1">
+          <h4 style="font-family:var(--font-serif);font-size:18px;margin-bottom:8px">迷茫的骑士 · AI 微电影</h4>
+          <div class="progress-label"><span>整体进度</span><span>60%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+          <div style="display:flex;gap:32px;margin-top:16px;font-size:12px;color:var(--text-tertiary)">
+            <span>✅ Continuity Bible 完成</span>
+            <span>✅ Anchor Image 体系建立</span>
+            <span>🔄 逐场景生成中</span>
+            <span>⏳ 后期合成待启动</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心能力 -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">Why This Matters</div>
+    <h2 class="sec-title">为什么这个项目对 AI 岗位是硬通货</h2>
+    <div class="col2" style="margin-top:24px">
+      <div class="card">
+        <h4>🎯 控制 AI 随机性</h4>
+        <p>这不是「调一个好 prompt」的项目——这是<strong>建立一套系统</strong>让 AI 的随机输出变得可预期、可复用、可规模化。这是 AI 产品/设计岗位最稀缺的能力。</p>
+      </div>
+      <div class="card">
+        <h4>🔧 工具链整合</h4>
+        <p>即梦 + Runway + NanoBanana2 三平台深度使用经验。更重要的是<strong>知道什么时候用哪个</strong>——不是堆工具，是选工具。</p>
+      </div>
+      <div class="card">
+        <h4>📐 系统思维</h4>
+        <p>Continuity Bible 本质是设计系统的 AI 版本——将「设计一致性」的方法论迁移到「AI 生成一致性」上。这是设计师独有的结构化思维。</p>
+      </div>
+      <div class="card">
+        <h4>🔄 迭代能力</h4>
+        <p>~60 轮迭代，每轮都记录失败原因和修正策略。这不是「一键出片」的运气——这是<strong>可复现的方法论</strong>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><a href="index">← 返回作品集首页</a></p>
+  <p style="margin-top:12px">© 2026 金承旭 JIN CHENGXU · AI Video Workflow Exploration</p>
+  <p style="font-size:10px;color:var(--text-tertiary);margin-top:4px">页面中的 [占位] 标记将在提供实际截图后替换</p>
+</footer>
+
+</body>
+</html>

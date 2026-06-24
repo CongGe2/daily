@@ -6,3 +6,10 @@ NTUSER.DAT
 
 .vercel
 .claude/settings.local.json
+*.fbx
+*.webm
+*.mp4
+videos/
+ai-tools/
+作品集图片/
+page@*.webm

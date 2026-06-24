@@ -197,6 +197,23 @@
   <h2 class="section-title">概念发展 · 从发散到收敛</h2>
   <p class="section-desc">运用 AI 生图工具进行外骨骼概念发散，生成多方向方案后进行系统性评估。核心收敛逻辑：从"能做多少"转向"用户真正愿意穿戴多少"。</p>
 
+  <!-- AI 3D Comparison -->
+  <div style="background:rgba(155,125,94,0.04);border:1px solid rgba(155,125,94,0.2);padding:28px 32px;margin:28px 0;border-radius:2px">
+    <h3 style="margin-top:0">🔮 Meshy AI — 概念图 → 3D 白膜验证</h3>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:16px">概念发散阶段的穿戴设备草图可直接导入 <strong>Meshy AI</strong>（图像转 3D，meshy-6），30 秒生成可旋转查看的 3D 白膜。不需要建模就能判断"这个形体在人身上成立吗"。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <figure style="margin:0">
+        <img src="images/ai-tools/meshy-vr-to-3d.png" alt="Meshy AI VR设备 3D白膜" style="width:100%;border-radius:2px;border:1px solid var(--border-light)">
+        <figcaption style="font-size:11px;color:var(--text-tertiary);text-align:center;margin-top:6px">Meshy AI：产品渲染图 → 3D 白膜（~30秒，100K面）</figcaption>
+      </figure>
+      <figure style="margin:0">
+        <img src="images/optimized/vr-keyshot-thumb.jpg" alt="KeyShot 终版渲染" style="width:100%;border-radius:2px;border:1px solid var(--border-light)">
+        <figcaption style="font-size:11px;color:var(--text-tertiary);text-align:center;margin-top:6px">Rhino 7 + KeyShot 终版渲染 —— AI 加速探索，设计师做最终决策</figcaption>
+      </figure>
+    </div>
+    <p style="margin-top:12px;font-size:11px;color:var(--text-tertiary);text-align:center">管线：概念草图 → Meshy AI（meshy-6, 100K面, PBR） → 快速形体验证 → Rhino 精修</p>
+  </div>
+
   <blockquote class="case-quote">
     <p>"最初的全身外骨骼套装设计，因为过于庞大以及不能飞行等设计缺陷进行了修改——改进了便捷程度和深入了链接设备的考虑，让人能够做到更多的动作，但是想要实现电影中的效果还是需要改进。"</p>
     <cite>—— 设计笔记</cite>
@@ -288,6 +305,63 @@
   <p class="section-desc">
     全身外骨骼的浪漫想象最终让位于腰腿部磁吸方案的务实选择——这不是妥协，而是产品设计最核心的能力：<span style="color:var(--text);font-weight:500">在约束中做出正确的取舍</span>。
   </p>
+</section>
+
+<!-- ============ PROCESS EVIDENCE ============ -->
+<section class="case-section alt">
+  <p class="section-num">Process Evidence</p>
+  <h2 class="section-title">过程证据</h2>
+  <p class="section-desc">设计不是线性的——这里记录了从外骨骼到磁吸方案的完整迭代过程，包括走弯路的时刻。</p>
+
+  <!-- Early Sketches -->
+  <div style="margin-bottom:48px">
+    <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">✏️ 早期草图</h3>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:20px;max-width:640px">
+      项目最初的灵感来自电影道具——科幻电影中的外骨骼和触觉反馈装置。早期草图的重点不是「做出来」，而是「极端发散」——全身外骨骼 → 上臂装置 → 腰部磁吸的演变路径。
+    </p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+      <div><img src="images/process/vr-concepts.png" alt="VR 早期概念发散" style="width:100%;border-radius:2px;border:1px solid var(--border-light)" loading="lazy"><span style="display:block;text-align:center;font-size:10px;color:var(--text-tertiary);margin-top:6px">▲ 概念发散 · 12 个方向</span></div>
+      <div><img src="images/case-study/page-30.jpg" alt="迭代一 · 外骨骼方案" style="width:100%;border-radius:2px;border:1px solid var(--border-light)" loading="lazy"><span style="display:block;text-align:center;font-size:10px;color:var(--text-tertiary);margin-top:6px">▲ 迭代一 · 外骨骼方案</span></div>
+      <div><img src="images/process/vr-prototype.png" alt="VR 3D 打印原型" style="width:100%;border-radius:2px;border:1px solid var(--border-light)" loading="lazy"><span style="display:block;text-align:center;font-size:10px;color:var(--text-tertiary);margin-top:6px">▲ 3D 打印原型验证</span></div>
+    </div>
+  </div>
+
+  <!-- Failed Iterations -->
+  <div style="margin-bottom:48px">
+    <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">❌ 失败迭代</h3>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:20px;max-width:640px">
+      12 个概念方案中，2 个重大方向被推翻。每一次推翻都在缩小问题空间。
+    </p>
+
+    <div style="background:var(--card);border:1px solid var(--border-light);padding:24px;border-radius:2px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:10px;font-weight:700;color:#c44;background:rgba(200,68,68,.08);padding:2px 8px;border-radius:2px">被毙方案 #1</span>
+        <strong style="font-family:var(--font-serif);font-size:16px">「全身外骨骼」—— 覆盖肩/臂/腰/腿的完整装备</strong>
+      </div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+        概念来源：科幻电影中全身触觉反馈装甲。视觉效果震撼，但问题也很明显：<strong>重量预估 3.5kg+、穿戴时间 >5 分钟、需要他人辅助</strong>。毙掉原因：量产可行性为零，且用户研究后确认"快速穿脱"比"全覆盖"优先级高得多。
+      </p>
+    </div>
+
+    <div style="background:var(--card);border:1px solid var(--border-light);padding:24px;border-radius:2px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:10px;font-weight:700;color:#c44;background:rgba(200,68,68,.08);padding:2px 8px;border-radius:2px">被毙方案 #2</span>
+        <strong style="font-family:var(--font-serif);font-size:16px">「上臂固定」—— 仅覆盖上臂的简化版</strong>
+      </div>
+      <p style="font-size:13px;color:var(--text-secondary);line-height:1.8">
+        外骨骼简化后的第一版：只保留上臂固定。问题在于<strong>长期使用肩部疲劳</strong>——人体工学测试中 20 分钟后即可感知不适。更致命的是，上臂固定限制了 VR 游戏中常见的双手交互动作（如瞄准、投掷）。毙掉原因：<strong>牺牲了核心交互自由度</strong>。
+      </p>
+    </div>
+  </div>
+
+  <!-- User Feedback -->
+  <div>
+    <h3 style="font-family:var(--font-serif);font-size:20px;margin-bottom:12px;">💬 用户测试反馈</h3>
+    <blockquote class="case-quote">
+      <p>"一开始我觉得外骨骼很酷，但戴上那个 3D 打印原型之后才意识到——我需要的不是'装备感'，是'忘记装备'。磁吸方案的好处就是：装上去那一刻有反馈，但玩起来就完全感觉不到它的存在了。"</p>
+      <cite>— 原型测试用户 #4 · 经常玩 VR 的同学</cite>
+    </blockquote>
+  </div>
 </section>
 
 <div style="text-align:center;padding-bottom:80px">

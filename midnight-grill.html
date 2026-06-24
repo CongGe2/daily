@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>MidnightGrill · 深夜食堂 — Three.js 3D + Unity 游戏动画特效 | 金承旭</title>
+  <meta name="description" content="Three.js 3D 烹饪模拟 + Unity 2D 游戏双版本。实时3D渲染/粒子特效/UI动画系统/C#游戏架构。" />
+  <meta property="og:title" content="MidnightGrill · 深夜食堂 — Three.js 3D + Unity 游戏动画" />
+  <meta property="og:description" content="Three.js WebGL 3D · 粒子特效 · 实时阴影 · UI动画 · Unity 2D 游戏架构" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="case.css">
+  <style>
+    body{background:var(--bg)}
+    .case-hero{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(180deg,#1a1008 0%,#2a1810 50%,var(--bg) 100%);color:#e8d8c0;padding:120px 24px 80px}
+    .case-hero-content{max-width:720px}
+    .case-hero h1{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:700;letter-spacing:.04em;margin-bottom:12px;color:#c8a050}
+    .case-hero .subtitle{font-size:16px;color:#c8a050;letter-spacing:.2em;font-weight:300;margin-bottom:28px}
+    .case-hero .hero-desc{font-size:15px;color:rgba(232,216,192,.55);line-height:1.8}
+    .case-hero .hero-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .case-hero .hero-tags span{padding:6px 16px;border:1px solid rgba(200,160,80,.25);border-radius:2px;font-size:12px;color:#c8a050;letter-spacing:.06em}
+    .case-section{max-width:800px;margin:0 auto;padding:80px clamp(24px,5vw,64px)}
+    .case-section h2{font-family:var(--serif);font-size:26px;font-weight:600;margin-bottom:20px;letter-spacing:-.01em}
+    .case-section h3{font-size:18px;font-weight:600;margin:32px 0 12px}
+    .case-section p,.case-section li{font-size:15px;line-height:1.8;color:var(--text2);margin-bottom:12px}
+    .case-section ul{padding-left:20px;margin-bottom:20px}
+    .case-section ul li{margin-bottom:6px}
+    .vfx-showcase{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:28px 0}
+    .vfx-card{background:var(--card);border-radius:8px;padding:24px;text-align:center;border:1px solid var(--border)}
+    .vfx-card .icon{font-size:36px;margin-bottom:10px}
+    .vfx-card .label{font-size:13px;font-weight:600;margin-bottom:4px}
+    .vfx-card .desc{font-size:12px;color:var(--text2);line-height:1.5}
+    .code-block{background:#141210;border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin:16px 0;overflow-x:auto;font-family:'SF Mono','Fira Code',monospace;font-size:13px;line-height:1.7;color:#c8a050}
+    .code-block .kw{color:#ff6a3d}
+    .code-block .cm{color:#8a8780}
+    .back-link{display:inline-block;margin-top:40px;color:var(--accent);text-decoration:none;font-size:14px}
+    .back-link:hover{text-decoration:underline}
+    .highlight{color:#c8a050;font-weight:600}
+    .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0}
+    .stat-item{text-align:center;padding:20px 12px;background:var(--card);border-radius:8px;border:1px solid var(--border)}
+    .stat-item .num{font-family:var(--serif);font-size:28px;font-weight:700;color:#c8a050}
+    .stat-item .label{font-size:12px;color:var(--text2);margin-top:4px}
+    @media(max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="nav-logo">JIN CHENGXU</a>
+    <nav><a href="index.html#projects">← 返回作品集</a></nav>
+  </div>
+</header>
+
+<section class="case-hero">
+  <div class="case-hero-content">
+    <h1>MidnightGrill · 深夜食堂</h1>
+    <p class="subtitle">THREE.JS 3D 实时渲染 · 粒子特效 · UNITY 2D 游戏架构</p>
+    <p class="hero-desc">
+      双版本烹饪模拟游戏。<strong style="color:#c8a050">Three.js 3D 版</strong>可直接在浏览器试玩：
+      实时阴影、粒子特效（蒸汽/金币/完成爆发）、霓虹灯招牌、日式灯笼、浮动文字动画。
+      <strong style="color:#c8a050">Unity 2D 版</strong>含 12 个 C# 脚本 + GameManager 状态机 +
+      程序化粒子（零贴图依赖）+ UI 动画曲线系统。
+    </p>
+    <div class="hero-tags">
+      <span>Three.js</span><span>WebGL 3D</span><span>Unity 2D</span><span>C#</span><span>Particle VFX</span><span>Spine</span><span>UI Animation</span>
+    </div>
+    <div style="margin-top:32px">
+      <a href="grill-master.html" style="display:inline-block;padding:14px 36px;background:#c8a050;color:#1a1008;border-radius:4px;font-weight:700;font-size:16px;text-decoration:none;letter-spacing:.04em">🔥 立即试玩 3D 版 →</a>
+    </div>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>项目概况 · 双版本</h2>
+  <div class="stat-grid">
+    <div class="stat-item"><div class="num">3D</div><div class="label">Three.js 版</div></div>
+    <div class="stat-item"><div class="num">12</div><div class="label">C# 脚本</div></div>
+    <div class="stat-item"><div class="num">6</div><div class="label">粒子特效</div></div>
+    <div class="stat-item"><div class="num">8</div><div class="label">动画类型</div></div>
+  </div>
+  <p>
+    <span class="highlight">深夜食堂</span> 是一款烹饪模拟游戏，拥有两个独立版本：
+  </p>
+  <p>
+    <strong style="color:#c8a050">🔥 Three.js 3D 版</strong> — 实时 WebGL 3D 渲染，可直接在浏览器中试玩。
+    完整 3D 厨房场景（地板/墙面/木条装饰/霓虹灯招牌/日式灯笼），
+    实时阴影（PCFSoftShadowMap），ACES 色调映射，
+    粒子特效系统（烹饪蒸汽/油花飞溅/完成爆发/金币粒子），
+    浮动文字动画，CSS 弹性 UI 动画（订单卡片入场/Combo 弹出/按钮呼吸）。
+  </p>
+  <p>
+    <strong style="color:var(--accent)">🎮 Unity 2D 版</strong> — 底层游戏架构验证。
+    12 个 C# 脚本 + GameManager 状态机驱动的完整游戏循环，
+    程序化粒子（零外部贴图依赖）+ UI 动画曲线系统 + Spine 骨骼动画集成。
+  </p>
+
+  <h2>Three.js 3D 技术栈</h2>
+  <ul>
+    <li><strong>渲染引擎：</strong> Three.js 0.160 · WebGL 2.0 · ACES Filmic Tone Mapping</li>
+    <li><strong>光照：</strong> 方向光（月亮光）+ 点光源（厨房暖光 + 霓虹反射）+ 环境光 · PCFSoft 阴影</li>
+    <li><strong>3D 场景：</strong> 木质台面 · 4 个 CylinderGeometry 烹饪站 · TorusGeometry 发光环 · CanvasTexture 霓虹招牌</li>
+    <li><strong>粒子系统：</strong> 程序化粒子池（蒸汽/金币/完成/失败）· 生命周期管理 · 缩放+透明度动画</li>
+    <li><strong>交互：</strong> Raycaster 拾取 · Pointer Events · 移动端触控适配</li>
+    <li><strong>UI：</strong> CSS 弹性动画（cubic-bezier 缓动）· 订单卡片入场 · Combo 弹出 · 浮动数字</li>
+    <li><strong>音效：</strong> Web Audio API 合成音效（正弦波/锯齿波/三角波）</li>
+  </ul>
+
+  <h2>游戏系统架构</h2>
+  <p>
+    <span class="highlight">GameManager</span> 状态机驱动全部游戏逻辑，6 个子系统各司其职：
+  </p>
+  <ul>
+    <li><strong>GameManager</strong> — 主控状态机（Title → Playing → DayEnd → Upgrade → GameOver），天数/金币/连击/升级管理，PlayerPrefs 存档</li>
+    <li><strong>CustomerSpawner</strong> — 顾客 + 订单生成，动态难度（天数增加 → 订单量增加），入场动画</li>
+    <li><strong>CookingStation</strong> — 4 种烹饪站（烤架/炸锅/备菜/出餐），进度条 + 食材变色 + 光晕提示</li>
+    <li><strong>SelectionManager</strong> — 食材按钮选择系统，点击食材 → 发光选中 → 点击烹饪站放置</li>
+    <li><strong>AssemblyPlate</strong> — 装盘系统，食材组合匹配算法（Dictionary 计数比对），自动触发订单完成</li>
+    <li><strong>Order</strong> — 订单生命周期：初始化 → 计时 → 食材填充 → 完成/超时失败</li>
+  </ul>
+
+  <h2>粒子特效系统（VFX）</h2>
+  <p>
+    全部粒子特效由 <span class="highlight">VFXManager.cs</span> 的 <code>CreateProceduralMaterial()</code> 方法
+    在运行时生成 32×32 像素纹理——圆形、柔光团、四角星三种形状——<span class="highlight">零外部贴图依赖</span>。
+  </p>
+  <div class="vfx-showcase">
+    <div class="vfx-card">
+      <div class="icon">💨</div>
+      <div class="label">烹饪蒸汽</div>
+      <div class="desc">柔光团粒子 · 缓升+渐消 · CircleShape 发射器</div>
+    </div>
+    <div class="vfx-card">
+      <div class="icon">💥</div>
+      <div class="label">油花飞溅</div>
+      <div class="desc">尖锐圆形粒子 · Burst 爆发 · 重力+随机旋转</div>
+    </div>
+    <div class="vfx-card">
+      <div class="icon">⭐</div>
+      <div class="label">完成金光</div>
+      <div class="desc">星形粒子 · SphereShape + 反重力 · 金色色调</div>
+    </div>
+    <div class="vfx-card">
+      <div class="icon">🪙</div>
+      <div class="label">金币爆发</div>
+      <div class="desc">星形黄色粒子 · Canvas 空间 · 订单完成触发</div>
+    </div>
+    <div class="vfx-card">
+      <div class="icon">💫</div>
+      <div class="label">Combo 光晕</div>
+      <div class="desc">全屏粒子层 · Combo≥5 触发 · 3秒自动销毁</div>
+    </div>
+    <div class="vfx-card">
+      <div class="icon">📳</div>
+      <div class="label">屏幕震动</div>
+      <div class="desc">Camera 随机偏移 · 指数衰减 · 震感可配置</div>
+    </div>
+  </div>
+
+  <div class="code-block">
+<span class="cm">// VFXManager.cs — 运行时程序化粒子纹理生成</span>
+<span class="kw">Material</span> <span class="fn">CreateProceduralMaterial</span>(Color tint, <span class="kw">bool</span> softBlob, <span class="kw">bool</span> star = <span class="kw">false</span>)
+{
+    <span class="kw">int</span> size = 32;
+    <span class="kw">var</span> tex = <span class="kw">new</span> Texture2D(size, size, TextureFormat.RGBA32, <span class="kw">false</span>);
+    <span class="cm">// ... pixel-level circle/star/soft-blob pattern generation ...</span>
+    <span class="kw">var</span> mat = <span class="kw">new</span> Material(Shader.Find(<span class="str">"Particles/Standard Unlit"</span>));
+    mat.mainTexture = tex;
+    <span class="kw">return</span> mat;
+}
+  </div>
+
+  <h2>UI 动画系统</h2>
+  <p>
+    <span class="highlight">UIAnimator.cs</span> 提供 8 种动画原语，全部由 AnimationCurve + Coroutine 驱动，
+    不依赖 DOTween 等第三方库：
+  </p>
+  <ul>
+    <li><strong>SlideIn</strong> — 从右侧滑入 + 弹性曲线（订单卡片入场）</li>
+    <li><strong>DropIn</strong> — 从上方掉落 + 缩放渐显（日结算面板）</li>
+    <li><strong>Pop</strong> — 弹性缩放弹出（Combo 文字）</li>
+    <li><strong>Punch</strong> — 快速缩涨（金币变化反馈）</li>
+    <li><strong>Stagger</strong> — 子元素交错入场（升级卡片）</li>
+    <li><strong>FlashColor</strong> — 颜色闪烁（按钮反馈）</li>
+    <li><strong>CountTo</strong> — 数字滚动动画（金币递增）</li>
+    <li><strong>Pulse</strong> — 持续呼吸缩放（选中状态指示）</li>
+  </ul>
+
+  <h2>Spine 骨骼动画集成</h2>
+  <p>
+    角色在 <span class="highlight">Spine</span> 中完成全套骨骼动画制作，通过 <span class="highlight">spine-unity</span> 运行时集成到 Unity：
+  </p>
+  <ul>
+    <li><strong>Idle</strong> — 2 秒循环 · 呼吸起伏 + 微小身体晃动</li>
+    <li><strong>Walk</strong> — 1 秒循环 · 手臂摆动 + 腿部迈步 + IK 脚掌踩地</li>
+    <li><strong>Happy</strong> — 1.5 秒 · 跳起 + 举手 + 表情变化</li>
+  </ul>
+  <p>
+    动画状态机由 <code>SpineAnimationController.cs</code> 管理，根据游戏事件切换动画轨道，
+    使用 <code>SkeletonAnimation.AnimationState.SetAnimation()</code> 实现 Crossfade 混合过渡。
+  </p>
+
+  <h2>技术栈</h2>
+  <p>
+    <strong>引擎：</strong> Unity 2022.3 LTS · 2D Core<br>
+    <strong>语言：</strong> C# (.NET Standard 2.1)<br>
+    <strong>动画：</strong> Spine 2D (spine-unity runtime) · Unity ParticleSystem · UI AnimationCurves<br>
+    <strong>渲染：</strong> Post-processing (Bloom + Vignette + Color Grading) · URP 2D Renderer<br>
+    <strong>输入：</strong> Mouse + Touch (pinch zoom)<br>
+    <strong>数据：</strong> ScriptableObject (RecipeDatabase) · PlayerPrefs (存档)<br>
+    <strong>版本控制：</strong> Git
+  </p>
+
+  <h2>反思与下一步</h2>
+  <ul>
+    <li>✅ 程序化粒子省去了外部贴图依赖，但若重来会从第一天就搭建 Post-processing 管线</li>
+    <li>✅ 模块化架构让新烹饪站/新菜谱的添加成本极低（只需修改 RecipeDatabase.asset）</li>
+    <li>🔜 计划添加更多 Spine 角色动画（厨师烹饪动作、顾客生气/离开动画）</li>
+    <li>🔜 Build WebGL 版本部署到 itch.io，方便面试官直接试玩</li>
+  </ul>
+
+  <a href="index.html#projects" class="back-link">← 返回作品集</a>
+</section>
+
+<footer style="text-align:center;padding:60px 24px;color:var(--text2);font-size:13px">
+  © 2026 金承旭 · MidnightGrill Unity Project
+</footer>
+
+</body>
+</html>

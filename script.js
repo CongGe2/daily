@@ -10,7 +10,7 @@
   const nav = document.getElementById('nav');
   const navToggle = document.getElementById('navToggle');
   const navLinks = nav.querySelectorAll('.nav-links a');
-  const revealEls = document.querySelectorAll('.reveal');
+  const baseRevealEls = document.querySelectorAll('.reveal');
 
   // ---------- Scroll: nav background ----------
   let lastScroll = 0;
@@ -61,7 +61,7 @@
     });
   }, observerOptions);
 
-  revealEls.forEach(function (el) {
+  baseRevealEls.forEach(function (el) {
     revealObserver.observe(el);
   });
 
@@ -167,8 +167,8 @@
   }
 
   // ── Scroll reveal ──
-  const revealEls = document.querySelectorAll('.reveal-section, .reveal');
-  if (revealEls.length > 0) {
+  const revealTargets = document.querySelectorAll('.reveal-section, .reveal');
+  if (revealTargets.length > 0) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -177,7 +177,7 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
-    revealEls.forEach(el => observer.observe(el));
+    revealTargets.forEach(el => observer.observe(el));
   }
 
   // ── Nav scroll shadow ──
