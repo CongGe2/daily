@@ -199,37 +199,86 @@
           <button class="filter-btn" data-filter="ai">🤖 AI</button>
         </div>
 
-        <!-- Live Project - 迷茫的骑士 -->
-        <article class="project-card project-card-live reveal" id="project-live">
-          <div class="project-index">LIVE</div>
+        <!-- AI Agent Portfolio Sub-Section -->
+        <div class="reveal" style="margin:56px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
+          <div class="section-label" style="margin:0;">AI Agent Portfolio</div>
+          <h3 style="font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);">AI Agent 作品集</h3>
+          <span style="font-size:12px;color:var(--text-tertiary);">面向 AI Agent 咨询岗位 · 可运行 · 可评测 · 可试玩</span>
+        </div>
+
+        <!-- Project ShopMind - AI Support Agent -->
+        <article class="project-card reveal" data-category="ai" id="project-shopmind">
+          <div class="project-index">AI AGENT</div>
           <div class="project-body">
             <div class="project-image">
-              <a href="ai-video-workflow">
-                <div class="live-project-cover" style="background:linear-gradient(135deg,#0a0a1a 0%,#1a1040 40%,#0d1a30 100%);width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;overflow:hidden;border:1px dashed rgba(176,146,110,.3);">
+              <span class="project-role-tag">AI Agent / 全栈</span>
+              <a href="shopmind-case.html">
+                <div class="live-project-cover" style="background:linear-gradient(135deg,#0f1220 0%,#161b33 45%,#0f1220 100%);width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(124,155,255,.3);">
                   <div style="text-align:center;z-index:1;">
-                    <span style="font-size:44px;display:block;filter:grayscale(0.3);">🏇</span>
-                    <span style="font-family:var(--serif);font-size:18px;font-weight:700;color:rgba(200,180,160,.8);display:block;margin-top:8px;">迷茫的骑士</span>
-                    <span style="font-size:11px;color:rgba(180,170,150,.5);display:block;margin-top:4px;">AI 微电影 · 进行中</span>
-                    <div style="margin-top:12px;width:120px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-left:auto;margin-right:auto;overflow:hidden;">
-                      <div style="height:100%;width:60%;background:linear-gradient(90deg,rgba(176,146,110,.6),rgba(200,170,130,.8));border-radius:2px;"></div>
-                    </div>
-                    <span style="font-size:9px;color:rgba(180,170,150,.4);display:block;margin-top:4px;">进度 60%</span>
+                    <span style="font-size:40px;display:block;">🤖</span>
+                    <span style="font-family:var(--serif);font-size:20px;font-weight:700;color:#7c9bff;display:block;margin-top:8px;">ShopMind</span>
+                    <span style="font-size:11px;color:rgba(170,185,255,.6);display:block;margin-top:4px;">Multilingual AI Support Agent · EN/ZH/JA/ES</span>
+                    <span style="font-size:9px;color:rgba(170,185,255,.4);display:block;margin-top:6px;">点击查看案例 →</span>
                   </div>
                   <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%);"></div>
-                  <div style="position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;color:rgba(176,146,110,.8);letter-spacing:.1em;background:rgba(0,0,0,.5);padding:2px 8px;border-radius:2px;">🟡 进行中</div>
+                  <div style="position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;color:#7c9bff;letter-spacing:.1em;background:rgba(0,0,0,.5);padding:2px 8px;border-radius:2px;">🟢 开源可运行</div>
                 </div>
               </a>
             </div>
             <div class="project-info">
-              <div class="project-meta"><span class="project-type">AI 微电影 · 进行中</span><span class="project-date">2026 —</span></div>
-              <h3 class="project-title">迷茫的骑士<span class="project-subtitle">AI 视频工作流实战验证 · Continuity Bible 方法论</span></h3>
-              <p class="project-desc">一部完全由 AI 辅助生成的微电影。将「控制 AI 随机性」的方法论落地为完整叙事作品——Continuity Bible 角色管理 + Anchor Image 锁定 + 分层生成策略。</p>
-              <a href="ai-video-workflow" class="project-link">查看工作流探索 →</a>
+              <div class="project-meta"><span class="project-type">AI Agent · 后端全栈开发</span><span class="project-date">2026.08</span></div>
+              <h3 class="project-title">ShopMind · 多语言 AI 客服 Agent<span class="project-subtitle">五工具 · 代码级护栏 · 评测满分 · 实时监控 · 人在回路</span><span class="project-subtitle-en">5 Tools · Policy-as-Code Guardrails · 100% Eval Pass · Human-in-the-Loop</span></h3>
+              <p class="project-desc">从零交付的跨境电商客服 AI Agent：function calling 工具循环集成订单查询、物流追踪、RAG 知识检索、退款、人工升级五个工具；$200 退款限额等业务护栏以代码执行而非提示词承诺；30 题金标评测集 + LLM-as-judge 五维评分 + 确定性硬门，通过率 100%、考官均分 4.93；JSONL 全链路追踪 + 实时监控面板 + PII 脱敏；升级场景自动转人工（human-in-the-loop），可现场试玩验证。</p>
+              <div class="project-metrics">
+                <div class="project-metric"><span class="project-metric-num">5</span><span class="project-metric-label">工具集成</span></div>
+                <div class="project-metric"><span class="project-metric-num">30/30</span><span class="project-metric-label">评测通过</span></div>
+                <div class="project-metric"><span class="project-metric-num">4.93</span><span class="project-metric-label">考官均分</span></div>
+                <div class="project-metric"><span class="project-metric-num">26</span><span class="project-metric-label">自动化测试</span></div>
+              </div>
+              <p class="project-reflection">💡 反思：评测系统是这个项目最大的收获——考官打满分的回答仍可能绕过政策，只有确定性硬门抓住了它。「政策在代码里，不在提示词里」是 AI Agent 落地的第一原则。</p>
+              <div class="project-tags">
+                <span>AI Agent</span><span>FastAPI</span><span>RAG</span><span>Guardrails</span><span>LLM-as-Judge</span><span>pytest</span><span>Postman</span>
+              </div>
+              <div class="project-links-dual">
+                <a href="shopmind-case.html" class="project-link-hero" style="background:var(--accent);color:#fff;border-color:var(--accent);">
+                  📋 查看完整案例
+                </a>
+                <a href="https://github.com/CongGe2/shopmind-support-agent" class="project-link-hero" target="_blank" rel="noopener">
+                  🔗 GitHub 仓库
+                </a>
+              </div>
             </div>
           </div>
         </article>
 
-        <!-- Project 00 - Rift Speaker -->
+        <!-- AI Voice Assistant - 小金 -->
+        <article class="project-card reveal" data-category="ai" id="project-voice">
+          <div class="project-index">🤖 NEW</div>
+          <div class="project-body">
+            <div class="project-image">
+              <a href="http://127.0.0.1:9528/interview.html" target="_blank">
+                <div class="live-project-cover" style="background:linear-gradient(135deg,#0a0a0f 0%,#1a1020 40%,#0d1a2a 100%);width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(232,125,125,.3);">
+                  <div style="text-align:center;z-index:1;">
+                    <span style="font-size:44px;display:block;">🎤</span>
+                    <span style="font-family:var(--serif);font-size:18px;font-weight:700;color:rgba(232,125,125,.8);display:block;margin-top:8px;">AI 语音助手</span>
+                    <span style="font-size:11px;color:rgba(200,180,180,.5);display:block;margin-top:4px;">本地运行 · Qwen3-TTS + DeepSeek</span>
+                    <span style="font-size:9px;color:rgba(232,125,125,.4);display:block;margin-top:6px;">点击跳转 Demo →</span>
+                  </div>
+                  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%);"></div>
+                  <div style="position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;color:rgba(232,125,125,.8);letter-spacing:.1em;background:rgba(0,0,0,.5);padding:2px 8px;border-radius:2px;">🟢 可体验</div>
+                </div>
+              </a>
+            </div>
+            <div class="project-info">
+              <div class="project-meta"><span class="project-type">AI 语音 · 本地部署</span><span class="project-date">2026.06</span></div>
+              <h3 class="project-title">AI 语音助手系统<span class="project-subtitle">端到端语音对话 · 声音克隆 · 全本地部署</span></h3>
+              <p class="project-desc">从零搭建完整 AI 语音对话系统。Qwen3-TTS 声音克隆 + DeepSeek 角色人格 + Whisper 语音识别，全栈 Python FastAPI WebSocket，RTX 4050 本地运行。支持语气控制、多音色切换、角色人格定制。</p>
+              <a href="http://127.0.0.1:9528/interview.html" class="project-link" target="_blank">查看项目介绍 →</a>
+            </div>
+          </div>
+        </article>
+
+<!-- Project 00 - Rift Speaker -->
         <article class="project-card reveal" data-category="product" id="project-00">
           <div class="project-index">NEW</div>
           <div class="project-body">
@@ -669,6 +718,25 @@
               <h3 class="project-title">RingFit Dashboard<span class="project-subtitle">健身数据追踪面板 · Claude Code 全流程</span></h3>
               <p class="project-desc">个人健康数据驱动的交互式仪表盘：SVG BMI 半圆仪表、12周趋势预测、燃脂效率排行。Vite + React，GitHub Actions 自动部署。</p>
               <a href="ringfit" class="project-link">查看完整开发过程 →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 06 - Game Asset Pipeline -->
+        <article class="project-card reveal" data-category="ai" id="project-pipeline">
+          <div class="project-index">06</div>
+          <div class="project-body">
+            <div class="project-image">
+              <span class="project-role-tag">工具/工程</span>
+              <a href="https://github.com/CongGe2/game-asset-pipeline">
+                <div class="project-img-placeholder" style="background:linear-gradient(135deg,#0d1117,#161b22,#21262d);height:240px;display:flex;align-items:center;justify-content:center;font-size:3rem;">⚙️</div>
+              </a>
+            </div>
+            <div class="project-info">
+              <div class="project-meta"><span class="project-type">Python · Blender · UE5 自动化管线</span><span class="project-date">2026.07</span></div>
+              <h3 class="project-title">游戏资产管线工具<span class="project-subtitle">Blender → UE5 全自动 · CLI · 插件 · 67 测试</span></h3>
+              <p class="project-desc">从零构建的完整游戏资产自动化管线。Blender Python 插件一键导出（冻结变换 + 原点重设 + UV 验证 + 材质兜底），UE5 Python 一键导入（编译网格 + 碰撞 + 材质实例），终端 CLI 全流程控制。Pydantic 配置校验、manifest 状态追踪、JUnit/HTML 报告、67 条 pytest（91% 覆盖率）。Blender 4.0-5.2 四版本兼容，GitHub 开源，v0.3.1 已发布。</p>
+              <a href="https://github.com/CongGe2/game-asset-pipeline" class="project-link" target="_blank">GitHub 仓库 →</a>
             </div>
           </div>
         </article>
