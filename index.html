@@ -14,6 +14,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=2">
+  <style>
+    .shopmind-cover:hover { border-color: rgba(124,155,255,.65); box-shadow: 0 10px 32px rgba(47,92,255,.16); }
+    .shopmind-cover:hover > div:first-of-type { opacity: 1; }
+    .shopmind-cover > div:first-of-type { opacity: .55; transition: opacity .3s; }
+  </style>
   <link rel="canonical" href="https://jhin.ink">
   <script type="application/ld+json">
   {
@@ -200,9 +205,9 @@
         </div>
 
         <!-- AI Agent Portfolio Sub-Section -->
-        <div class="reveal" style="margin:56px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;">
-          <div class="section-label" style="margin:0;">AI Agent Portfolio</div>
-          <h3 style="font-family:var(--serif);font-size:24px;font-weight:700;color:var(--text);">AI Agent 作品集</h3>
+        <div class="reveal" style="margin:56px 0 24px;padding-bottom:16px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;">
+          <div class="section-label" style="margin:0;color:var(--accent);">🤖 AI Agent Portfolio</div>
+          <h3 style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--text);letter-spacing:-.01em;">AI Agent 作品集</h3>
           <span style="font-size:12px;color:var(--text-tertiary);">面向 AI Agent 咨询岗位 · 可运行 · 可评测 · 可试玩</span>
         </div>
 
@@ -213,15 +218,25 @@
             <div class="project-image">
               <span class="project-role-tag">AI Agent / 全栈</span>
               <a href="shopmind-case.html">
-                <div class="live-project-cover" style="background:linear-gradient(135deg,#0f1220 0%,#161b33 45%,#0f1220 100%);width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(124,155,255,.3);">
-                  <div style="text-align:center;z-index:1;">
-                    <span style="font-size:40px;display:block;">🤖</span>
-                    <span style="font-family:var(--serif);font-size:20px;font-weight:700;color:#7c9bff;display:block;margin-top:8px;">ShopMind</span>
-                    <span style="font-size:11px;color:rgba(170,185,255,.6);display:block;margin-top:4px;">Multilingual AI Support Agent · EN/ZH/JA/ES</span>
-                    <span style="font-size:9px;color:rgba(170,185,255,.4);display:block;margin-top:6px;">点击查看案例 →</span>
+                <div class="shopmind-cover" style="background:linear-gradient(150deg,#0f1220 0%,#1a2038 40%,#101528 75%,#0d1120 100%);width:100%;aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;border-radius:2px;position:relative;overflow:hidden;border:1px solid rgba(124,155,255,.28);transition:border-color .3s,box-shadow .3s;">
+                  <!-- floating glow -->
+                  <div style="position:absolute;top:-40%;left:50%;width:70%;height:90%;background:radial-gradient(ellipse at center,rgba(80,120,255,.22) 0%,transparent 70%);transform:translateX(-50%);pointer-events:none;"></div>
+                  <!-- mini chat mockup -->
+                  <div style="position:relative;z-index:1;width:72%;display:flex;flex-direction:column;gap:7px;">
+                    <div style="align-self:flex-start;background:rgba(124,155,255,.1);border:1px solid rgba(124,155,255,.25);border-radius:10px 10px 10px 3px;padding:7px 10px;font-size:9.5px;color:rgba(210,218,255,.9);line-height:1.5;max-width:88%;">
+                      I want a full refund for ORD-10071…
+                    </div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                      <span style="font-size:8px;color:#7c9bff;background:rgba(124,155,255,.12);border:1px solid rgba(124,155,255,.3);border-radius:999px;padding:1px 7px;">🔧 get_order</span>
+                      <span style="font-size:8px;color:#7c9bff;background:rgba(124,155,255,.12);border:1px solid rgba(124,155,255,.3);border-radius:999px;padding:1px 7px;">🔧 request_refund</span>
+                      <span style="font-size:8px;color:#ffb36b;background:rgba(255,179,107,.12);border:1px solid rgba(255,179,107,.35);border-radius:999px;padding:1px 7px;">🔧 escalate_human</span>
+                    </div>
+                    <div style="align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px 10px 10px 3px;padding:7px 10px;font-size:9.5px;color:rgba(226,230,255,.85);line-height:1.5;max-width:92%;">
+                      已转人工 · 经理 24 小时内联系…
+                    </div>
                   </div>
-                  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.7) 100%);"></div>
-                  <div style="position:absolute;top:8px;left:8px;font-size:9px;font-weight:700;color:#7c9bff;letter-spacing:.1em;background:rgba(0,0,0,.5);padding:2px 8px;border-radius:2px;">🟢 开源可运行</div>
+                  <div style="position:absolute;top:8px;left:8px;z-index:2;font-size:9px;font-weight:700;color:#7c9bff;letter-spacing:.1em;background:rgba(0,0,0,.55);padding:2px 8px;border-radius:2px;">🟢 开源可运行</div>
+                  <div style="position:absolute;bottom:8px;right:10px;z-index:2;font-family:var(--serif);font-size:13px;font-weight:700;color:rgba(170,185,255,.75);letter-spacing:.06em;">SHOPMIND</div>
                 </div>
               </a>
             </div>
